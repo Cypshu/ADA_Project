@@ -1,0 +1,249 @@
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------------------------------------------
+% Grundlayout
+% ------------------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+% Die deutsche Sprachinstallation von Babel ist auf manchen TinyTeX-Systemen
+% nicht als Paketoption registriert; die benötigten Überschriften werden daher
+% direkt gesetzt.
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\renewcommand{\figurename}{Abbildung}
+\renewcommand{\tablename}{Tabelle}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
+\usepackage{xcolor}
+\definecolor{ADAblue}{HTML}{173F5F}
+\definecolor{ADAgold}{HTML}{D99A2B}
+\definecolor{ADAlight}{HTML}{EEF3F7}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ADAblue,
+  urlcolor=ADAblue,
+  citecolor=ADAblue,
+  pdftitle={E-Portfolio Santander Customer Transaction Prediction},
+  pdfauthor={Cyprian Sawarzynski}
+}
+
+% ------------------------------------------------------------
+% Eigene Formatierung und Platzhalter
+% ------------------------------------------------------------
+\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\logentry}[2]{\subsubsection*{#1 – #2}}
+\newcommand{\sourceitem}[2]{\noindent\textbf{#1}\\#2\par\medskip}
+
+\pagestyle{plain}
+
+\begin{document}
+
+% ------------------------------------------------------------
+% Titelseite
+% ------------------------------------------------------------
+\begin{titlepage}
+  \centering
+  \vspace*{2.2cm}
+  {\color{ADAblue}\rule{\textwidth}{1.5pt}}\\[1.2cm]
+  {\Huge\bfseries\color{ADAblue} E-Portfolio\par}
+  \vspace{0.5cm}
+  {\LARGE Santander Customer Transaction Prediction\par}
+  \vspace{1.4cm}
+  {\color{ADAgold}\rule{0.35\textwidth}{2pt}}\\[1.4cm]
+
+  \begin{tabular}{>{\bfseries}p{0.34\textwidth}p{0.48\textwidth}}
+    Name & Cyprian Sawarzynski \\
+    Modul & Advanced Data Analytics / Scientific Programming and Data Analysis \\
+    Semester & Sommersemester 2026 \\
+    Gruppennummer & 138 \\
+    Gruppenmitglieder & Tim Hebestreit (Gruppenleiter), Angeline Usanayo, Trong Cao \\
+    Sprecher/Gruppenleitung & Tim Hebestreit \\
+    Abgabetermin & 01.09.2026 \\
+  \end{tabular}
+
+  \vfill
+  {\small Individuelles E-Portfolio · Version: \today\par}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+% ------------------------------------------------------------
+% 1 Projektüberblick
+% ------------------------------------------------------------
+\section{Projektüberblick und Fragestellung}
+
+\subsection{Datensatz und Aufgabenstellung}
+Das Projekt behandelt den Datensatz \emph{Santander Customer Transaction Prediction}. Die
+Daten stammen aus einer Kaggle Competition aus dem Jahr 2019. Auf Basis von
+Finanztransaktionsmerkmalen soll vorhergesagt werden, ob eine Person eine Transaktion
+durchführen wird.
+
+\begin{itemize}
+  \item OpenML-Datensatz: ID \texttt{45566}
+  \item Kaggle: \url{https://www.kaggle.com/c/santander-customer-transaction-prediction}
+  \item OpenML: \url{https://www.openml.org/search?type=data\&status=active\&id=45566}
+\end{itemize}
+
+\subsection{Eigene Forschungsfrage}
+\placeholder{präzise eigene Forschungsfrage ergänzen, z.~B. welche Merkmale und Modelle
+die Transaktionsvorhersage besonders gut unterstützen.}
+
+\subsection{Projektziel}
+Ziel ist die Entwicklung, der Vergleich und die begründete Evaluation mehrerer
+Machine-Learning-Modelle für die binäre Klassifikationsaufgabe. Die Entscheidungen sollen
+durch die explorative Datenanalyse, geeignete Daten-Pipelines, passende Metriken und
+dokumentierte Modellvergleiche nachvollziehbar begründet werden.
+
+% ------------------------------------------------------------
+% 2 Logbuch
+% ------------------------------------------------------------
+\section{Individuelles Logbuch}
+Das Logbuch wird chronologisch geführt. Jeder Eintrag dokumentiert Arbeitsschritte,
+Entscheidungen, verworfene Ansätze, Schwierigkeiten, Zeitaufwand und nächste Schritte.
+
+\logentry{06.08.2026}{Portfolio-Skelett und Projektauswahl}
+\begin{itemize}
+  \item Die Bewertungs- und Projektunterlagen wurden gelesen.
+  \item Als Projektdatensatz wurde Santander Customer Transaction Prediction
+        (OpenML ID 45566) festgehalten.
+  \item Ein laufendes E-Portfolio wurde zunächst als Notebook angelegt und anschließend
+        auf ein LaTeX-Dokument umgestellt.
+  \item \textbf{Entscheidung:} Das Logbuch wird ab jetzt zeitnah nach jedem relevanten
+        Arbeitsschritt ergänzt.
+  \item \textbf{Zeitaufwand:} \placeholder{Minuten/Stunden eintragen}
+  \item \textbf{Gruppentreffen:} \placeholder{kein Treffen / Treffen am ...}
+  \item \textbf{Offene Fragen:} genaue Aufgabenverteilung, Forschungsfrage,
+        Modellstrategie und verfügbarer Rechenrahmen.
+\end{itemize}
+
+\logentry{\placeholder{Datum}}{\placeholder{kurzer Titel}}
+\begin{itemize}
+  \item \textbf{Arbeitsschritte:} \placeholder{}
+  \item \textbf{Ergebnis/Erkenntnis:} \placeholder{}
+  \item \textbf{Entscheidung und Begründung:} \placeholder{}
+  \item \textbf{Verworfene Ansätze oder Schwierigkeiten:} \placeholder{}
+  \item \textbf{Nächster Schritt:} \placeholder{}
+  \item \textbf{Zeitaufwand:} \placeholder{}
+  \item \textbf{Bezug zum Gruppentreffen:} \placeholder{}
+\end{itemize}
+
+% ------------------------------------------------------------
+% 3 Zusammenfassung
+% ------------------------------------------------------------
+\section{Zusammenfassung des Logbuchs}
+\textit{Dieser Abschnitt wird am Ende aus dem Logbuch entwickelt und auf maximal vier
+Seiten einschließlich Abbildungen und Tabellen verdichtet.}
+
+\subsection{Fragestellung und Ziel}
+\placeholder{Fragestellung, fachliche Motivation und Ziel der Analyse ausformulieren.}
+
+\subsection{Vorgehen und Methodeneinsatz}
+\placeholder{Datenzugang, Datentypen, EDA, Umgang mit fehlenden Werten, Train-Test-Aufteilung,
+Pipelines, Modelle, Learning Curves, Dimensionsreduktion und Hyperparameteroptimierung
+beschreiben.}
+
+\subsection{Iterationen und begründete Entscheidungen}
+\placeholder{Mehrere getestete Ansätze gegenüberstellen und anhand der Evaluationsergebnisse
+begründen.}
+
+\subsection{Ergebnisse}
+\placeholder{Zentrale Kennzahlen, Modellvergleich und wichtigste EDA-Befunde eintragen.}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox[c][4cm][c]{0.82\textwidth}{\centering
+    \textcolor{ADAgold}{\textbf{PLACEHOLDER: Abbildung einfügen}}\\
+    z.~B. Modellvergleich, ROC-/PR-Kurve oder EDA-Ergebnis}}
+  \caption{\placeholder{aussagekräftige Bildunterschrift}}
+  \label{fig:placeholder}
+\end{figure}
+
+\subsection{Grenzen, Unsicherheiten und Ausblick}
+\placeholder{Datenqualität, Rechenzeit, Generalisierbarkeit, mögliche Verzerrungen und
+konkrete nächste Schritte reflektieren.}
+
+% ------------------------------------------------------------
+% 4 Einschätzung
+% ------------------------------------------------------------
+\section{Einschätzung der Gruppenmitglieder}
+Dieser vertrauliche Abschnitt reflektiert die Zusammenarbeit. Für jede Person werden
+mindestens eine Stärke und ein Entwicklungsfeld mit kurzer Begründung ergänzt.
+
+\subsection*{Tim Hebestreit}
+\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
+\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+
+\subsection*{Angeline Usanayo}
+\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
+\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+
+\subsection*{Trong Cao}
+\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
+\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+
+% ------------------------------------------------------------
+% 5-6 Gruppenabschnitte
+% ------------------------------------------------------------
+\section{Ergebnisse der Gruppe}
+\textbf{Hinweis:} Dieser Abschnitt ist laut Aufgabenstellung nur im Portfolio der
+Sprecherin enthalten. Tim Hebestreit führt als Gruppenleiter die gemeinsame Darstellung.
+
+\placeholder{Falls von Tim freigegeben, hier auf die finale Gruppenzusammenfassung und
+zentrale gemeinsame Ergebnisse verweisen.}
+
+\section{Protokoll der Gruppentreffen}
+\textbf{Hinweis:} Dieser Abschnitt ist laut Aufgabenstellung nur im Portfolio der
+Sprecherin enthalten. Eigene Bezüge zu Treffen werden zusätzlich im Logbuch dokumentiert.
+
+\placeholder{Verweis auf Tims Protokoll bzw. relevante Treffen ergänzen, sofern erforderlich.}
+
+% ------------------------------------------------------------
+% 7 Quellen und Hilfsmittel
+% ------------------------------------------------------------
+\section{Quellen und Hilfsmittel}
+Zitierstil: \placeholder{z.~B. APA 7 oder Harvard verbindlich festlegen}
+
+\sourceitem{Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, SoSe 2026. Verwendung:
+Anforderungen und Bewertung des E-Portfolios. Zugriff: Projektunterlagen.}
+
+\sourceitem{OpenML, Datensatz ID 45566.}{\emph{Santander Customer Transaction Prediction}.
+Verwendung: Datenquelle. Zugriff: \placeholder{Zugriffsdatum ergänzen}.}
+
+\sourceitem{Kaggle.}{\emph{Santander Customer Transaction Prediction}. Verwendung:
+Wettbewerbskontext und Datensatzbeschreibung. Zugriff: \placeholder{Zugriffsdatum ergänzen}.}
+
+\sourceitem{Software.}{Python, Jupyter, pandas, NumPy, scikit-learn, matplotlib und seaborn.
+Verwendete Versionen: \placeholder{Versionen eintragen}.}
+
+\sourceitem{Generative KI.}{Tool, Zweck und relevante Prompts:
+\placeholder{transparent dokumentieren}. Datum: \placeholder{Datum}.}
+
+\subsection{KI- und Tool-Transparenz}
+Für jeden relevanten Einsatz werden Datum, Tool/Version, Zweck, Prompt bzw. Kurzbeschreibung,
+Ergebnis und die eigene Prüfung des Ergebnisses dokumentiert.
+
+% ------------------------------------------------------------
+% Anhang: Checkliste
+% ------------------------------------------------------------
+\appendix
+\section{Abschluss-Checkliste}
+\begin{itemize}
+  \item Name, Gruppennummer, Thema und Gruppenmitglieder ergänzt
+  \item Forschungsfrage und Ziel präzisiert
+  \item Logbuch chronologisch und zeitnah geführt
+  \item Entscheidungen, verworfene Ansätze, Schwierigkeiten und Iterationen dokumentiert
+  \item EDA-Erkenntnisse mit Modellentscheidungen verknüpft
+  \item Modelle, Metriken, Pipelines, Learning Curves und Hyperparameter beschrieben
+  \item Abbildungen/Tabellen nummeriert, beschriftet und interpretiert
+  \item Gruppenmitglieder fair und konkret eingeschätzt
+  \item Quellen, Softwareversionen und KI-Nutzung vollständig dokumentiert
+  \item PDF kompiliert und nach dem vorgegebenen Schema benannt
+\end{itemize}
+
+\end{document}
