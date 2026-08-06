@@ -5,7 +5,7 @@ Die Hauptdatei ist `ADA_138_Sawarzynski_Portfolio.tex`.
 Das laufende individuelle Arbeitsprotokoll befindet sich in `Logbuch_Santander_Cyp.tex`.
 Es wird nach jedem relevanten Arbeitsschritt ergänzt und später als Grundlage für die
 Zusammenfassung des E-Portfolios verwendet. Das Hauptportfolio bindet diese Datei im
-Anhang automatisch per `\\input{Logbuch_Santander_Cyp.tex}` ein. Die Quelle bleibt damit
+Anhang automatisch per `\input{Logbuch_Santander_Cyp.tex}` ein. Die Quelle bleibt damit
 separat und wird trotzdem in der finalen Portfolio-PDF berücksichtigt.
 
 ## PDF erzeugen
@@ -37,4 +37,5 @@ Dateien im Ordner `assets` abgelegt und anschließend mit `\includegraphics` ein
 ## Struktur
 
 - `ADA_138_Sawarzynski_Portfolio.tex`: editierbare Portfolio-Hauptdatei
+- `Logbuch_Santander_Cyp.tex`: separat gepflegte Logbuch-Quelle und eingebundener Portfolio-Anhang
 - `assets/`: Abbildungen und sonstige Portfolio-Assets
