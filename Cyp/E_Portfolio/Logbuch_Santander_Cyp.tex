@@ -429,6 +429,54 @@ Darstellung, Sortierung und Beschriftung verbessert.}
 \field{Nächster Schritt}{Die zehn auffälligsten Features mit Signifikanztests, Konfidenzintervallen
 und möglichen Mehrfachtestkorrekturen weiter untersuchen.}
 
+\logsection{06.08.2026}{Korrelationsbasierte Featureauswahl und erneute Dimensionsreduktion}
+\field{Zusammenfassung}{Da die ursprüngliche PCA-/t-SNE-Darstellung keine klare Trennung der
+Labelgruppen zeigte, wurde die Dimensionsreduktion mit 14 gezielt ausgewählten Features wiederholt.
+Die Auswahl basiert auf der signierten Zeilensumme der Differenzmatrix
+\texttt{corr\_true - corr\_false}. Zusätzlich wurde die globale Korrelationsmatrix nach der Summe
+der absoluten Off-Diagonal-Korrelationen sortiert.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Für jedes Feature die signierte Summe seiner label-bedingten Korrelationsänderungen
+        berechnet; die Diagonale wurde ausgeschlossen.
+  \item Sieben Features mit den größten positiven Scores und sieben mit den größten negativen
+        Scores ausgewählt.
+  \item Die ausgewählten Features auf Basis der bestehenden Min-Max-Normalisierung verwendet und
+        die Zielvariable weiterhin ausschließlich als Label behandelt.
+  \item PCA für alle 200.000 Zeilen und t-SNE für eine reproduzierbare Stichprobe von 5.000 Zeilen
+        mit den 14 Features berechnet.
+  \item K-Means mit $k=2$ und DBSCAN auf beiden neuen Embeddings ausgeführt.
+  \item Labelvergleichsbilder für PCA und t-SNE sowie eine nach absoluter Korrelationssumme
+        sortierte Korrelations-Heatmap erstellt.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Die ausgewählten positiven Features sind \texttt{var\_161},
+\texttt{var\_188}, \texttt{var\_177}, \texttt{var\_123}, \texttt{var\_84}, \texttt{var\_63}
+und \texttt{var\_7}. Die ausgewählten negativen Features sind \texttt{var\_19},
+\texttt{var\_176}, \texttt{var\_189}, \texttt{var\_184}, \texttt{var\_194}, \texttt{var\_69}
+und \texttt{var\_169}. Die ersten beiden PCA-Komponenten erklären zusammen 17,1223\,\% der
+Varianz. K-Means zeigte weiterhin praktisch keine Übereinstimmung mit dem Label: PCA ARI=-0,0000,
+NMI=0,0001; t-SNE ARI=-0,0001, NMI=0,0009. DBSCAN bildete in beiden Embeddings nur einen Cluster.
+Die Dimensionsreduktion verbessert damit die erklärte PCA-Varianz deutlich gegenüber der
+200-Feature-Baseline, erzeugt aber noch keine belastbare Labeltrennung.}
+\field{Entscheidung und Begründung}{Die mathematische Zielgröße $2\log_2(200)=15,29$ wurde als
+symmetrische Auswahl von 7 positiven plus 7 negativen Features umgesetzt. Die signierte
+Zeilensumme wurde als Feature-Ranking verwendet, weil sie die Richtung der gesamten
+Korrelationsänderung berücksichtigt. Die absolute Korrelationssumme dient separat dazu, die
+Korrelationsmatrix nach den insgesamt am stärksten vernetzten Features zu ordnen.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Eine Auswahl nach einzelnen Extrempaaren wurde nicht
+verwendet, da dabei die übrigen Korrelationen eines Features unberücksichtigt bleiben würden.
+Eine absolute Zeilensumme wurde ebenfalls nicht als Hauptkriterium gewählt, weil sie die Richtung
+der label-bedingten Veränderung verliert. Die neue t-SNE-Ausführung dauerte wegen der
+rechenintensiven Dimensionsreduktion mehrere Minuten.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die bisherige Analyse
+bleibt als Baseline erhalten; die neue Featureauswahl und die neuen Grafiken wurden separat
+gespeichert.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die ausgewählten Features mit überwachten Modellen prüfen und untersuchen,
+ob die fehlende 2D-Trennung durch die Projektion oder durch tatsächlich geringe Labelinformation
+verursacht wird.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
