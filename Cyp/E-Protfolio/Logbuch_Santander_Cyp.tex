@@ -1,3 +1,5 @@
+\ifdefined\PortfolioMain
+\else
 \documentclass[11pt,a4paper]{article}
 
 % Eigenständiges individuelles Logbuch für das Santander-Projekt.
@@ -28,11 +30,19 @@
        \large Santander Customer Transaction Prediction}
 \author{Cyprian Sawarzynski\\Gruppe 138}
 \date{Sommersemester 2026}
+\fi
 
+\providecommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
+\providecommand{\logsection}[2]{\subsection*{#1 -- #2}}
+\providecommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
+
+\ifdefined\PortfolioMain
+\else
 \begin{document}
 \maketitle
 \tableofcontents
 \clearpage
+\fi
 
 \section{Zweck und Führungsregeln}
 
@@ -175,5 +185,9 @@ Schwierigkeiten/Grenzen und Ausblick klar erkennbar sein. Für Abbildungen und T
 Nummer, kurze Caption, Textreferenz und ein prägnanter Take-away ergänzt. Die ausführliche
 Nachvollziehbarkeit bleibt in diesem Logbuch erhalten.
 
-\end{document}
-
+\ifdefined\PortfolioMain
+  \def\LogbuchEnd{}
+\else
+  \def\LogbuchEnd{\end{document}}
+\fi
+\LogbuchEnd
