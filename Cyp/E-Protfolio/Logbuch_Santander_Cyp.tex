@@ -1,0 +1,179 @@
+\documentclass[11pt,a4paper]{article}
+
+% Eigenständiges individuelles Logbuch für das Santander-Projekt.
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
+\usepackage{xcolor}
+\definecolor{ADAblue}{HTML}{173F5F}
+\definecolor{ADAgold}{HTML}{D99A2B}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ADAblue,
+  urlcolor=ADAblue,
+  pdftitle={Logbuch Santander Customer Transaction Prediction},
+  pdfauthor={Cyprian Sawarzynski}
+}
+
+\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
+\newcommand{\logsection}[2]{\subsection*{#1 -- #2}}
+\newcommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
+
+\title{\color{ADAblue}\textbf{Individuelles Logbuch}\\[0.4em]
+       \large Santander Customer Transaction Prediction}
+\author{Cyprian Sawarzynski\\Gruppe 138}
+\date{Sommersemester 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{Zweck und Führungsregeln}
+
+Dieses Logbuch dokumentiert meinen individuellen Arbeitsprozess während des gesamten
+Bearbeitungszeitraums. Es ist kein nachträglich geglätteter Ergebnisbericht, sondern hält
+den tatsächlichen Weg zur Analyse fest. Dadurch sollen Arbeitsaufwand, eigene Entscheidungen,
+Anpassungen, Schwierigkeiten und verworfene Ansätze nachvollziehbar bleiben.
+
+Die Einträge werden chronologisch und möglichst unmittelbar nach dem jeweiligen Arbeitsschritt
+ergänzt. Jeder Eintrag enthält mindestens:
+
+\begin{itemize}
+  \item Datum des Eintrags,
+  \item einen kurzen und prägnanten Titel,
+  \item eine verständliche Zusammenfassung des Arbeitsschritts.
+\end{itemize}
+
+Zusätzlich dokumentiere ich systematisch:
+
+\begin{itemize}
+  \item konkrete Arbeitsschritte und Ergebnisse,
+  \item methodische Entscheidungen und deren Begründung,
+  \item verworfene Ansätze und Iterationen,
+  \item Schwierigkeiten, Unsicherheiten und offene Fragen,
+  \item Zeitaufwand und gegebenenfalls Bezug zu Gruppentreffen,
+  \item nächste Schritte und Abweichungen vom vereinbarten Vorgehen.
+\end{itemize}
+
+Das Logbuch bildet die Grundlage für die spätere Zusammenfassung im E-Portfolio. Abbildungen
+oder Tabellen dürfen hier auch vorläufig bzw. als Arbeitsdokumentation eingefügt werden;
+für die finale Zusammenfassung werden die relevanten Darstellungen später formal ausgearbeitet.
+
+\section{Projekt- und Gruppenrahmen}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.32\textwidth}X}
+  Thema & Santander Customer Transaction Prediction \\
+  Datensatz & OpenML ID 45566 \\
+  Name & Cyprian Sawarzynski \\
+  Gruppennummer & 138 \\
+  Gruppenmitglieder & Tim Hebestreit (Gruppenleiter), Angeline Usanayo, Trong Cao \\
+  Sprecher/Gruppenleitung & Tim Hebestreit \\
+  Projektdeadline & 01.09.2026 \\
+  Individueller Workload-Richtwert & ca. 100 Stunden \\
+\end{tabularx}
+
+\section{Chronologische Einträge}
+
+\logsection{06.08.2026}{Projektunterlagen und Projektauswahl}
+\field{Zusammenfassung}{Die Bewertungs- und Projektunterlagen wurden gelesen. Als Projekt aus
+den vorhandenen Aufgaben wurde Santander Customer Transaction Prediction ausgewählt.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Bewertungshinweise für das E-Portfolio gelesen.
+  \item Anforderungen an EDA und Machine Learning herausgearbeitet.
+  \item Santander-Aufgabenblatt gelesen und OpenML-Datensatz ID 45566 notiert.
+  \item Kaggle- und OpenML-Links als spätere Quellen vorgemerkt.
+\end{itemize}}
+\field{Entscheidungen und Begründung}{Die Analyse wird auf Santander fokussiert, weil die Aufgabe eine
+binäre Transaktionsvorhersage mit klarer OpenML-Referenz vorgibt. Die weitere Bearbeitung soll
+EDA-Erkenntnisse ausdrücklich mit den späteren Modellentscheidungen verbinden.}
+\field{Schwierigkeiten und offene Fragen}{Die genaue Aufgabenverteilung innerhalb der Gruppe,
+die persönliche Forschungsfrage, die Modellstrategie und der verfügbare Rechenrahmen sind noch
+zu klären.}
+\field{Abweichung vom Vorgehen}{Noch keine Abweichung vom Gruppenplan dokumentiert.}
+\field{Gruppentreffen}{\placeholder{kein Treffen / Datum und Kurzverweis ergänzen}}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Logbuch und E-Portfolio als belastbare Arbeitsgrundlage anlegen und anschließend
+den Datensatz laden sowie technisch prüfen.}
+
+\logsection{06.08.2026}{E-Portfolio auf LaTeX umgestellt}
+\field{Zusammenfassung}{Das zunächst als Notebook angelegte E-Portfolio wurde auf ein eigenständiges
+LaTeX-Dokument umgestellt. Ziel war ein besser kontrollierbares Layout für die spätere PDF-Abgabe.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Ordner \texttt{E-Protfolio} im eigenen Projektordner angelegt.
+  \item Hauptdatei \texttt{ADA\_138\_Sawarzynski\_Portfolio.tex} erstellt.
+  \item Titel, Projektüberblick, Logbuch-Platzhalter, Zusammenfassung, Gruppenreflexion,
+        Quellen und Abschluss-Checkliste strukturiert.
+  \item Ordner \texttt{assets} für spätere Abbildungen vorbereitet.
+  \item LaTeX-Datei mit XeLaTeX kompiliert und PDF-Ausgabe geprüft.
+\end{itemize}}
+\field{Entscheidungen und Begründung}{Das Logbuch wird als separate Datei geführt, damit der
+Arbeitsprozess unabhängig vom später verdichteten Portfolio fortlaufend ergänzt werden kann.}
+\field{Schwierigkeiten und Lösungen}{Die lokale TinyTeX-Installation enthielt mehrere optionale
+Pakete nicht. Die Präambel wurde deshalb auf vorhandene Standardpakete reduziert; die Ausgabe
+kompiliert nun erfolgreich.}
+\field{Abweichung vom Vorgehen}{Das ursprünglich geplante Notebook-Format wurde zugunsten von
+LaTeX verworfen, nachdem die PDF-Gestaltung von nbconvert nicht zufriedenstellend war.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die EDA des Santander-Datensatzes beginnen und dabei Datenform, Datentypen,
+Zielvariable, fehlende Werte, Klassenverteilung und erste Verteilungen systematisch untersuchen.}
+
+\logsection{\placeholder{Datum}}{\placeholder{prägnanter Arbeitstitel}}
+\field{Zusammenfassung}{\placeholder{Kurze Zusammenfassung des konkreten Arbeitsschritts.}}
+\field{Arbeitsschritte}{\placeholder{Welche Schritte wurden tatsächlich durchgeführt?}}
+\field{Ergebnis/Erkenntnis}{\placeholder{Was kam dabei heraus? Zahlen, Tabellen oder Abbildungen verlinken.}}
+\field{Entscheidung und Begründung}{\placeholder{Welche Entscheidung wurde getroffen und warum?}}
+\field{Verworfene Ansätze/Schwierigkeiten}{\placeholder{Was hat nicht funktioniert oder wurde verworfen?}}
+\field{Abweichung vom vereinbarten Vorgehen}{\placeholder{Keine / konkrete Abweichung mit Begründung.}}
+\field{Gruppentreffen}{\placeholder{Datum, Teilnehmende und Bezug zum Treffen.}}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden.}}
+\field{Nächster Schritt}{\placeholder{Konkreter nächster Arbeitsschritt.}}
+
+\section{Laufende Methodik- und Entscheidungsübersicht}
+
+Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
+Entscheidungen nur im Fließtext verborgen bleiben.
+
+\begin{longtable}{p{0.19\textwidth}p{0.29\textwidth}p{0.42\textwidth}}
+\toprule
+\textbf{Bereich} & \textbf{Aktueller Stand} & \textbf{Begründung/Beleg} \\
+\midrule
+Datenzugang & \placeholder{offen} & \placeholder{Quelle, Version, Zugriffsdatum} \\
+Datentypen & \placeholder{offen} & \placeholder{Speicherbedarf und geeignete Wahl} \\
+Fehlende Werte & \placeholder{offen} & \placeholder{EDA-Befund und Umgang damit} \\
+Zielvariable & \placeholder{offen} & \placeholder{Kodierung und Klassenverteilung} \\
+Train-Test-Aufteilung & \placeholder{offen} & \placeholder{Zeitpunkt und Begründung} \\
+Metrik(en) & \placeholder{offen} & \placeholder{Warum passend für die Aufgabe?} \\
+Modelle & \placeholder{offen} & \placeholder{Vergleich und Auswahl} \\
+Feature Engineering & \placeholder{offen} & \placeholder{getestete Varianten} \\
+Hyperparameter & \placeholder{offen} & \placeholder{Suchraum und Evaluation} \\
+\bottomrule
+\end{longtable}
+
+\section{Offene Fragen und Risiken}
+
+\begin{itemize}
+  \item \placeholder{Welche genaue persönliche Forschungsfrage wird verfolgt?}
+  \item \placeholder{Wie wird die Gruppenarbeit aufgeteilt?}
+  \item \placeholder{Welche Metrik ist für die unausgeglichene Zielvariable sachgerecht?}
+  \item \placeholder{Wie groß ist der Datensatz und welche Speicherstrategie ist erforderlich?}
+  \item \placeholder{Welche Grenzen der Aussagekraft müssen später diskutiert werden?}
+\end{itemize}
+
+\section{Hinweise für die spätere Zusammenfassung}
+
+Bei der späteren Verdichtung des Logbuchs müssen Fragestellung, Methodenwahl, Ergebnisse,
+Schwierigkeiten/Grenzen und Ausblick klar erkennbar sein. Für Abbildungen und Tabellen werden
+Nummer, kurze Caption, Textreferenz und ein prägnanter Take-away ergänzt. Die ausführliche
+Nachvollziehbarkeit bleibt in diesem Logbuch erhalten.
+
+\end{document}
+
