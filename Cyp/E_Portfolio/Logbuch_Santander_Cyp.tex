@@ -313,6 +313,45 @@ keinem Schritt als erklärendes Feature verwendet.}
 prüfen, Effektgrößen mit Verteilungen und Ausreißern verbinden und die Featureauswahl für die
 Modellierung vorbereiten.}
 
+\logsection{06.08.2026}{PCA-/t-SNE-Labelansichten und korrigierte Korrelations-Heatmaps}
+\field{Zusammenfassung}{Die Dimensionsreduktionsgrafiken wurden nach den beiden Labelwerten
+getrennt. Zusätzlich wurde die Diagonale aus den Korrelations-Heatmaps maskiert, da sie nur die
+Selbstkorrelation jedes Features zeigt und die Interpretation der übrigen Zusammenhänge verfälscht.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Separate PCA-Abbildungen für ausschließlich \texttt{target=0} und ausschließlich
+        \texttt{target=1} erzeugt.
+  \item Separate t-SNE-Abbildungen für ausschließlich \texttt{target=0} und ausschließlich
+        \texttt{target=1} erzeugt.
+  \item Für alle vier Bilder identische Achsenbereiche gesetzt, damit die räumliche Verteilung
+        zwischen den Labelgruppen direkt vergleichbar bleibt.
+  \item Kontrastreiche Farben verwendet: Blau für Label 0 und Rot für Label 1.
+  \item Die Diagonalen der globalen sowie der label-konditionierten Korrelations-Heatmaps mit
+        Masken ausgeblendet; die Korrelationsrangliste nutzte bereits nur das obere Dreieck.
+  \item Den PCA-/t-SNE-Abschnitt als eigene Visualisierungs- und Clustering-Gruppe kenntlich gemacht.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Die vier neuen Labelansichten wurden mit der reproduzierbaren
+5.000-Zeilen-Stichprobe erstellt. Dadurch sind Unterschiede in der Punktdichte und räumlichen
+Lage zwischen den Labelgruppen sichtbar, ohne dass die jeweils andere Klasse die Darstellung
+überlagert. Die Heatmaps zeigen nach der Maskierung ausschließlich Beziehungen zwischen
+verschiedenen Features.}
+\field{Entscheidung und Begründung}{Die getrennte Darstellung wurde gewählt, weil eine gemeinsame
+Farbskala die seltenere positive Klasse visuell überdecken kann. Identische Achsen sind für einen
+fairen Vergleich wichtiger als eine jeweils automatisch optimierte Ansicht. Die Diagonale wird
+nicht durch Null ersetzt, sondern als fehlend maskiert, damit sie nicht als künstlicher Wert in die
+Farbskala eingeht.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Eine gemeinsame Target-Abbildung bleibt als ältere
+Übersicht im Notebook erhalten, dient aber nicht mehr als primäre Labeldarstellung. Die
+Dimensionsreduktion basiert weiterhin auf einer Stichprobe für t-SNE; daraus dürfen keine Aussagen
+über exakte Häufigkeiten im vollständigen Datensatz abgeleitet werden.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; es handelt sich um eine
+Darstellungs- und Interpretationsverbesserung.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die getrennten Ansichten mit den Gruppenverteilungen, Effektgrößen und
+label-konditionierten Korrelationen zusammenführen und auffällige Features für die Modellierung
+priorisieren.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
