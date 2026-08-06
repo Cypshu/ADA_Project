@@ -225,6 +225,49 @@ noch nicht als neue Datei gespeichert und nicht auf die Zielvariable angewendet.
 \field{Nächster Schritt}{Verteilungen und Ausreißer gezielt visualisieren, stark schiefe Merkmale
 prüfen und die Feature-Ziel-Zusammenhänge im Kontext der Klassenimbalance bewerten.}
 
+\logsection{06.08.2026}{Visualisierung, PCA, t-SNE und Clustering}
+\field{Zusammenfassung}{Die EDA wurde um grafische Darstellungen und eine erste unüberwachte
+Strukturanalyse ergänzt. Erstellt wurden eine Korrelations-Heatmap, Boxplots der normalisierten
+Features und Zeilen, Verteilungsübersichten, Q-Q-Plots sowie PCA- und t-SNE-Projektionen mit
+K-Means- und DBSCAN-Clustern.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Korrelationsmatrix der 200 Features als Heatmap visualisiert.
+  \item Boxplots aller normalisierten Features und Boxplots von 100 zufällig ausgewählten Zeilen
+        erstellt; zusätzlich Verteilung der Feature-Mittelwerte und eine Stichprobe aller Werte geplottet.
+  \item Q-Q-Plots für \texttt{var\_0}, \texttt{var\_68}, \texttt{var\_81} und \texttt{var\_199}
+        gegen die Normalverteilung erzeugt.
+  \item PCA auf zwei Dimensionen für die gesamte normalisierte Featurematrix berechnet.
+  \item Für t-SNE eine reproduzierbare Stichprobe von 5.000 Zeilen verwendet und zuvor auf 50 PCA-
+        Komponenten reduziert.
+  \item Auf beiden 2D-Embeddings K-Means mit $k=2$ und DBSCAN angewandt. \texttt{target} wurde
+        ausschließlich als Label verwendet und nachträglich mit ARI/NMI verglichen.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Die ersten beiden PCA-Komponenten erklären nur 0,7503\,\% bzw.
+0,6860\,\% der Varianz, zusammen rund 1,44\,\%. K-Means erzeugte in PCA zwei Cluster mit 2.726
+und 2.274 Punkten, in t-SNE zwei Cluster mit 2.479 und 2.521 Punkten. Die Übereinstimmung mit
+\texttt{target} ist jeweils sehr gering: PCA-K-Means ARI=-0,0016 und NMI=0,0004; t-SNE-K-Means
+ARI=0,0008 und NMI=0,0015. DBSCAN erzeugte mit der ersten Parametrisierung auf PCA einen großen
+Cluster mit 4.999 Punkten und einen Ausreißer; auf t-SNE wurden alle 5.000 Punkte einem Cluster
+zugeordnet. Die DBSCAN-Übereinstimmung mit dem Target war entsprechend praktisch null.}
+\field{Entscheidung und Begründung}{Die Stichprobe von 5.000 Zeilen wurde wegen der hohen
+Rechenkosten von t-SNE und DBSCAN gewählt; der Zufallszustand 42 macht die Darstellung
+reproduzierbar. PCA und t-SNE werden als explorative Visualisierung behandelt, nicht als Beweis
+für fachlich sinnvolle Cluster. Die sehr geringe PCA-Varianz und die niedrigen ARI/NMI-Werte
+sprechen gegen eine klare zweidimensionale Trennung nach \texttt{target}.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Eine direkte t-SNE-Berechnung auf allen 200.000 Zeilen
+wurde wegen unverhältnismäßiger Laufzeit nicht verwendet. DBSCAN mit $\texttt{eps}=0,5$ auf den
+standardisierten 2D-Embeddings war zu wenig trennscharf und wird deshalb nicht als finale
+Clusterlösung interpretiert. Die Q-Q-Plots zeigen nur vier repräsentative Features; eine vollständige
+Verteilungsbewertung aller 200 Features bleibt ein nächster Analyseschritt.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Clusterverfahren
+wurden auf einer dokumentierten Stichprobe ausgeführt; die Zielvariable wurde nicht als Feature
+verwendet.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{DBSCAN-Parameter und Clusteranzahl systematisch sensitivitätsprüfen,
+weitere Verteilungen visualisieren und mögliche Ausreißer bzw. stark schiefe Features untersuchen.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
