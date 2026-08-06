@@ -268,6 +268,51 @@ verwendet.}
 \field{Nächster Schritt}{DBSCAN-Parameter und Clusteranzahl systematisch sensitivitätsprüfen,
 weitere Verteilungen visualisieren und mögliche Ausreißer bzw. stark schiefe Features untersuchen.}
 
+\logsection{06.08.2026}{Erweiterte Label-/Feature-EDA}
+\field{Zusammenfassung}{Die EDA wurde klar in Label und Features getrennt. Für alle 200 Features
+wurden Klassenimbalance, gruppierte Verteilungen, Mittelwert- und Medianunterschiede sowie
+label-konditionierte Feature-Feature-Korrelationen untersucht und visualisiert.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Featurematrix $X$ mit 200 Spalten und Labelvektor $y=\texttt{target}$ separat definiert.
+  \item Klassenhäufigkeiten und Klassenanteile als Balkendiagramm und Kreisdiagramm dargestellt.
+  \item Für jedes Feature Mittelwert, Median und Standardabweichung je Labelgruppe berechnet.
+  \item Absolute und relative Mittelwertdifferenzen sowie Cohen's $d$ als standardisierte
+        Effektgröße bestimmt und für alle 200 Features geplottet.
+  \item Alle Features in zehn gruppierten Boxplot-Seiten mit jeweils \texttt{target=False} und
+        \texttt{target=True} verglichen; die zwölf stärksten Features zusätzlich als Violinplots.
+  \item Je Labelgruppe eine 200$\times$200-Korrelationsmatrix berechnet und die Differenz
+        $\mathrm{corr}(True)-\mathrm{corr}(False)$ als Heatmap und Rangliste dargestellt.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Die Labelverteilung bleibt mit 179.902 False (89,951\,\%) und
+20.098 True (10,049\,\%) deutlich unausgeglichen. Die größten positiven standardisierten
+Mittelwertdifferenzen zeigen \texttt{var\_6} ($d=0,215926$), \texttt{var\_110} ($d=0,205989$),
+\texttt{var\_53} ($d=0,204101$), \texttt{var\_26} ($d=0,199796$) und \texttt{var\_22}
+($d=0,194818$). Die größten negativen Differenzen zeigen \texttt{var\_81} ($d=-0,255463$),
+\texttt{var\_139} ($d=-0,237684$), \texttt{var\_12} ($d=-0,221911$), \texttt{var\_146}
+($d=-0,204394$) und \texttt{var\_76} ($d=-0,199939$). Die stärkste Veränderung einer
+Feature-Feature-Korrelation beträgt nur rund 0,031455 (Paar \texttt{var\_62}/\texttt{var\_173});
+weitere starke Änderungen liegen ebenfalls nur knapp über 0,03. Die Korrelationen zwischen
+Features verändern sich durch das Label somit in dieser ersten Auswertung nur schwach.}
+\field{Entscheidung und Begründung}{Cohen's $d$ wird zur Rangordnung verwendet, weil rohe
+Mittelwertdifferenzen wegen der unterschiedlichen Feature-Skalen nicht direkt vergleichbar sind.
+Die label-konditionierten Korrelationsmatrizen werden getrennt von der ursprünglichen Matrix
+analysiert, weil eine Korrelation des konstanten Labels innerhalb einer einzelnen Gruppe nicht
+definiert wäre. Die Rohdaten und die Labeltrennung bleiben unverändert.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Die gruppierten Boxplots werden aus Rechen- und
+Darstellungsgründen mit 2.000 zufällig gezogenen Zeilen pro Klasse geplottet; alle Tabellen und
+Effektgrößen basieren weiterhin auf dem vollständigen Datensatz. Eine sichtbare Verteilungsdifferenz
+ist nicht automatisch kausal und muss wegen der 200 parallelen Tests vorsichtig interpretiert
+werden. Die Korrelationsdifferenzen sind klein und werden deshalb nicht als starker Beleg für
+labelabhängige Abhängigkeiten bewertet.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Das Label wurde in
+keinem Schritt als erklärendes Feature verwendet.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Mehrfachtestproblematik und statistische Signifikanz der Unterschiede
+prüfen, Effektgrößen mit Verteilungen und Ausreißern verbinden und die Featureauswahl für die
+Modellierung vorbereiten.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
