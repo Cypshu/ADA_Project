@@ -393,6 +393,42 @@ Skalierung, Maskierung und Anordnung der bereits berechneten Ergebnisse.}
 \field{Nächster Schritt}{Die nun besser lesbaren Unterschiede mit Effektgrößen, Verteilungen und
 statistischer Absicherung zusammenführen.}
 
+\logsection{06.08.2026}{Interpretierbarkeit der erweiterten EDA-Plots verbessert}
+\field{Zusammenfassung}{Die erweiterten EDA-Grafiken wurden auf eine präzisere und kompaktere
+Interpretation angepasst. Beschriftungen erklären nun, ob Mittelwerte oder Pearson-Korrelationen
+dargestellt werden; die wichtigsten Verteilungsbeispiele und Korrelationsänderungen sind gezielt
+sortiert.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Die Gruppenmittelwertgrafik in eine Darstellung der Abweichungen der Gruppenmittelwerte
+        mittels Cohen's $d$ und eine signiert log1p-transformierte Heatmap überführt.
+  \item Die Bedeutung der standardisierten Gruppenmittelwerte ergänzt: Gruppenmittelwert geteilt
+        durch gepoolte Standardabweichung; das Vorzeichen zeigt die Richtung der Abweichung.
+  \item Die Verteilungsplots auf zehn Beispiele reduziert: fünf größte positive und fünf größte
+        negative Cohen's-$d$-Effekte.
+  \item Den Korrelationsplot als Pearson-Korrelationen je Labelgruppe beschriftet und die zwölf
+        Paare nach absoluter label-bedingter Differenz absteigend geordnet.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Die log1p-Transformation komprimiert große standardisierte Mittelwerte,
+behält aber positive und negative Richtungen durch die signierte Form bei. Die zehn ausgewählten
+Box- und Violinplots sind dadurch direkt mit der Effektgrößenrangliste verknüpft. Der
+Korrelationsvergleich zeigt weiterhin pro Featurepaar separat \texttt{corr\_false}, \texttt{corr\_true},
+die Differenz und die absolute Differenz.}
+\field{Entscheidung und Begründung}{Die vollständige statistische Tabelle bleibt erhalten, während
+die Grafik auf die interpretierbarsten zehn Beispiele fokussiert wird. Eine empirische Farbskala
+zwischen beobachtetem Minimum und Maximum ist informativer als eine feste $[-1,1]$-Skala, sofern
+die gemeinsame Skala bei direkten Matrixvergleichen dokumentiert bleibt.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Die Darstellung aller 200 gruppierten Boxplots wurde
+für diesen Abschnitt verworfen, weil sie die zentralen Unterschiede schwer erkennbar macht. Die
+logarithmische Transformation darf nicht als Änderung der Rohdaten missverstanden werden; sie
+betrifft ausschließlich die Darstellung der standardisierten Gruppenmittelwerte.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; es wurden ausschließlich
+Darstellung, Sortierung und Beschriftung verbessert.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die zehn auffälligsten Features mit Signifikanztests, Konfidenzintervallen
+und möglichen Mehrfachtestkorrekturen weiter untersuchen.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
