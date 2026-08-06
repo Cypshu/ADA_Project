@@ -182,6 +182,49 @@ Datensatzprüfung wurde als erster EDA-Schritt vor Visualisierungen und Modellie
 \field{Nächster Schritt}{Duplikate, konstante bzw. nahezu konstante Merkmale, Verteilungen,
 Ausreißer und Zusammenhänge mit der unausgeglichenen Zielvariable untersuchen.}
 
+\logsection{06.08.2026}{Deskriptive Statistik, Korrelation und Normalisierung}
+\field{Zusammenfassung}{Die technische EDA wurde um die vollständige deskriptive Statistik aller
+201 Spalten, eine Korrelationsmatrix, eine Prüfung auf Kategorikalität bzw. Wertkonzentration,
+eine Negativwertanalyse und eine Min-Max-Normalisierung erweitert.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Für jede Spalte Minimum, Maximum, Mittelwert, Median, Varianz, Standardabweichung,
+        Skewness und Kurtosis berechnet. Das boolesche \texttt{target} wurde für diese Kennzahlen
+        zusätzlich als 0/1 numerisch betrachtet.
+  \item Eine Pearson-Korrelationsmatrix der Form 201 $\times$ 201 erstellt und die stärksten
+        absoluten Zusammenhänge ausgegeben.
+  \item Datentypen, Kardinalität, dominante Einzelwerte und negative Werte je Feature geprüft.
+  \item Die 200 Features mit Min-Max auf das Intervall [0,1] transformiert; \texttt{target} blieb
+        unverändert.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Alle 200 Features sind vom Typ \texttt{float64}; ausschließlich
+\texttt{target} ist boolesch. 131 von 200 Features (65,5\,\%) enthalten mindestens einen negativen
+Wert, 69 Features enthalten keine negativen Werte. Es gibt 0 konstante Features. Kein Feature hat
+maximal 20 verschiedene Werte oder eine Dominanz eines einzelnen Wertes von mindestens 90\,\%.
+Damit zeigen die Features keinen Hinweis auf klassische kategorische Variablen; das boolesche
+\texttt{target} ist die einzige kategoriale Spalte. Die Korrelationsmatrix hat die Form 201 $\times$
+201; die stärksten linearen Zusammenhänge mit dem Ziel zeigen \texttt{var\_81} (r=-0,080917),
+\texttt{var\_139} (r=-0,074080), \texttt{var\_12} (r=-0,069489) und \texttt{var\_6}
+(r=0,066731). Nach der Normalisierung liegen globales Minimum und Maximum der Featurematrix bei
+0 bzw. 1.}
+\field{Entscheidung und Begründung}{Die Bool-Variable wird als Zielvariable behandelt und nicht
+als gewöhnliches kontinuierliches Feature normalisiert. Für die Merkmale ist Min-Max eine
+nachvollziehbare erste Skalierung, weil dadurch alle unterschiedlichen Wertebereiche vergleichbar
+werden. Die Rohdaten bleiben unverändert; \texttt{X\_minmax} wird nur reproduzierbar im Notebook
+erzeugt.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Eine vollständige 201 $\times$ 201 Matrix ist als
+Tabelle schwer lesbar. Deshalb wird sie vollständig als Objekt \texttt{correlation\_matrix}
+gespeichert und zusätzlich über die stärksten Korrelationspaare zusammengefasst. Die anonymisierten
+Feature-Namen erlauben keine fachliche Interpretation einzelner Variablen; die Korrelationswerte
+sind daher zunächst nur deskriptiv. Die Notebook-Ausführung dauerte wegen des großen Datensatzes
+und der Matrixberechnung rund zwei Minuten.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Normalisierung wurde
+noch nicht als neue Datei gespeichert und nicht auf die Zielvariable angewendet.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Verteilungen und Ausreißer gezielt visualisieren, stark schiefe Merkmale
+prüfen und die Feature-Ziel-Zusammenhänge im Kontext der Klassenimbalance bewerten.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
