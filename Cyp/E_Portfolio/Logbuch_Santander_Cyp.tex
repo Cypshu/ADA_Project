@@ -352,6 +352,47 @@ Darstellungs- und Interpretationsverbesserung.}
 label-konditionierten Korrelationen zusammenführen und auffällige Features für die Modellierung
 priorisieren.}
 
+\logsection{06.08.2026}{Skalenanpassung und direkter PCA-/t-SNE-Vergleich}
+\field{Zusammenfassung}{Die Skalen der Korrelations- und Gruppenmittelwert-Heatmaps wurden auf
+die tatsächlich beobachteten Wertebereiche angepasst. Zusätzlich wurden PCA und t-SNE jeweils in
+einer gemeinsamen Dreifachansicht mit nur Label 0, nur Label 1 und beiden Labels zusammengeführt.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Für die globale Feature-Korrelationsmatrix die Off-Diagonal-Minima und -Maxima als
+        Farbgrenzen verwendet; die Diagonale bleibt maskiert.
+  \item Für die label-konditionierten Matrizen eine gemeinsame Skala für True/False und eine
+        separate beobachtete Skala für die Differenzmatrix verwendet.
+  \item Die standardisierten Gruppenmittelwerte ebenfalls mit empirischem Minimum und Maximum
+        skaliert.
+  \item Je eine 3-Panel-Grafik für PCA und t-SNE mit identischen Achsen erstellt: nur
+        \texttt{target=0}, nur \texttt{target=1}, beide gemeinsam.
+  \item Die Top-Rangliste der label-bedingten Korrelationsänderungen um die Einzelwerte
+        \texttt{corr\_false} und \texttt{corr\_true} ergänzt; zusätzlich werden Differenz und
+        absolute Differenz ausgegeben und geplottet.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Das stärkste Korrelationsänderungspaar
+\texttt{var\_62}/\texttt{var\_173} weist innerhalb \texttt{target=False} $r=0,003212$ und
+innerhalb \texttt{target=True} $r=-0,028243$ auf. Die Differenz beträgt $-0,031455$. Damit ist
+der direkte Vergleich möglich; die absolute Änderung bleibt dennoch klein. Die neuen PCA-/t-SNE-
+Dreifachansichten machen sichtbar, ob eine scheinbare Labeltrennung nur durch die gemeinsame
+Darstellung oder tatsächlich durch räumlich getrennte Punktwolken entsteht.}
+\field{Entscheidung und Begründung}{Eine gemeinsame Farbskala ist für True/False notwendig, wenn
+die beiden label-konditionierten Matrizen direkt verglichen werden sollen. Die Differenzmatrix
+erhält eine eigene Skala, weil ihre Werte deutlich kleiner sind. Für PCA und t-SNE wurden gleiche
+Achsenbereiche pro Methode beibehalten; dadurch wird der Vergleich nicht durch automatische
+Achsenanpassung verfälscht.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Die feste Skala $[-1,1]$ wurde für die Visualisierung
+verworfen, weil die tatsächlich beobachteten Korrelationen wesentlich kleiner sind und dadurch
+kaum Kontrast zeigen. Die empirische Skala verbessert die Lesbarkeit, ist aber bei Vergleichen
+zwischen unterschiedlichen Matrizen nur zusammen mit der dokumentierten gemeinsamen Skala
+interpretierbar.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; die Änderungen betreffen
+Skalierung, Maskierung und Anordnung der bereits berechneten Ergebnisse.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die nun besser lesbaren Unterschiede mit Effektgrößen, Verteilungen und
+statistischer Absicherung zusammenführen.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
