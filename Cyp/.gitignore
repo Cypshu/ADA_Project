@@ -1,1 +1,23 @@
+# Nur die Portfolio-Quellen, die README-Datei, Assets und die finale
+# zusammengeführte Portfolio-PDF werden versioniert.
 *
+!.gitignore
+!E_Portfolio/
+!E_Portfolio/**/
+!E_Portfolio/*.tex
+!E_Portfolio/README.md
+!E_Portfolio/assets/
+!E_Portfolio/assets/**
+!E_Portfolio/ADA_138_Sawarzynski_Portfolio.pdf
+
+# LaTeX-Buildartefakte
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Die separate Logbuch-PDF wird lokal erzeugt, aber nicht versioniert.
+E_Portfolio/Logbuch_Santander_Cyp.pdf
