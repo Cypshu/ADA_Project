@@ -117,7 +117,7 @@ den Datensatz laden sowie technisch prüfen.}
 LaTeX-Dokument umgestellt. Ziel war ein besser kontrollierbares Layout für die spätere PDF-Abgabe.}
 \field{Arbeitsschritte}{
 \begin{itemize}
-  \item Ordner \texttt{E-Protfolio} im eigenen Projektordner angelegt.
+  \item Ordner \texttt{E\_Portfolio} im eigenen Projektordner angelegt.
   \item Hauptdatei \texttt{ADA\_138\_Sawarzynski\_Portfolio.tex} erstellt.
   \item Titel, Projektüberblick, Logbuch-Platzhalter, Zusammenfassung, Gruppenreflexion,
         Quellen und Abschluss-Checkliste strukturiert.
@@ -147,6 +147,41 @@ Zielvariable, fehlende Werte, Klassenverteilung und erste Verteilungen systemati
 \field{Zeitaufwand}{\placeholder{Minuten/Stunden.}}
 \field{Nächster Schritt}{\placeholder{Konkreter nächster Arbeitsschritt.}}
 
+\logsection{06.08.2026}{Datensatz geladen und technische EDA begonnen}
+\field{Zusammenfassung}{Der Santander-Datensatz wurde über OpenML (Datensatz-ID 45566) geladen und
+als lokale CSV-Datei für die weitere Analyse im Ordner \texttt{data} abgelegt. Parallel wurde das
+Notebook \texttt{EDA/01\_Datensatz\_Einfuehrung.ipynb} erstellt und vollständig ausgeführt.}
+\field{Arbeitsschritte}{
+\begin{itemize}
+  \item Datensatz mit \texttt{sklearn.datasets.fetch\_openml(data\_id=45566, as\_frame=True)} bezogen.
+  \item Die Rohdaten unverändert als \texttt{data/santander\_customer\_transaction\_prediction.csv} gespeichert.
+  \item Eine Daten-README mit Quelle, OpenML-ID, Downloadmethode und Download-Datum ergänzt.
+  \item Das EDA-Notebook mit Ladepfad, Form, Speicherbedarf, Spaltennamen, Datentypen,
+        fehlenden Werten und Zielklassenverteilung ausgeführt.
+\end{itemize}}
+\field{Ergebnis/Erkenntnis}{Der Datensatz enthält 200.000 Zeilen und 201 Spalten. Davon sind 200
+Spalten numerische Merkmale vom Typ \texttt{float64}; die Zielvariable \texttt{target} ist boolesch.
+Es wurden insgesamt 0 fehlende Zellen, 0 Spalten mit fehlenden Werten und 0 Zeilen mit fehlenden
+Werten festgestellt. Die Zielvariable umfasst 179.902 negative (89,951\,\%) und 20.098 positive
+(10,049\,\%) Fälle. Der eingelesene DataFrame benötigt tiefen Speicherbedarf von rund 305,37 MiB;
+die CSV-Datei ist rund 292,06 MiB groß (306.200.605 Bytes). Die Merkmalsnamen sind anonymisiert
+und reichen von \texttt{var\_0} bis \texttt{var\_199}; die letzte Spalte ist \texttt{target}.}
+\field{Entscheidung und Begründung}{Die Rohdaten werden wegen ihrer Größe nicht versioniert,
+sondern über die dokumentierte OpenML-ID reproduzierbar beschafft. Im Notebook wird zunächst nur
+geladen und beschrieben; Transformationen werden erst nach dieser technischen Bestandsaufnahme
+und nachvollziehbar in weiteren EDA-Schritten vorgenommen.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Ein direkter Download einer nicht dokumentierten
+externen Datei wurde nicht verwendet. Stattdessen wurde OpenML als reproduzierbare Quelle gewählt.
+Die große CSV-Datei ist für Git ungeeignet und bleibt deshalb lokal. Die Merkmalsnamen enthalten
+keine fachliche Semantik; ihre Bedeutung muss über die Aufgabenbeschreibung und die statistische
+EDA erschlossen werden.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die technische
+Datensatzprüfung wurde als erster EDA-Schritt vor Visualisierungen und Modellierung durchgeführt.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Duplikate, konstante bzw. nahezu konstante Merkmale, Verteilungen,
+Ausreißer und Zusammenhänge mit der unausgeglichenen Zielvariable untersuchen.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
@@ -156,10 +191,10 @@ Entscheidungen nur im Fließtext verborgen bleiben.
 \toprule
 \textbf{Bereich} & \textbf{Aktueller Stand} & \textbf{Begründung/Beleg} \\
 \midrule
-Datenzugang & \placeholder{offen} & \placeholder{Quelle, Version, Zugriffsdatum} \\
-Datentypen & \placeholder{offen} & \placeholder{Speicherbedarf und geeignete Wahl} \\
-Fehlende Werte & \placeholder{offen} & \placeholder{EDA-Befund und Umgang damit} \\
-Zielvariable & \placeholder{offen} & \placeholder{Kodierung und Klassenverteilung} \\
+Datenzugang & OpenML ID 45566 & Lokale CSV, geladen am 06.08.2026; Quelle und Download sind in \texttt{data/README.md} dokumentiert. \\
+Datentypen & 200\,$\times$\,\texttt{float64}, 1\,$\times$\,\texttt{bool} & DataFrame-Speicherbedarf rund 305,37 MiB; technische Bestandsaufnahme im EDA-Notebook. \\
+Fehlende Werte & Keine festgestellt & 0 fehlende Zellen, 0 betroffene Spalten und 0 betroffene Zeilen; keine Imputation erforderlich. \\
+Zielvariable & \texttt{target}, boolesch & 179.902 False (89,951\,\%) und 20.098 True (10,049\,\%); Klassenungleichgewicht bei Metrik und Split beachten. \\
 Train-Test-Aufteilung & \placeholder{offen} & \placeholder{Zeitpunkt und Begründung} \\
 Metrik(en) & \placeholder{offen} & \placeholder{Warum passend für die Aufgabe?} \\
 Modelle & \placeholder{offen} & \placeholder{Vergleich und Auswahl} \\

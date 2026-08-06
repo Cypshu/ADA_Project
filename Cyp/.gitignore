@@ -21,3 +21,13 @@
 
 # Die separate Logbuch-PDF wird lokal erzeugt, aber nicht versioniert.
 E_Portfolio/Logbuch_Santander_Cyp.pdf
+
+# EDA-Quellen und Rohdaten
+!data/
+data/*
+!data/README.md
+!EDA/
+!EDA/**/
+!EDA/*.ipynb
+!EDA/assets/
+!EDA/assets/**
