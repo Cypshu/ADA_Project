@@ -1,0 +1,30 @@
+﻿# Santander-Datensatz bleibt nur lokal
+/Ang/dataset
+
+# Jupyter-Zwischendateien
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+.virtual_documents/
+**/.virtual_documents/
+.jupyter/
+**/.jupyter/
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/
+
+# Zugangsdaten
+.env
+kaggle.json
+
+# Betriebssystem
+Thumbs.db
+.DS_Store
