@@ -1,0 +1,310 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PAKETE & SETUP ---
+\usepackage[ngerman]{babel}
+\usepackage[margin=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{framed}
+\usepackage{hyperref}
+\usepackage{lipsum} % Für Platzhalter-Text
+
+% --- FARBDEFINITIONEN ---
+\definecolor{primary}{RGB}{20, 50, 90}       % Dunkelblau
+\definecolor{secondary}{RGB}{70, 110, 150}   % Muted Blau
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    citecolor=primary,
+    urlcolor=secondary
+}
+
+% --- MANUELLE PLATZHALTER (HIER IHRE DATEN EINTRAGEN) ---
+\newcommand{\thethema}{Santander Customer Transaction Prediction}
+\newcommand{\theautor}{Maria Musterfrau}
+\newcommand{\thematrikelnr}{1234567}
+\newcommand{\thestudiengang}{Data Science \& Analytics}
+\newcommand{\themodul}{Advanced Data Analytics}
+\newcommand{\thedozent}{Dr. Jan-Matthis Waack}
+\newcommand{\thesemester}{SoSe 2026}
+\newcommand{\theabgabedatum}{1. September 2026}
+\newcommand{\thegruppennummer}{138}
+\newcommand{\thesprecherin}{Maria Musterfrau (Sprecherin)}
+\newcommand{\themitglieder}{Maria Musterfrau, Max Mustermann, Erika Mustermann}
+
+% Schalter: Ist dieses Portfolio von der Sprecherin?
+\newif\ifsprecherin
+\sprecherintrue % Auf \sprecherinfalse setzen, falls Sie NICHT Sprecherin sind!
+
+% --- KOPF- UND FUSSZEILEN ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray} e-Portfolio | ADA}
+\fancyhead[R]{\small\color{gray} Gruppe \thegruppennummer}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- SEKTIONSFORMATIERUNG ---
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primary}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{secondary}}{\thesubsection}{1em}{}
+
+% ==============================================================================
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% POS 1: TITELSEITE (DECKBLATT) - Max. 1 Seite
+% ------------------------------------------------------------------------------
+\begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \vspace*{1cm}
+    
+    {\Large\scshape\color{secondary} e-Portfolio Ausarbeitung}\\[0.5cm]
+    {\huge\bfseries\color{primary} \thethema}\\[1.5cm]
+    
+    \rule{\linewidth}{1pt}\\[1cm]
+    
+    \begin{minipage}{0.48\textwidth}
+        \begin{flushleft} \large
+            \textbf{Autor/in:}\\
+            \theautor\\
+            Matrikelnr.: \thematrikelnr\\
+            \thestudiengang\\[0.5cm]
+            
+            \textbf{Gruppe:}\\
+            Gruppe \thegruppennummer\\[0.2cm]
+            \textbf{Sprecherin:}\\
+            \thesprecherin
+        \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.48\textwidth}
+        \begin{flushright} \large
+            \textbf{Veranstaltung:}\\
+            \themodul\\[0.3cm]
+            \textbf{Dozent:}\\
+            \thedozent\\[0.3cm]
+            \textbf{Semester:}\\
+            \thesemester\\[0.3cm]
+            \textbf{Abgabedatum:}\\
+            \theabgabedatum
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    
+{\large
+        \textbf{Gruppenmitglieder:}\\[0.2cm]
+        \themitglieder
+    }
+    
+    \vfill
+    {\small Modulverantwortlicher: Dr. Jan-Matthis Waack}
+\end{titlepage}
+
+\newpage
+\pagenumbering{arabic}
+
+% ------------------------------------------------------------------------------
+% INHALTS- UND BESTANDTEILÜBERSICHT
+% ------------------------------------------------------------------------------
+\section*{Inhalts- und Bestandteilübersicht}
+\addcontentsline{toc}{section}{Inhalts- und Bestandteilübersicht}
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{c X l r}
+        \toprule
+        \textbf{Pos.} & \textbf{Bestandteil} & \textbf{Enthalten im e-Portfolio von} & \textbf{Empf. Umfang} \\
+        \midrule
+        1 & Titel & allen Gruppenmitgliedern & max. 1 Seite \\
+        2 & Logbuch & allen Gruppenmitgliedern & --- \\
+        3 & Zusammenfassung des Logbuchs & allen Gruppenmitgliedern & max. 4 Seiten \\
+        4 & Einschätzung der Gruppenmitglieder & allen Gruppenmitgliedern & max. 1 Seite \\
+        5 & Ergebnisse der Gruppe & Sprecherin der Gruppe & max. 3 Seiten \\
+        6 & Protokoll der Gruppentreffen & Sprecherin der Gruppe & ca. 1--2 Seiten \\
+        7 & Quellen und Hilfsmittel & allen Gruppenmitgliedern & ca. 1 Seite \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\vspace{0.5cm}
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------------------
+% POS 3: ZUSAMMENFASSUNG DES LOGBUCHS - Max. 4 Seiten
+% ------------------------------------------------------------------------------
+\section{Zusammenfassung des Logbuchs (Seite 1 von 4)}
+\label{sec:zusammenfassung}
+
+\textit{Hinweis: Ausformulierte Darstellung des Arbeits- und Methodeneinsatzes auf Basis des individuellen Logbuchs.}
+
+\subsection{Teil A: Grundlagen und Arbeitsprozess}
+\lipsum[1-3]
+
+\newpage
+\subsection*{Zusammenfassung des Logbuchs (Seite 2 von 4)}
+\lipsum[4-6]
+
+\newpage
+\subsection{Teil B: Reflexion und Einordnung (Seite 3 von 4)}
+\lipsum[7-8]
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ergebnisse des Modellvergleichs}
+    \label{tab:ergebnisse}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Modell} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
+        \midrule
+        Baseline & 0.75 & 0.70 & 0.68 & 0.69 \\
+        Random Forest & 0.86 & 0.83 & 0.81 & 0.82 \\
+        XGBoost & 0.90 & 0.88 & 0.87 & 0.87 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\newpage
+\subsection{Teil C: Abbildungen und Tabellen (Seite 4 von 4)}
+\lipsum[9-11]
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% POS 4: EINSCHÄTZUNG DER GRUPPENMITGLIEDER - Max. 1 Seite
+% ------------------------------------------------------------------------------
+\section{Einschätzung der Gruppenmitglieder (Max. 1 Seite)}
+\label{sec:einschaetzung}
+
+\textit{Hinweis: Vertrauliche, sachliche Einschätzung der Zusammenarbeit. Pro Gruppenmitglied mindestens 1 Stärke und 1 Schwäche benennen.}
+
+\subsection*{Mitglied 1: Max Mustermann}
+\begin{itemize}
+    \item \textbf{Stärke:} Äußerst strukturiert bei der Erstellung der Daten-Pipelines.
+    \item \textbf{Schwäche:} Kommunizierte Zwischenstände in den Meetings manchmal sehr kurzfristig.
+\end{itemize}
+
+\subsection*{Mitglied 2: Erika Mustermann}
+\begin{itemize}
+    \item \textbf{Stärke:} Sehr gründlich bei der Visualisierung der explorativen Datenanalyse.
+    \item \textbf{Schwäche:} Neigte dazu, sich in Einzeldetails zu vertiefen.
+\end{itemize}
+
+\vfill
+\textit{[Platzhalter für weitere Anmerkungen zur Teamarbeit]}
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% POS 5: ERGEBNISSE DER GRUPPE - Max. 3 Seiten (Nur Sprecherin)
+% ------------------------------------------------------------------------------
+\ifsprecherin
+\section{Ergebnisse der Gruppe (Seite 1 von 3)}
+\label{sec:gruppenergebnisse}
+
+\textit{(Dieser Abschnitt ist nur im e-Portfolio der Sprecherin enthalten.)}
+
+\subsection{Synthese der Ergebnisse}
+\lipsum[12-14]
+
+\newpage
+\subsection*{Ergebnisse der Gruppe (Seite 2 von 3)}
+\lipsum[15-17]
+
+\newpage
+\subsection{Diskussion \& Gesamterkenntnis (Seite 3 von 3)}
+\lipsum[18-20]
+
+\newpage
+\fi
+
+% ------------------------------------------------------------------------------
+% POS 6: PROTOKOLL DER GRUPPENTREFFEN - Ca. 1-2 Seiten (Nur Sprecherin)
+% ------------------------------------------------------------------------------
+\ifsprecherin
+\section{Protokoll der Gruppentreffen (Seite 1 von 2)}
+\label{sec:protokoll}
+
+\textit{(Dieser Abschnitt ist nur im e-Portfolio der Sprecherin enthalten.)}
+
+\subsection*{Gruppentreffen 1}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Datum:} 10. Mai 2026 | \textbf{Teilnehmende:} Alle
+    \item \textbf{Besprochene Inhalte:} Wahl der Sprecherin, Verteilung der Vorbereitungsschritte.
+    \item \textbf{Vereinbarte Schritte:} Vorbereitung der EDA und Aufsetzen der Ordnerstruktur.
+\end{itemize}
+
+\subsection*{Gruppentreffen 2}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Datum:} 15. Juni 2026 | \textbf{Teilnehmende:} Alle
+    \item \textbf{Besprochene Inhalte:} Evaluation der ersten Modellvarianten.
+\end{itemize}
+
+\newpage
+\subsection*{Protokoll der Gruppentreffen (Seite 2 von 2)}
+\subsection*{Gruppentreffen 3}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Datum:} 20. Juli 2026 | \textbf{Teilnehmende:} Alle
+    \item \textbf{Besprochene Inhalte:} Finale Vorbereitung des e-Portfolios und Zusammenführung der Ergebnisse.
+\end{itemize}
+\lipsum[21-22]
+
+\newpage
+\fi
+
+% ------------------------------------------------------------------------------
+% POS 7: QUELLEN UND HILFSMITTEL - Ca. 1 Seite
+% ------------------------------------------------------------------------------
+\section{Quellen und Hilfsmittel (Ca. 1 Seite)}
+\label{sec:quellen}
+
+\textit{Hinweis: Alle verwendeten Quellen, Bibliotheken und KI-Tools angeben.}
+
+\subsection{Literatur- und Webquellen}
+\begin{enumerate}[label={[\arabic*]}]
+    \item Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. \textit{JMLR}, 12, 2825-2830.
+    \item XGBoost Documentation (2026). \url{https://xgboost.readthedocs.io/} (Zugriff: 01.08.2026).
+\end{enumerate}
+
+\subsection{Einsatz Generativer KI}
+\begin{itemize}
+    \item \textbf{Verwendetes Tool:} ChatGPT / Claude / Gemini
+    \item \textbf{Einsatzbereich:} Unterstützung bei der Erstellung des LaTeX-Layouts und Überprüfung auf Tippfehler.
+    \item \textbf{Beispiel-Prompts:} \texttt{"Erstelle eine übersichtliche LaTeX Table für einen Modellvergleich."}
+\end{itemize}
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% POS 2: LOGBUCH (ANHANG) - Zählt NICHT zum Seitenumfang!
+% ------------------------------------------------------------------------------
+\appendix
+\section{Anhang: Individuelles Logbuch}
+\label{sec:logbuch}
+
+\textit{Das Logbuch wird als Anhang beigefügt und zählt nicht zum offiziellen Seitenumfang, wird aber als eigener Bestandteil bewertet. Es belegt den Workload ($\approx 100$ Stunden).}
+
+\subsection*{Logbucheintrag 1}
+\label{log:eintrag1}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Datum:} 05. Mai 2026 | \textbf{Dauer:} 4 Std.
+    \item \textbf{Titel:} Einrichtung der Umgebung \& Erstsichtung
+    \item \textbf{Beschreibung:} Aufsetzen des Git-Repositories und Vorbereitung der Datenstruktur.
+\end{itemize}
+
+\end{document}
