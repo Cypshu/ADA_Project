@@ -477,6 +477,51 @@ gespeichert.}
 ob die fehlende 2D-Trennung durch die Projektion oder durch tatsächlich geringe Labelinformation
 verursacht wird.}
 
+\logsection{14.08.2026}{Ausgeglichene Labelgruppen und methodischer EDA-Ausblick}
+\field{Zusammenfassung}{Die label-konditionierte Korrelationsanalyse wurde zusätzlich mit einem
+reproduzierbaren Verhältnis von True:False = 1:1 durchgeführt. Dafür wurden alle 20.098 True-Zeilen
+beibehalten und mit \texttt{random\_state=42} ohne Zurücklegen genau 20.098 False-Zeilen gezogen.
+Die Zielvariable blieb aus allen Korrelationsmatrizen ausgeschlossen; die Diagonale wurde weiterhin
+maskiert.}
+\field{Durchgeführte Analysen}{Für die balancierte Stichprobe wurden die False-, True- und
+Differenz-Korrelationsmatrix mit empirischen Skalen visualisiert. Zusätzlich wurden die
+Korrelationsdifferenzen und die absoluten Korrelations-Zeilensummen mit der unausgeglichenen
+Baseline verglichen. Die Baseline-Grafiken wurden nicht überschrieben; neue Abbildungen liegen unter
+\texttt{EDA/assets/}.}
+\field{Ergebnis/Erkenntnis}{Die 1:1-Auswertung ermöglicht einen direkteren Gruppenvergleich, ist als
+Undersampling jedoch selbst stichprobenabhängig. Unterschiede zwischen Baseline und 1:1-Analyse
+dürfen deshalb nicht ohne Stabilitätsprüfung als echte Populationseffekte interpretiert werden. Für
+die nächsten Schritte sind mehrere Seeds und Bootstrap-Konfidenzintervalle vorgesehen.}
+\field{Zusätzliche Violinplots}{Ergänzend zu den zehn bestehenden repräsentativen Violinplots wurden
+fünf Features dynamisch über \texttt{abs(cohens\_d).nsmallest(5)} ausgewählt. Jeder Plot zeigt die
+Verteilungen von False und True, Median und Quartile sowie Feature, Cohen's d und Gruppenmittelwerte.
+Die Auswahl und Grafik werden separat gespeichert.}
+\field{PCA/t-SNE-Dokumentation}{Die Notebooktexte stellen nun ausdrücklich klar, dass die Eingabefeatures
+Min-Max-normalisiert im Intervall [0,1] liegen und \texttt{target} nicht als Feature verwendet wird.
+PCA wird als lineare, varianzmaximierende Projektion beschrieben; t-SNE als nichtlineare, lokale
+Nachbarschaftsprojektion mit 5.000er Stichprobe und parameter-/seedabhängigem Ergebnis. Überlappung
+in zwei Dimensionen beweist keinen Informationsverlust, und eine sichtbare Trennung wäre kein Beweis
+für robuste Modellierbarkeit.}
+\field{Ausblick}{Als nächste EDA-Schritte wurden Stabilitätsanalysen, Bootstrap-Intervalle,
+Multiple-Testing-Korrektur, Signifikanztests und Effektgrößen, Mutual Information, Ausreißer und
+Heavy Tails, Redundanz- und Varianzanalysen, Vergleiche verschiedener Skalierungen, PCA-Scree-Plot,
+Ranglistenstabilität sowie anschließend ein überwachtes Baseline-Modell mit ROC-AUC, PR-AUC,
+Balanced Accuracy, Recall, Precision und F1 dokumentiert. Besonders relevant bleiben die starke
+Klassenimbalance, anonymisierte kontinuierliche Features, negative Rohwerte, geringe 2D-PCA-Varianz
+und schwache label-bedingte Korrelationsänderungen.}
+\field{Entscheidung und Begründung}{Das 1:1-Verhältnis wurde durch False-Undersampling umgesetzt, weil
+alle seltenen True-Beobachtungen erhalten bleiben und der Vergleich dadurch nicht von der großen
+False-Gruppe dominiert wird. Die ursprüngliche unausgeglichene Analyse bleibt als Baseline erhalten.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Eine einzelne balancierte Stichprobe reicht nicht aus, um
+die Stabilität der Korrelationen zu garantieren. Außerdem bleiben PCA und t-SNE bewusst explorativ;
+ihre 2D-Darstellungen werden nicht als endgültiger Nachweis für oder gegen Modellierbarkeit gewertet.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die neuen Berechnungen,
+Grafiken und Erläuterungen wurden zusätzlich zu den vorhandenen Baseline-Analysen ergänzt.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Stabilität der 1:1-Ergebnisse über mehrere Seeds und Bootstrap-Stichproben
+prüfen und danach einen überwachten Baseline-Klassifikator mit Imbalance-Metriken trainieren.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
