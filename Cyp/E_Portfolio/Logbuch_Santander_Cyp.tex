@@ -522,6 +522,19 @@ Grafiken und Erläuterungen wurden zusätzlich zu den vorhandenen Baseline-Analy
 \field{Nächster Schritt}{Stabilität der 1:1-Ergebnisse über mehrere Seeds und Bootstrap-Stichproben
 prüfen und danach einen überwachten Baseline-Klassifikator mit Imbalance-Metriken trainieren.}
 
+\logsection{15.08.2026}{Vollständige EDA-Erweiterung und Schlussfolgerung}
+\field{Zusammenfassung}{Die EDA wurde um Stabilitäts-, Inferenz-, Redundanz- und Modellierungsanalysen erweitert. Abschnitt 13 wurde korrigiert, sodass PCA, t-SNE und Clustering nun konsistent auf der Min-Max-normalisierten Matrix arbeiten. Die 15 Violinplots aus den Abschnitten 15.3 und 18 wurden zusätzlich in einer gemeinsamen 3x5-Abbildung zusammengeführt.}
+\field{Durchgeführte Analysen}{Für fünf 1:1-Stichproben mit den Seeds 42 bis 46 wurden Cohen's-d-Ranglisten verglichen. Zusätzlich wurden Bootstrap-Intervalle mit 500 Wiederholungen und 5.000 Beobachtungen je Gruppe, Welch-t-Tests mit Benjamini-Hochberg-FDR, Mutual Information auf 50.000 Zeilen, IQR-Ausreißerquoten, Varianz-/IQR-Rankings, Redundanz ab $|r|\geq 0{,}8$, Skalierungsvergleiche, ein PCA-Scree-Plot mit 20 Komponenten, Korrelationsranglistenstabilität und eine balancierte Logistic-Regression-Baseline berechnet.}
+\field{Ergebnis/Erkenntnis}{Die Cohen's-d-Ranglisten sind zwischen den fünf 1:1-Stichproben sehr stabil (Spearman ungefähr 0,996). 181 von 200 Features bleiben nach FDR-Korrektur bei $\alpha=0{,}05$ signifikant. Die ersten 20 Min-Max-PCA-Komponenten erklären zusammen nur 12,988\,\% der Varianz. Es wurden keine Featurepaare mit $|r|\geq 0{,}8$ gefunden. Die Logistic-Regression-Baseline erreicht ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863 und F1 0,4181.}
+\field{Interpretation und Grenzen}{Die hohe Signifikanzzahl ist wegen der großen Stichprobe nicht mit großen praktischen Effekten gleichzusetzen; Cohen's d und Konfidenzintervalle bleiben entscheidend. Mutual Information ergänzt die lineare Analyse, beweist aber keine Kausalität. Die 2D-Projektionen und Cluster sind explorativ; t-SNE-Achsen sind nicht global interpretierbar, und die Logistic Regression ist kein optimiertes Endmodell.}
+\field{Portfolio- und Plotquellen}{Die Schlussfolgerung verweist im Notebook auf Klassenimbalance, Gruppenmittelwerte, FDR-Tests, Mutual Information, Ausreißer/Varianz, Skalierung/PCA, Korrelationsranglisten und ROC-/PR-Kurven. Die gemeinsame Violinplot-Übersicht wird als \texttt{EDA/assets/all\_15\_violinplots\_combined.png} gespeichert; weitere Quellenplots liegen im selben Asset-Ordner.}
+\field{Entscheidung und Begründung}{Die Erweiterungen wurden vollständig umgesetzt, um zwischen stabilen Gruppenunterschieden, statistischer Signifikanz, nichtlinearen Zusammenhängen und bloßen Projektionseffekten zu unterscheiden. Die bestehende Baseline-EDA und die bisherigen Einzelgrafiken wurden erhalten.}
+\field{Verworfene Ansätze/Schwierigkeiten}{Die vollständige Notebookausführung ist wegen mehrerer t-SNE-, Korrelations- und Bootstrap-Schritte sehr rechenintensiv. Bootstrap-Intervalle wurden deshalb mit einer dokumentierten festen Stichprobengröße je Wiederholung berechnet; die Unsicherheit dieses Designs bleibt im Notebook ausgewiesen.}
+\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Bootstrap-Berechnung wurde technisch so umgesetzt, dass 500 Wiederholungen mit reproduzierbarer Stichprobengröße ohne unnötige Speicherlast ausgeführt werden können.}
+\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
+\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
+\field{Nächster Schritt}{Die Baseline mit weiteren überwachten Modellen, geeigneten Schwellenwerten und Cross-Validation unter Klassenimbalance vergleichen.}
+
 \section{Laufende Methodik- und Entscheidungsübersicht}
 
 Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige

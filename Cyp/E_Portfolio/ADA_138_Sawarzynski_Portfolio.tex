@@ -111,23 +111,70 @@ Quelldatei bleibt dabei die einzige Stelle, an der die Einträge gepflegt werden
 % 3 Zusammenfassung
 % ------------------------------------------------------------
 \section{Zusammenfassung des Logbuchs}
-\textit{Dieser Abschnitt wird am Ende aus dem Logbuch entwickelt und auf maximal vier
-Seiten einschließlich Abbildungen und Tabellen verdichtet.}
+Die explorative Datenanalyse untersucht den Santander-Datensatz als binäre
+Klassifikationsaufgabe. Das Ziel ist, Datenqualität, Labelunterschiede, Verteilungen,
+Abhängigkeiten und die Grenzen einer ersten Modellierbarkeit nachvollziehbar zu bestimmen.
 
 \subsection{Fragestellung und Ziel}
-\placeholder{Fragestellung, fachliche Motivation und Ziel der Analyse ausformulieren.}
+Untersucht wird, ob die anonymisierten Transaktionsmerkmale belastbare Unterschiede zwischen
+den Klassen \texttt{target=False} und \texttt{target=True} zeigen und welche linearen, nichtlinearen oder
+redundanten Strukturen für spätere Modelle relevant sind. Wegen der starken Klassenimbalance
+werden neben der natürlichen Verteilung reproduzierbare 1:1-Undersampling-Vergleiche verwendet.
 
 \subsection{Vorgehen und Methodeneinsatz}
-\placeholder{Datenzugang, Datentypen, EDA, Umgang mit fehlenden Werten, Train-Test-Aufteilung,
-Pipelines, Modelle, Learning Curves, Dimensionsreduktion und Hyperparameteroptimierung
-beschreiben.}
+Der Datensatz umfasst 200.000 Zeilen, 200 kontinuierliche \texttt{float64}-Features und die boolesche
+Zielvariable \texttt{target}; fehlende Zellen wurden nicht festgestellt. Die EDA umfasst deskriptive
+Statistik, Schiefe, Kurtosis, Min-Max-Normalisierung, klassenweise Verteilungen, Cohen's d,
+Welch-Tests mit Benjamini-Hochberg-FDR, Mutual Information, Ausreißer- und Varianzanalysen,
+Redundanz, Skalierungsvergleich, PCA-Scree-Plot sowie label-konditionierte Korrelationen.
+PCA, t-SNE, K-Means und DBSCAN wurden ausschließlich mit Min-Max-normalisierten Features
+ausgeführt; \texttt{target} diente nur zur Farbgebung und nachträglichen Bewertung. Die überwachte
+Referenz ist eine Logistic Regression mit \texttt{class\_weight=balanced} und stratified 80:20-Split.
 
 \subsection{Iterationen und begründete Entscheidungen}
-\placeholder{Mehrere getestete Ansätze gegenüberstellen und anhand der Evaluationsergebnisse
-begründen.}
+Die ursprüngliche unausgeglichene Korrelationsanalyse wurde durch fünf zusätzliche 1:1-Seeds
+und Bootstrap-Intervalle ergänzt. Die Cohen's-d-Ranglisten waren zwischen den 1:1-Stichproben
+sehr stabil (Spearman ungefähr 0,996), während die Korrelationsrangliste der natürlichen
+Baseline deutlich von den balancierten Ranglisten abwich. Die PCA-2D-Projektion wurde nicht
+als Beweis für fehlende Modellinformation interpretiert, weil zwei Komponenten nur einen kleinen
+Teil der globalen Varianz abbilden und t-SNE lokale Nachbarschaften verzerrt darstellen kann.
 
 \subsection{Ergebnisse}
-\placeholder{Zentrale Kennzahlen, Modellvergleich und wichtigste EDA-Befunde eintragen.}
+Nach FDR-Korrektur waren 181 von 200 Features signifikant; wegen der großen Stichprobe müssen
+diese Befunde mit Effektgrößen und Intervallen gelesen werden. Die ersten 20 normalisierten
+PCA-Komponenten erklärten zusammen nur 12,988\,\% der Varianz. Es wurden keine Featurepaare
+mit $|r|\geq0{,}8$ gefunden, was gegen starke lineare Redundanz in diesem Schwellenbereich
+spricht. Die Logistic-Regression-Baseline erreichte ROC-AUC 0,8599, PR-AUC 0,5004,
+Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863 und F1 0,4181. Die niedrige
+Precision bestätigt, dass die Imbalance bei der Schwellen- und Modellbewertung zentral bleibt.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../EDA/assets/klassenimbalance.png}
+  \caption{Starke Klassenimbalance als Grundlage für balancierte Analysen und geeignete Metriken.}
+  \label{fig:eda-class-imbalance}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../EDA/assets/all_15_violinplots_combined.png}
+  \caption{Gemeinsame Übersicht der 15 Violinplots: repräsentative Features und kleinste absolute Cohen's-d-Werte.}
+  \label{fig:eda-violinplots}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../EDA/assets/pca_scree_kumulierte_varianz.png}
+  \caption{Scree-Plot und kumulierte erklärte Varianz der Min-Max-normalisierten Features.}
+  \label{fig:eda-pca-scree}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../EDA/assets/baseline_logistic_roc_pr.png}
+  \caption{ROC- und Precision-Recall-Kurven der balancierten Logistic-Regression-Baseline.}
+  \label{fig:eda-baseline}
+\end{figure}
 
 \begin{figure}[htbp]
   \centering
@@ -139,8 +186,12 @@ begründen.}
 \end{figure}
 
 \subsection{Grenzen, Unsicherheiten und Ausblick}
-\placeholder{Datenqualität, Rechenzeit, Generalisierbarkeit, mögliche Verzerrungen und
-konkrete nächste Schritte reflektieren.}
+Die Feature-Namen sind anonymisiert, daher ist keine fachliche Kausalinterpretation möglich.
+Undersampling und Bootstrap besitzen eigene Stichprobenvarianz. Multiple Tests erzeugen auch
+bei kleinen Effekten Signifikanz; deshalb werden FDR und Cohen's d gemeinsam betrachtet.
+PCA/t-SNE und unüberwachtes Clustering sind explorative Projektionen und keine Modellbeweise.
+Als nächstes sollten weitere überwachte Modelle, Cross-Validation, Schwellenwertoptimierung,
+PR-AUC-orientierte Auswahl und robuste Imbalance-Strategien verglichen werden.
 
 % ------------------------------------------------------------
 % 4 Einschätzung
