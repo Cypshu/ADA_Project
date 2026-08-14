@@ -1,13 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 
-% ------------------------------------------------------------
-% Grundlayout
-% ------------------------------------------------------------
 \usepackage{fontspec}
 \setmainfont{Latin Modern Roman}
-% Die deutsche Sprachinstallation von Babel ist auf manchen TinyTeX-Systemen
-% nicht als Paketoption registriert; die benötigten Überschriften werden daher
-% direkt gesetzt.
 \renewcommand{\contentsname}{Inhaltsverzeichnis}
 \renewcommand{\figurename}{Abbildung}
 \renewcommand{\tablename}{Tabelle}
@@ -15,9 +9,6 @@
 \usepackage{xcolor}
 \definecolor{ADAblue}{HTML}{173F5F}
 \definecolor{ADAgold}{HTML}{D99A2B}
-\definecolor{ADAlight}{HTML}{EEF3F7}
-\usepackage{booktabs}
-\usepackage{longtable}
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{graphicx}
@@ -31,21 +22,12 @@
   pdfauthor={Cyprian Sawarzynski}
 }
 
-% ------------------------------------------------------------
-% Eigene Formatierung und Platzhalter
-% ------------------------------------------------------------
-\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
-\newcommand{\logentry}[2]{\subsubsection*{#1 – #2}}
+\newcommand{\offen}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
 \newcommand{\sourceitem}[2]{\noindent\textbf{#1}\\#2\par\medskip}
-
 \pagestyle{plain}
 
 \begin{document}
 
-% ------------------------------------------------------------
-% Titelseite
-% ------------------------------------------------------------
 \begin{titlepage}
   \centering
   \vspace*{2.2cm}
@@ -67,22 +49,19 @@
   \end{tabular}
 
   \vfill
-  {\small Individuelles E-Portfolio · Version: \today\par}
+  {\small Individuelles E-Portfolio -- Arbeitsstand: \today\par}
 \end{titlepage}
 
 \tableofcontents
 \clearpage
 
-% ------------------------------------------------------------
-% 1 Projektüberblick
-% ------------------------------------------------------------
-\section{Projektüberblick und Fragestellung}
+\section{Projektueberblick und persoenliche Fragestellung}
 
 \subsection{Datensatz und Aufgabenstellung}
-Das Projekt behandelt den Datensatz \emph{Santander Customer Transaction Prediction}. Die
-Daten stammen aus einer Kaggle Competition aus dem Jahr 2019. Auf Basis von
-Finanztransaktionsmerkmalen soll vorhergesagt werden, ob eine Person eine Transaktion
-durchführen wird.
+Das Gruppenprojekt behandelt den Datensatz \emph{Santander Customer Transaction Prediction}.
+Die Daten stammen aus einer Kaggle Competition aus dem Jahr 2019. Auf Basis von 200
+anonymisierten numerischen Merkmalen soll vorhergesagt werden, ob die Zielvariable
+\texttt{target} positiv ist.
 
 \begin{itemize}
   \item OpenML-Datensatz: ID \texttt{45566}
@@ -90,190 +69,176 @@ durchführen wird.
   \item OpenML: \url{https://www.openml.org/search?type=data\&status=active\&id=45566}
 \end{itemize}
 
-\subsection{Eigene Forschungsfrage}
-\placeholder{präzise eigene Forschungsfrage ergänzen, z.~B. welche Merkmale und Modelle
-die Transaktionsvorhersage besonders gut unterstützen.}
+\subsection{Persoenliche Fragestellung}
+Mein bisheriger Schwerpunkt ist die Frage, \textbf{welche statistisch stabilen Unterschiede
+zwischen \texttt{target=False} und \texttt{target=True} in den anonymisierten Features erkennbar
+sind und welche Konsequenzen sich daraus fuer eine robuste Modellierung unter starker
+Klassenimbalance ergeben}. Dabei wird zwischen statistischer Signifikanz, praktischer
+Effektgroesse, linearer bzw. nichtlinearer Abhaengigkeit und Darstellungseffekten von
+Dimensionsreduktionsverfahren unterschieden.
 
-\subsection{Projektziel}
-Ziel ist die Entwicklung, der Vergleich und die begründete Evaluation mehrerer
-Machine-Learning-Modelle für die binäre Klassifikationsaufgabe. Die Entscheidungen sollen
-durch die explorative Datenanalyse, geeignete Daten-Pipelines, passende Metriken und
-dokumentierte Modellvergleiche nachvollziehbar begründet werden.
+\subsection{Ziel meines Arbeitsanteils}
+Ziel meines bisherigen Arbeitsanteils ist eine nachvollziehbare EDA als Grundlage fuer die
+anschliessende Modellierung. Dazu gehoeren Datenqualitaet, Klassenverteilung,
+Featureverteilungen, Effektgroessen, Inferenz, Redundanz, Dimensionsreduktion,
+Stabilitaetspruefungen und eine erste ueberwachte Referenz. Die EDA soll begruenden, welche
+Modellierungsentscheidungen spaeter sinnvoll sind und welche Annahmen nicht durch die Daten
+gestuetzt werden.
 
-% ------------------------------------------------------------
-% 2 Logbuch
-% ------------------------------------------------------------
-\section{Individuelles Logbuch}
-Das vollständige, fortlaufend gepflegte Logbuch ist im Anhang eingebunden. Die separate
-Quelldatei bleibt dabei die einzige Stelle, an der die Einträge gepflegt werden.
+\section{Individueller Arbeitsprozess}
+Das vollstaendige, chronologisch gefuehrte Arbeitsprotokoll befindet sich im Anhang und wird in
+der separaten Datei \texttt{Logbuch\_Santander\_Cyp.tex} gepflegt. Das Logbuch dokumentiert den
+tatsaechlichen Arbeitsverlauf. Die folgenden Abschnitte sind dagegen thematisch geordnet und
+verdichten die Ergebnisse fuer eine lesbare Gesamtdarstellung.
 
-% ------------------------------------------------------------
-% 3 Zusammenfassung
-% ------------------------------------------------------------
-\section{Zusammenfassung des Logbuchs}
-Die explorative Datenanalyse untersucht den Santander-Datensatz als binäre
-Klassifikationsaufgabe. Das Ziel ist, Datenqualität, Labelunterschiede, Verteilungen,
-Abhängigkeiten und die Grenzen einer ersten Modellierbarkeit nachvollziehbar zu bestimmen.
+\section{Verdichtete Zusammenfassung der bisherigen Arbeit}
 
-\subsection{Fragestellung und Ziel}
-Untersucht wird, ob die anonymisierten Transaktionsmerkmale belastbare Unterschiede zwischen
-den Klassen \texttt{target=False} und \texttt{target=True} zeigen und welche linearen, nichtlinearen oder
-redundanten Strukturen für spätere Modelle relevant sind. Wegen der starken Klassenimbalance
-werden neben der natürlichen Verteilung reproduzierbare 1:1-Undersampling-Vergleiche verwendet.
-
-\subsection{Vorgehen und Methodeneinsatz}
-Der Datensatz umfasst 200.000 Zeilen, 200 kontinuierliche \texttt{float64}-Features und die boolesche
-Zielvariable \texttt{target}; fehlende Zellen wurden nicht festgestellt. Die EDA umfasst deskriptive
-Statistik, Schiefe, Kurtosis, Min-Max-Normalisierung, klassenweise Verteilungen, Cohen's d,
-Welch-Tests mit Benjamini-Hochberg-FDR, Mutual Information, Ausreißer- und Varianzanalysen,
-Redundanz, Skalierungsvergleich, PCA-Scree-Plot sowie label-konditionierte Korrelationen.
-PCA, t-SNE, K-Means und DBSCAN wurden ausschließlich mit Min-Max-normalisierten Features
-ausgeführt; \texttt{target} diente nur zur Farbgebung und nachträglichen Bewertung. Die überwachte
-Referenz ist eine Logistic Regression mit \texttt{class\_weight=balanced} und stratified 80:20-Split.
-
-\subsection{Iterationen und begründete Entscheidungen}
-Die ursprüngliche unausgeglichene Korrelationsanalyse wurde durch fünf zusätzliche 1:1-Seeds
-und Bootstrap-Intervalle ergänzt. Die Cohen's-d-Ranglisten waren zwischen den 1:1-Stichproben
-sehr stabil (Spearman ungefähr 0,996), während die Korrelationsrangliste der natürlichen
-Baseline deutlich von den balancierten Ranglisten abwich. Die PCA-2D-Projektion wurde nicht
-als Beweis für fehlende Modellinformation interpretiert, weil zwei Komponenten nur einen kleinen
-Teil der globalen Varianz abbilden und t-SNE lokale Nachbarschaften verzerrt darstellen kann.
-
-\subsection{Ergebnisse}
-Nach FDR-Korrektur waren 181 von 200 Features signifikant; wegen der großen Stichprobe müssen
-diese Befunde mit Effektgrößen und Intervallen gelesen werden. Die ersten 20 normalisierten
-PCA-Komponenten erklärten zusammen nur 12,988\,\% der Varianz. Es wurden keine Featurepaare
-mit $|r|\geq0{,}8$ gefunden, was gegen starke lineare Redundanz in diesem Schwellenbereich
-spricht. Die Logistic-Regression-Baseline erreichte ROC-AUC 0,8599, PR-AUC 0,5004,
-Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863 und F1 0,4181. Die niedrige
-Precision bestätigt, dass die Imbalance bei der Schwellen- und Modellbewertung zentral bleibt.
+\subsection{Datenbasis und Datenqualitaet}
+Der Datensatz umfasst 200.000 Beobachtungen, 200 kontinuierliche \texttt{float64}-Features und
+die boolesche Zielvariable \texttt{target}. Fehlende Werte wurden nicht festgestellt. Die
+Zielvariable ist stark unausgeglichen: 179.902 Beobachtungen gehoeren zur negativen Klasse
+(89,951\,\%), 20.098 zur positiven Klasse (10,049\,\%). Die Features sind anonymisiert; eine
+inhaltlich-kausale Interpretation einzelner Variablen ist daher nicht moeglich.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{../EDA/assets/klassenimbalance.png}
-  \caption{Starke Klassenimbalance als Grundlage für balancierte Analysen und geeignete Metriken.}
+  \includegraphics[width=0.82\textwidth]{../EDA/assets/klassenimbalance.png}
+  \caption{Klassenverteilung des Santander-Datensatzes. Die starke Imbalance beeinflusst Stichprobendesign, Modelltraining und die Wahl geeigneter Evaluationsmetriken.}
   \label{fig:eda-class-imbalance}
 \end{figure}
 
+\subsection{Verteilungen, Gruppenunterschiede und statistische Absicherung}
+Fuer alle Features wurden deskriptive Kennzahlen, Schiefe, Kurtosis sowie klassenweise
+Verteilungen untersucht. Zur skalenunabhaengigen Einordnung der Gruppenunterschiede wird
+Cohen's $d$ verwendet. Zusaetzlich wurden Welch-Tests durchgefuehrt und die resultierenden
+$p$-Werte mit Benjamini-Hochberg-FDR korrigiert. Nach FDR-Korrektur waren 181 von 200 Features
+bei $\alpha=0{,}05$ statistisch signifikant. Wegen der grossen Stichprobe wird dieses Ergebnis
+nicht isoliert interpretiert: Signifikanz wird gemeinsam mit Effektgroessen und
+Konfidenzintervallen betrachtet.
+
+Die Stabilitaet der Effektgroessenranglisten wurde mit fuenf reproduzierbaren 1:1-Stichproben
+(Seeds 42 bis 46) geprueft. Die Ranglisten nach Cohen's $d$ waren sehr stabil
+(Spearman ungefaehr 0,996). Damit sind die wichtigsten Gruppenunterschiede nicht lediglich ein
+Artefakt einer einzelnen balancierten Stichprobe.
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{../EDA/assets/all_15_violinplots_combined.png}
-  \caption{Gemeinsame Übersicht der 15 Violinplots: repräsentative Features und kleinste absolute Cohen's-d-Werte.}
+  \includegraphics[width=0.92\textwidth]{../EDA/assets/all_15_violinplots_combined.png}
+  \caption{Ausgewaehlte Violinplots zur Einordnung von Gruppenunterschieden. Die Visualisierung ergaenzt die numerischen Effektgroessen; sie ersetzt keine statistische Absicherung.}
   \label{fig:eda-violinplots}
 \end{figure}
 
+\subsection{Abhaengigkeiten, Redundanz und nichtlineare Information}
+Die Pearson-Korrelationen zwischen den Features sind insgesamt schwach. Es wurden keine
+Featurepaare mit $|r|\geq0{,}8$ gefunden; damit gibt es bei diesem Schwellenwert keinen Hinweis
+auf starke lineare Redundanz. Label-konditionierte Korrelationsmatrizen wurden sowohl auf der
+natuerlichen Klassenverteilung als auch auf balancierten 1:1-Stichproben untersucht. Die
+Interpretation dieser Darstellungen wurde im Verlauf nachgeschaerft, weil empirisch enge
+Farbskalen kleine numerische Unterschiede visuell stark erscheinen lassen koennen. Mutual
+Information wurde ergaenzend verwendet, um moegliche nichtlineare Feature-Label-Zusammenhaenge
+zu betrachten.
+
+\subsection{Skalierung und Dimensionsreduktion}
+Fuer vergleichende Analysen wurden die Features reproduzierbar skaliert; PCA, t-SNE, K-Means und
+DBSCAN wurden auf Min-Max-normalisierten Features durchgefuehrt. Die Zielvariable wurde nicht als
+Eingabefeature verwendet, sondern nur zur nachtraeglichen Visualisierung bzw. Bewertung.
+
+Die ersten beiden PCA-Komponenten der vollstaendigen 200-Feature-Darstellung erklaeren zusammen
+nur rund 1,44\,\% der Varianz. Auch der Scree-Plot zeigt, dass die globale Varianz breit ueber
+viele Dimensionen verteilt ist: Die ersten 20 Min-Max-PCA-Komponenten erklaeren zusammen nur
+12,988\,\%. Deshalb wird eine fehlende Trennung in zwei Dimensionen ausdruecklich nicht als
+Beweis fuer fehlende praediktive Information interpretiert. Gleiches gilt fuer t-SNE, dessen
+Darstellung lokale Nachbarschaften betont und parameter- sowie seedabhaengig ist.
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{../EDA/assets/pca_scree_kumulierte_varianz.png}
-  \caption{Scree-Plot und kumulierte erklärte Varianz der Min-Max-normalisierten Features.}
+  \includegraphics[width=0.84\textwidth]{../EDA/assets/pca_scree_kumulierte_varianz.png}
+  \caption{PCA-Scree-Plot und kumulierte erklaerte Varianz der Min-Max-normalisierten Features. Die geringe kumulierte Varianz weniger Komponenten begrenzt die Aussagekraft zweidimensionaler Projektionen.}
   \label{fig:eda-pca-scree}
 \end{figure}
 
+\subsection{Erste ueberwachte Referenz}
+Als Plausibilitaetspruefung, ob trotz schwacher zweidimensionaler Trennung modellierbare
+Information vorhanden ist, wurde eine Logistic Regression mit
+\texttt{class\_weight=balanced} und einem stratifizierten 80:20-Train-Test-Split verwendet.
+Die Baseline erreicht ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749,
+Precision 0,2863 und F1 0,4181. Damit ist klar, dass die fehlende Clustertrennung in PCA/t-SNE
+nicht mit fehlender Vorhersageinformation gleichgesetzt werden darf. Gleichzeitig zeigt die
+niedrige Precision, dass die Klassenimbalance fuer Schwellenwahl und Modellbewertung zentral
+bleibt.
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{../EDA/assets/baseline_logistic_roc_pr.png}
-  \caption{ROC- und Precision-Recall-Kurven der balancierten Logistic-Regression-Baseline.}
+  \includegraphics[width=0.84\textwidth]{../EDA/assets/baseline_logistic_roc_pr.png}
+  \caption{ROC- und Precision-Recall-Kurven der Logistic-Regression-Baseline. Fuer die unausgeglichene Zielvariable ist insbesondere die Precision-Recall-Perspektive relevant.}
   \label{fig:eda-baseline}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \fbox{\parbox[c][4cm][c]{0.82\textwidth}{\centering
-    \textcolor{ADAgold}{\textbf{PLACEHOLDER: Abbildung einfügen}}\\
-    z.~B. Modellvergleich, ROC-/PR-Kurve oder EDA-Ergebnis}}
-  \caption{\placeholder{aussagekräftige Bildunterschrift}}
-  \label{fig:placeholder}
-\end{figure}
+\subsection{Wichtigste methodische Entscheidungen und Korrekturen}
+Im Verlauf der EDA wurden mehrere Darstellungen und Interpretationen ueberarbeitet. Wesentliche
+Korrekturen waren die klare Trennung von Features und Label, die Maskierung der
+Korrelationsdiagonalen, der direkte Vergleich identischer Farb- und Achsenskalierungen, die
+Ergaenzung balancierter Stichproben und mehrerer Seeds sowie die explizite Einschraenkung der
+Aussagekraft von PCA, t-SNE und Clustering. Ein korrelationsbasiertes 14-Feature-Experiment wurde
+als explorativer Versuch dokumentiert, aber nicht als finale Featureauswahl uebernommen, weil es
+keine belastbare Labeltrennung erzeugte.
 
-\subsection{Grenzen, Unsicherheiten und Ausblick}
-Die Feature-Namen sind anonymisiert, daher ist keine fachliche Kausalinterpretation möglich.
-Undersampling und Bootstrap besitzen eigene Stichprobenvarianz. Multiple Tests erzeugen auch
-bei kleinen Effekten Signifikanz; deshalb werden FDR und Cohen's d gemeinsam betrachtet.
-PCA/t-SNE und unüberwachtes Clustering sind explorative Projektionen und keine Modellbeweise.
-Als nächstes sollten weitere überwachte Modelle, Cross-Validation, Schwellenwertoptimierung,
-PR-AUC-orientierte Auswahl und robuste Imbalance-Strategien verglichen werden.
+\subsection{Grenzen und naechster Schritt}
+Die Feature-Namen sind anonymisiert und erlauben keine fachliche Kausalinterpretation.
+Undersampling, Bootstrap und Mutual Information besitzen eigene Stichproben- bzw.
+Schaetzunsicherheiten. Multiple Tests koennen bei grossen Stichproben auch sehr kleine Effekte
+als signifikant markieren. Dimensionsreduktions- und Clusterverfahren bleiben explorativ.
 
-% ------------------------------------------------------------
-% 4 Einschätzung
-% ------------------------------------------------------------
-\section{Einschätzung der Gruppenmitglieder}
-Dieser vertrauliche Abschnitt reflektiert die Zusammenarbeit. Für jede Person werden
-mindestens eine Stärke und ein Entwicklungsfeld mit kurzer Begründung ergänzt.
+Der naechste fachliche Schritt ist deshalb kein weiterer Versuch, die EDA optisch zu optimieren,
+sondern ein sauberer Modellvergleich mit Cross-Validation, geeigneten Imbalance-Strategien,
+PR-AUC-orientierter Bewertung, Schwellenwertanalyse und nachvollziehbarer Hyperparameterwahl.
+
+\section{Einschaetzung der Gruppenmitglieder}
+Dieser vertrauliche Abschnitt soll auf realen Beobachtungen aus der Zusammenarbeit beruhen.
+Die Bewertung wird erst ergaenzt, wenn ausreichend belastbare eigene Beobachtungen vorliegen;
+automatische oder erfundene Einschaetzungen waeren hier nicht sachgerecht.
 
 \subsection*{Tim Hebestreit}
-\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
-\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
+\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
 
 \subsection*{Angeline Usanayo}
-\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
-\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
+\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
 
 \subsection*{Trong Cao}
-\textbf{Stärke:} \placeholder{konkrete Stärke und Begründung}\\
-\textbf{Entwicklungsfeld:} \placeholder{konkretes Entwicklungsfeld und Begründung}
+\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
+\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
 
-% ------------------------------------------------------------
-% 5-6 Gruppenabschnitte
-% ------------------------------------------------------------
-\section{Ergebnisse der Gruppe}
-\textbf{Hinweis:} Dieser Abschnitt ist laut Aufgabenstellung nur im Portfolio der
-Sprecherin enthalten. Tim Hebestreit führt als Gruppenleiter die gemeinsame Darstellung.
-
-\placeholder{Falls von Tim freigegeben, hier auf die finale Gruppenzusammenfassung und
-zentrale gemeinsame Ergebnisse verweisen.}
-
-\section{Protokoll der Gruppentreffen}
-\textbf{Hinweis:} Dieser Abschnitt ist laut Aufgabenstellung nur im Portfolio der
-Sprecherin enthalten. Eigene Bezüge zu Treffen werden zusätzlich im Logbuch dokumentiert.
-
-\placeholder{Verweis auf Tims Protokoll bzw. relevante Treffen ergänzen, sofern erforderlich.}
-
-% ------------------------------------------------------------
-% 7 Quellen und Hilfsmittel
-% ------------------------------------------------------------
 \section{Quellen und Hilfsmittel}
-Zitierstil: \placeholder{z.~B. APA 7 oder Harvard verbindlich festlegen}
+Die Quellenangaben werden vor Abgabe in einem einheitlichen Zitierstil finalisiert.
 
-\sourceitem{Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, SoSe 2026. Verwendung:
-Anforderungen und Bewertung des E-Portfolios. Zugriff: Projektunterlagen.}
-
-\sourceitem{OpenML, Datensatz ID 45566.}{\emph{Santander Customer Transaction Prediction}.
-Verwendung: Datenquelle. Zugriff: \placeholder{Zugriffsdatum ergänzen}.}
-
-\sourceitem{Kaggle.}{\emph{Santander Customer Transaction Prediction}. Verwendung:
-Wettbewerbskontext und Datensatzbeschreibung. Zugriff: \placeholder{Zugriffsdatum ergänzen}.}
-
-\sourceitem{Software.}{Python, Jupyter, pandas, NumPy, scikit-learn, matplotlib und seaborn.
-Verwendete Versionen: \placeholder{Versionen eintragen}.}
-
-\sourceitem{Generative KI.}{Tool, Zweck und relevante Prompts:
-\placeholder{transparent dokumentieren}. Datum: \placeholder{Datum}.}
+\sourceitem{Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, Sommersemester 2026. Verwendung: Anforderungen und Bewertung des E-Portfolios.}
+\sourceitem{OpenML, Datensatz ID 45566.}{\emph{Santander Customer Transaction Prediction}. Verwendung: reproduzierbare Datenquelle; Abruf des Datensatzes im Projekt am 06.08.2026 dokumentiert.}
+\sourceitem{Kaggle.}{\emph{Santander Customer Transaction Prediction}. Verwendung: Wettbewerbskontext und Aufgabenbeschreibung. \offen{finales Zugriffsdatum}}
+\sourceitem{Software.}{Python, Jupyter, pandas, NumPy, SciPy, scikit-learn, matplotlib und seaborn. \offen{verwendete Versionen aus der Projektumgebung ergaenzen}}
+\sourceitem{Generative KI / Agentenunterstuetzung.}{Im Arbeitsprozess wurde Agentenunterstuetzung fuer EDA- und Dokumentationsarbeiten verwendet. Ergebnisse wurden als Arbeitsstaende uebernommen und werden fachlich sowie strukturell nachgeprueft. \offen{Tool/Version, konkrete Einsatzzeitraeume und relevante Prompts vollstaendig dokumentieren}}
 
 \subsection{KI- und Tool-Transparenz}
-Für jeden relevanten Einsatz werden Datum, Tool/Version, Zweck, Prompt bzw. Kurzbeschreibung,
-Ergebnis und die eigene Prüfung des Ergebnisses dokumentiert.
+Fuer die finale Abgabe werden relevante KI-Einsaetze mit Datum, Tool/Version, Zweck, Prompt bzw.
+Kurzbeschreibung, erzeugtem Ergebnis und eigener Pruefung dokumentiert. Insbesondere muessen
+nachtraegliche Korrekturen kenntlich bleiben, wenn ein Agent eine methodische oder strukturelle
+Entscheidung zunaechst unzureichend umgesetzt hat.
 
-% ------------------------------------------------------------
-% Anhang: Checkliste
-% ------------------------------------------------------------
 \appendix
 \section{Individuelles Logbuch}
 \def\PortfolioMain{}
 \input{Logbuch_Santander_Cyp.tex}
 
 \clearpage
-\section{Abschluss-Checkliste}
+\section{Offene Punkte vor der Abgabe}
 \begin{itemize}
-  \item Name, Gruppennummer, Thema und Gruppenmitglieder ergänzt
-  \item Forschungsfrage und Ziel präzisiert
-  \item Logbuch chronologisch und zeitnah geführt
-  \item Entscheidungen, verworfene Ansätze, Schwierigkeiten und Iterationen dokumentiert
-  \item EDA-Erkenntnisse mit Modellentscheidungen verknüpft
-  \item Modelle, Metriken, Pipelines, Learning Curves und Hyperparameter beschrieben
-  \item Abbildungen/Tabellen nummeriert, beschriftet und interpretiert
-  \item Gruppenmitglieder fair und konkret eingeschätzt
-  \item Quellen, Softwareversionen und KI-Nutzung vollständig dokumentiert
-  \item PDF kompiliert und nach dem vorgegebenen Schema benannt
+  \item Reale Zeitaufwaende im Logbuch ergaenzen, soweit nachvollziehbar; keine Zeiten schaetzen, wenn keine belastbare Grundlage existiert.
+  \item Gruppentreffen und Abweichungen vom Gruppenplan anhand tatsaechlicher Ereignisse ergaenzen.
+  \item Einschaetzung der Gruppenmitglieder aus eigener Beobachtung vervollstaendigen.
+  \item Softwareversionen, Zitierstil, Zugriffsdatum und KI-/Prompt-Dokumentation finalisieren.
+  \item Nach Abschluss der Modellierungsphase die Zusammenfassung um Modellvergleich, Cross-Validation, Hyperparameter und finale Schlussfolgerung erweitern.
+  \item Finale PDF kompilieren und Abbildungen, Querverweise sowie Seitenumfang visuell pruefen.
 \end{itemize}
 
 \end{document}

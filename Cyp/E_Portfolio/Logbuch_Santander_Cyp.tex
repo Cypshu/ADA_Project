@@ -1,8 +1,6 @@
 \ifdefined\PortfolioMain
 \else
 \documentclass[11pt,a4paper]{article}
-
-% Eigenständiges individuelles Logbuch für das Santander-Projekt.
 \usepackage{fontspec}
 \setmainfont{Latin Modern Roman}
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
@@ -14,25 +12,16 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=ADAblue,
-  urlcolor=ADAblue,
-  pdftitle={Logbuch Santander Customer Transaction Prediction},
-  pdfauthor={Cyprian Sawarzynski}
-}
-
-\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
+\hypersetup{colorlinks=true,linkcolor=ADAblue,urlcolor=ADAblue,pdftitle={Logbuch Santander Customer Transaction Prediction},pdfauthor={Cyprian Sawarzynski}}
+\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
 \newcommand{\logsection}[2]{\subsection*{#1 -- #2}}
 \newcommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
-
-\title{\color{ADAblue}\textbf{Individuelles Logbuch}\\[0.4em]
-       \large Santander Customer Transaction Prediction}
+\title{\color{ADAblue}\textbf{Individuelles Logbuch}\\[0.4em]\large Santander Customer Transaction Prediction}
 \author{Cyprian Sawarzynski\\Gruppe 138}
 \date{Sommersemester 2026}
 \fi
 
-\providecommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PLACEHOLDER: #1]}}}
+\providecommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
 \providecommand{\logsection}[2]{\subsection*{#1 -- #2}}
 \providecommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
 
@@ -44,39 +33,17 @@
 \clearpage
 \fi
 
-\section{Zweck und Führungsregeln}
+\section{Zweck und Fuehrungsregeln}
+Dieses Logbuch dokumentiert meinen individuellen Arbeitsprozess chronologisch. Es ist bewusst
+kein nachtraeglich geglaetteter Ergebnisbericht. Fachliche Ergebnisse werden im Portfolio
+thematisch verdichtet; hier bleiben auch Korrekturen, verworfene Ansaetze und Iterationen sichtbar.
 
-Dieses Logbuch dokumentiert meinen individuellen Arbeitsprozess während des gesamten
-Bearbeitungszeitraums. Es ist kein nachträglich geglätteter Ergebnisbericht, sondern hält
-den tatsächlichen Weg zur Analyse fest. Dadurch sollen Arbeitsaufwand, eigene Entscheidungen,
-Anpassungen, Schwierigkeiten und verworfene Ansätze nachvollziehbar bleiben.
-
-Die Einträge werden chronologisch und möglichst unmittelbar nach dem jeweiligen Arbeitsschritt
-ergänzt. Jeder Eintrag enthält mindestens:
-
-\begin{itemize}
-  \item Datum des Eintrags,
-  \item einen kurzen und prägnanten Titel,
-  \item eine verständliche Zusammenfassung des Arbeitsschritts.
-\end{itemize}
-
-Zusätzlich dokumentiere ich systematisch:
-
-\begin{itemize}
-  \item konkrete Arbeitsschritte und Ergebnisse,
-  \item methodische Entscheidungen und deren Begründung,
-  \item verworfene Ansätze und Iterationen,
-  \item Schwierigkeiten, Unsicherheiten und offene Fragen,
-  \item Zeitaufwand und gegebenenfalls Bezug zu Gruppentreffen,
-  \item nächste Schritte und Abweichungen vom vereinbarten Vorgehen.
-\end{itemize}
-
-Das Logbuch bildet die Grundlage für die spätere Zusammenfassung im E-Portfolio. Abbildungen
-oder Tabellen dürfen hier auch vorläufig bzw. als Arbeitsdokumentation eingefügt werden;
-für die finale Zusammenfassung werden die relevanten Darstellungen später formal ausgearbeitet.
+Jeder neue Eintrag soll Datum, Titel, Arbeitsschritt, Ergebnis bzw. Erkenntnis, Entscheidung und
+Begruendung, Schwierigkeiten oder verworfene Ansaetze sowie den naechsten Schritt enthalten.
+Zeitaufwand und Gruppentreffen werden nur eingetragen, wenn sie tatsaechlich nachvollziehbar sind.
+Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 
 \section{Projekt- und Gruppenrahmen}
-
 \begin{tabularx}{\textwidth}{>{\bfseries}p{0.32\textwidth}X}
   Thema & Santander Customer Transaction Prediction \\
   Datensatz & OpenML ID 45566 \\
@@ -88,490 +55,147 @@ für die finale Zusammenfassung werden die relevanten Darstellungen später form
   Individueller Workload-Richtwert & ca. 100 Stunden \\
 \end{tabularx}
 
-\section{Chronologische Einträge}
+\section{Chronologische Eintraege}
 
 \logsection{06.08.2026}{Projektunterlagen und Projektauswahl}
-\field{Zusammenfassung}{Die Bewertungs- und Projektunterlagen wurden gelesen. Als Projekt aus
-den vorhandenen Aufgaben wurde Santander Customer Transaction Prediction ausgewählt.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Bewertungshinweise für das E-Portfolio gelesen.
-  \item Anforderungen an EDA und Machine Learning herausgearbeitet.
-  \item Santander-Aufgabenblatt gelesen und OpenML-Datensatz ID 45566 notiert.
-  \item Kaggle- und OpenML-Links als spätere Quellen vorgemerkt.
-\end{itemize}}
-\field{Entscheidungen und Begründung}{Die Analyse wird auf Santander fokussiert, weil die Aufgabe eine
-binäre Transaktionsvorhersage mit klarer OpenML-Referenz vorgibt. Die weitere Bearbeitung soll
-EDA-Erkenntnisse ausdrücklich mit den späteren Modellentscheidungen verbinden.}
-\field{Schwierigkeiten und offene Fragen}{Die genaue Aufgabenverteilung innerhalb der Gruppe,
-die persönliche Forschungsfrage, die Modellstrategie und der verfügbare Rechenrahmen sind noch
-zu klären.}
-\field{Abweichung vom Vorgehen}{Noch keine Abweichung vom Gruppenplan dokumentiert.}
-\field{Gruppentreffen}{\placeholder{kein Treffen / Datum und Kurzverweis ergänzen}}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Logbuch und E-Portfolio als belastbare Arbeitsgrundlage anlegen und anschließend
-den Datensatz laden sowie technisch prüfen.}
+\field{Zusammenfassung}{Bewertungs- und Projektunterlagen wurden gelesen; Santander Customer Transaction Prediction wurde als Projekt festgelegt.}
+\field{Arbeitsschritte}{Bewertungshinweise und Santander-Aufgabenblatt gelesen; OpenML-ID 45566 sowie Kaggle-/OpenML-Quellen vorgemerkt.}
+\field{Ergebnis/Erkenntnis}{Es handelt sich um eine binaere Klassifikationsaufgabe; EDA-Erkenntnisse sollen spaeter nachvollziehbar mit Modellentscheidungen verbunden werden.}
+\field{Entscheidung und Begruendung}{Fokus auf Santander entsprechend der Gruppenprojektauswahl und der klaren reproduzierbaren Datenreferenz.}
+\field{Offene Punkte}{Aufgabenverteilung, persoenliche Forschungsfrage, Modellstrategie und Rechenrahmen waren zu diesem Zeitpunkt noch zu klaeren.}
+\field{Gruppentreffen}{\placeholder{nur ergaenzen, falls fuer diesen Arbeitsschritt ein Treffen stattfand}}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{E-Portfolio und Logbuch als Arbeitsgrundlage anlegen; anschliessend Daten technisch pruefen.}
 
 \logsection{06.08.2026}{E-Portfolio auf LaTeX umgestellt}
-\field{Zusammenfassung}{Das zunächst als Notebook angelegte E-Portfolio wurde auf ein eigenständiges
-LaTeX-Dokument umgestellt. Ziel war ein besser kontrollierbares Layout für die spätere PDF-Abgabe.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Ordner \texttt{E\_Portfolio} im eigenen Projektordner angelegt.
-  \item Hauptdatei \texttt{ADA\_138\_Sawarzynski\_Portfolio.tex} erstellt.
-  \item Titel, Projektüberblick, Logbuch-Platzhalter, Zusammenfassung, Gruppenreflexion,
-        Quellen und Abschluss-Checkliste strukturiert.
-  \item Ordner \texttt{assets} für spätere Abbildungen vorbereitet.
-  \item LaTeX-Datei mit XeLaTeX kompiliert und PDF-Ausgabe geprüft.
-\end{itemize}}
-\field{Entscheidungen und Begründung}{Das Logbuch wird als separate Datei geführt, damit der
-Arbeitsprozess unabhängig vom später verdichteten Portfolio fortlaufend ergänzt werden kann.}
-\field{Schwierigkeiten und Lösungen}{Die lokale TinyTeX-Installation enthielt mehrere optionale
-Pakete nicht. Die Präambel wurde deshalb auf vorhandene Standardpakete reduziert; die Ausgabe
-kompiliert nun erfolgreich.}
-\field{Abweichung vom Vorgehen}{Das ursprünglich geplante Notebook-Format wurde zugunsten von
-LaTeX verworfen, nachdem die PDF-Gestaltung von nbconvert nicht zufriedenstellend war.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die EDA des Santander-Datensatzes beginnen und dabei Datenform, Datentypen,
-Zielvariable, fehlende Werte, Klassenverteilung und erste Verteilungen systematisch untersuchen.}
-
-\logsection{\placeholder{Datum}}{\placeholder{prägnanter Arbeitstitel}}
-\field{Zusammenfassung}{\placeholder{Kurze Zusammenfassung des konkreten Arbeitsschritts.}}
-\field{Arbeitsschritte}{\placeholder{Welche Schritte wurden tatsächlich durchgeführt?}}
-\field{Ergebnis/Erkenntnis}{\placeholder{Was kam dabei heraus? Zahlen, Tabellen oder Abbildungen verlinken.}}
-\field{Entscheidung und Begründung}{\placeholder{Welche Entscheidung wurde getroffen und warum?}}
-\field{Verworfene Ansätze/Schwierigkeiten}{\placeholder{Was hat nicht funktioniert oder wurde verworfen?}}
-\field{Abweichung vom vereinbarten Vorgehen}{\placeholder{Keine / konkrete Abweichung mit Begründung.}}
-\field{Gruppentreffen}{\placeholder{Datum, Teilnehmende und Bezug zum Treffen.}}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden.}}
-\field{Nächster Schritt}{\placeholder{Konkreter nächster Arbeitsschritt.}}
+\field{Zusammenfassung}{Das zunaechst als Notebook angelegte E-Portfolio wurde auf LaTeX umgestellt, um Layout und finale PDF-Ausgabe besser kontrollieren zu koennen.}
+\field{Arbeitsschritte}{Ordner \texttt{E\_Portfolio}, Portfolio-Hauptdatei und separates Logbuch angelegt; Grundstruktur und Asset-Ordner vorbereitet; XeLaTeX-Kompilierung geprueft.}
+\field{Entscheidung und Begruendung}{Portfolio und Logbuch bleiben getrennte Quellen: Das Logbuch bewahrt Chronologie, das Portfolio verdichtet die Ergebnisse thematisch.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Notebook-/nbconvert-Ausgabe wurde wegen unzureichender PDF-Gestaltung verworfen; TinyTeX-Praeambel musste auf verfuegbare Pakete reduziert werden.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Technische EDA beginnen.}
 
 \logsection{06.08.2026}{Datensatz geladen und technische EDA begonnen}
-\field{Zusammenfassung}{Der Santander-Datensatz wurde über OpenML (Datensatz-ID 45566) geladen und
-als lokale CSV-Datei für die weitere Analyse im Ordner \texttt{data} abgelegt. Parallel wurde das
-Notebook \texttt{EDA/01\_Datensatz\_Einfuehrung.ipynb} erstellt und vollständig ausgeführt.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Datensatz mit \texttt{sklearn.datasets.fetch\_openml(data\_id=45566, as\_frame=True)} bezogen.
-  \item Die Rohdaten unverändert als \texttt{data/santander\_customer\_transaction\_prediction.csv} gespeichert.
-  \item Eine Daten-README mit Quelle, OpenML-ID, Downloadmethode und Download-Datum ergänzt.
-  \item Das EDA-Notebook mit Ladepfad, Form, Speicherbedarf, Spaltennamen, Datentypen,
-        fehlenden Werten und Zielklassenverteilung ausgeführt.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Der Datensatz enthält 200.000 Zeilen und 201 Spalten. Davon sind 200
-Spalten numerische Merkmale vom Typ \texttt{float64}; die Zielvariable \texttt{target} ist boolesch.
-Es wurden insgesamt 0 fehlende Zellen, 0 Spalten mit fehlenden Werten und 0 Zeilen mit fehlenden
-Werten festgestellt. Die Zielvariable umfasst 179.902 negative (89,951\,\%) und 20.098 positive
-(10,049\,\%) Fälle. Der eingelesene DataFrame benötigt tiefen Speicherbedarf von rund 305,37 MiB;
-die CSV-Datei ist rund 292,06 MiB groß (306.200.605 Bytes). Die Merkmalsnamen sind anonymisiert
-und reichen von \texttt{var\_0} bis \texttt{var\_199}; die letzte Spalte ist \texttt{target}.}
-\field{Entscheidung und Begründung}{Die Rohdaten werden wegen ihrer Größe nicht versioniert,
-sondern über die dokumentierte OpenML-ID reproduzierbar beschafft. Im Notebook wird zunächst nur
-geladen und beschrieben; Transformationen werden erst nach dieser technischen Bestandsaufnahme
-und nachvollziehbar in weiteren EDA-Schritten vorgenommen.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Ein direkter Download einer nicht dokumentierten
-externen Datei wurde nicht verwendet. Stattdessen wurde OpenML als reproduzierbare Quelle gewählt.
-Die große CSV-Datei ist für Git ungeeignet und bleibt deshalb lokal. Die Merkmalsnamen enthalten
-keine fachliche Semantik; ihre Bedeutung muss über die Aufgabenbeschreibung und die statistische
-EDA erschlossen werden.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die technische
-Datensatzprüfung wurde als erster EDA-Schritt vor Visualisierungen und Modellierung durchgeführt.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Duplikate, konstante bzw. nahezu konstante Merkmale, Verteilungen,
-Ausreißer und Zusammenhänge mit der unausgeglichenen Zielvariable untersuchen.}
+\field{Arbeitsschritte}{Datensatz mit \texttt{fetch\_openml(data\_id=45566, as\_frame=True)} geladen; Rohdaten lokal als CSV abgelegt; Datenquelle dokumentiert; Notebook erstellt und ausgefuehrt.}
+\field{Ergebnis/Erkenntnis}{200.000 Zeilen, 201 Spalten; 200 \texttt{float64}-Features und boolesches \texttt{target}; keine fehlenden Zellen. Zielklassen: 179.902 False (89,951\,\%) und 20.098 True (10,049\,\%). DataFrame ca. 305,37 MiB; CSV ca. 292,06 MiB.}
+\field{Entscheidung und Begruendung}{Rohdaten werden wegen der Groesse nicht versioniert, sondern ueber OpenML reproduzierbar beschafft. Transformationen erfolgen erst nach technischer Bestandsaufnahme.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Nicht dokumentierte externe Downloadquellen wurden nicht verwendet; anonymisierte Features verhindern fachliche Semantik auf Variablenebene.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Konstanz, Wertverteilungen, Ausreisser und Feature-Ziel-Zusammenhaenge untersuchen.}
 
 \logsection{06.08.2026}{Deskriptive Statistik, Korrelation und Normalisierung}
-\field{Zusammenfassung}{Die technische EDA wurde um die vollständige deskriptive Statistik aller
-201 Spalten, eine Korrelationsmatrix, eine Prüfung auf Kategorikalität bzw. Wertkonzentration,
-eine Negativwertanalyse und eine Min-Max-Normalisierung erweitert.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Für jede Spalte Minimum, Maximum, Mittelwert, Median, Varianz, Standardabweichung,
-        Skewness und Kurtosis berechnet. Das boolesche \texttt{target} wurde für diese Kennzahlen
-        zusätzlich als 0/1 numerisch betrachtet.
-  \item Eine Pearson-Korrelationsmatrix der Form 201 $\times$ 201 erstellt und die stärksten
-        absoluten Zusammenhänge ausgegeben.
-  \item Datentypen, Kardinalität, dominante Einzelwerte und negative Werte je Feature geprüft.
-  \item Die 200 Features mit Min-Max auf das Intervall [0,1] transformiert; \texttt{target} blieb
-        unverändert.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Alle 200 Features sind vom Typ \texttt{float64}; ausschließlich
-\texttt{target} ist boolesch. 131 von 200 Features (65,5\,\%) enthalten mindestens einen negativen
-Wert, 69 Features enthalten keine negativen Werte. Es gibt 0 konstante Features. Kein Feature hat
-maximal 20 verschiedene Werte oder eine Dominanz eines einzelnen Wertes von mindestens 90\,\%.
-Damit zeigen die Features keinen Hinweis auf klassische kategorische Variablen; das boolesche
-\texttt{target} ist die einzige kategoriale Spalte. Die Korrelationsmatrix hat die Form 201 $\times$
-201; die stärksten linearen Zusammenhänge mit dem Ziel zeigen \texttt{var\_81} (r=-0,080917),
-\texttt{var\_139} (r=-0,074080), \texttt{var\_12} (r=-0,069489) und \texttt{var\_6}
-(r=0,066731). Nach der Normalisierung liegen globales Minimum und Maximum der Featurematrix bei
-0 bzw. 1.}
-\field{Entscheidung und Begründung}{Die Bool-Variable wird als Zielvariable behandelt und nicht
-als gewöhnliches kontinuierliches Feature normalisiert. Für die Merkmale ist Min-Max eine
-nachvollziehbare erste Skalierung, weil dadurch alle unterschiedlichen Wertebereiche vergleichbar
-werden. Die Rohdaten bleiben unverändert; \texttt{X\_minmax} wird nur reproduzierbar im Notebook
-erzeugt.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Eine vollständige 201 $\times$ 201 Matrix ist als
-Tabelle schwer lesbar. Deshalb wird sie vollständig als Objekt \texttt{correlation\_matrix}
-gespeichert und zusätzlich über die stärksten Korrelationspaare zusammengefasst. Die anonymisierten
-Feature-Namen erlauben keine fachliche Interpretation einzelner Variablen; die Korrelationswerte
-sind daher zunächst nur deskriptiv. Die Notebook-Ausführung dauerte wegen des großen Datensatzes
-und der Matrixberechnung rund zwei Minuten.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Normalisierung wurde
-noch nicht als neue Datei gespeichert und nicht auf die Zielvariable angewendet.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Verteilungen und Ausreißer gezielt visualisieren, stark schiefe Merkmale
-prüfen und die Feature-Ziel-Zusammenhänge im Kontext der Klassenimbalance bewerten.}
+\field{Arbeitsschritte}{Minimum, Maximum, Mittelwert, Median, Varianz, Standardabweichung, Skewness und Kurtosis berechnet; Pearson-Korrelationsmatrix erstellt; Kardinalitaet, dominante Werte und negative Werte geprueft; Features Min-Max-normalisiert.}
+\field{Ergebnis/Erkenntnis}{131 von 200 Features enthalten negative Werte; keine konstanten Features und keine klar kategorial wirkenden numerischen Features. Staerkste lineare Zielkorrelationen: \texttt{var\_81} $r=-0{,}080917$, \texttt{var\_139} $r=-0{,}074080$, \texttt{var\_12} $r=-0{,}069489$, \texttt{var\_6} $r=0{,}066731$.}
+\field{Entscheidung und Begruendung}{\texttt{target} wird nicht skaliert; Min-Max-Skalierung dient als reproduzierbare Vergleichsbasis fuer spaetere Projektionen.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Die vollstaendige Korrelationsmatrix ist als Tabelle nicht lesbar und wird daher visualisiert bzw. ueber Ranglisten zusammengefasst.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Verteilungen und Ausreisser visualisieren und Klassenunterschiede untersuchen.}
 
 \logsection{06.08.2026}{Visualisierung, PCA, t-SNE und Clustering}
-\field{Zusammenfassung}{Die EDA wurde um grafische Darstellungen und eine erste unüberwachte
-Strukturanalyse ergänzt. Erstellt wurden eine Korrelations-Heatmap, Boxplots der normalisierten
-Features und Zeilen, Verteilungsübersichten, Q-Q-Plots sowie PCA- und t-SNE-Projektionen mit
-K-Means- und DBSCAN-Clustern.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Korrelationsmatrix der 200 Features als Heatmap visualisiert.
-  \item Boxplots aller normalisierten Features und Boxplots von 100 zufällig ausgewählten Zeilen
-        erstellt; zusätzlich Verteilung der Feature-Mittelwerte und eine Stichprobe aller Werte geplottet.
-  \item Q-Q-Plots für \texttt{var\_0}, \texttt{var\_68}, \texttt{var\_81} und \texttt{var\_199}
-        gegen die Normalverteilung erzeugt.
-  \item PCA auf zwei Dimensionen für die gesamte normalisierte Featurematrix berechnet.
-  \item Für t-SNE eine reproduzierbare Stichprobe von 5.000 Zeilen verwendet und zuvor auf 50 PCA-
-        Komponenten reduziert.
-  \item Auf beiden 2D-Embeddings K-Means mit $k=2$ und DBSCAN angewandt. \texttt{target} wurde
-        ausschließlich als Label verwendet und nachträglich mit ARI/NMI verglichen.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Die ersten beiden PCA-Komponenten erklären nur 0,7503\,\% bzw.
-0,6860\,\% der Varianz, zusammen rund 1,44\,\%. K-Means erzeugte in PCA zwei Cluster mit 2.726
-und 2.274 Punkten, in t-SNE zwei Cluster mit 2.479 und 2.521 Punkten. Die Übereinstimmung mit
-\texttt{target} ist jeweils sehr gering: PCA-K-Means ARI=-0,0016 und NMI=0,0004; t-SNE-K-Means
-ARI=0,0008 und NMI=0,0015. DBSCAN erzeugte mit der ersten Parametrisierung auf PCA einen großen
-Cluster mit 4.999 Punkten und einen Ausreißer; auf t-SNE wurden alle 5.000 Punkte einem Cluster
-zugeordnet. Die DBSCAN-Übereinstimmung mit dem Target war entsprechend praktisch null.}
-\field{Entscheidung und Begründung}{Die Stichprobe von 5.000 Zeilen wurde wegen der hohen
-Rechenkosten von t-SNE und DBSCAN gewählt; der Zufallszustand 42 macht die Darstellung
-reproduzierbar. PCA und t-SNE werden als explorative Visualisierung behandelt, nicht als Beweis
-für fachlich sinnvolle Cluster. Die sehr geringe PCA-Varianz und die niedrigen ARI/NMI-Werte
-sprechen gegen eine klare zweidimensionale Trennung nach \texttt{target}.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Eine direkte t-SNE-Berechnung auf allen 200.000 Zeilen
-wurde wegen unverhältnismäßiger Laufzeit nicht verwendet. DBSCAN mit $\texttt{eps}=0,5$ auf den
-standardisierten 2D-Embeddings war zu wenig trennscharf und wird deshalb nicht als finale
-Clusterlösung interpretiert. Die Q-Q-Plots zeigen nur vier repräsentative Features; eine vollständige
-Verteilungsbewertung aller 200 Features bleibt ein nächster Analyseschritt.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Clusterverfahren
-wurden auf einer dokumentierten Stichprobe ausgeführt; die Zielvariable wurde nicht als Feature
-verwendet.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{DBSCAN-Parameter und Clusteranzahl systematisch sensitivitätsprüfen,
-weitere Verteilungen visualisieren und mögliche Ausreißer bzw. stark schiefe Features untersuchen.}
+\field{Arbeitsschritte}{Korrelations-Heatmap, Boxplots, Verteilungsuebersichten und Q-Q-Plots erstellt; PCA auf zwei Dimensionen; t-SNE auf reproduzierbarer 5.000er Stichprobe nach PCA-Vorreduktion; K-Means und DBSCAN auf den 2D-Embeddings.}
+\field{Ergebnis/Erkenntnis}{PC1 erklaert 0,7503\,\%, PC2 0,6860\,\%, zusammen ca. 1,44\,\%. K-Means und DBSCAN stimmen praktisch nicht mit dem Target ueberein; ARI/NMI liegen nahe null.}
+\field{Entscheidung und Begruendung}{2D-Projektionen und Cluster werden ausschliesslich explorativ interpretiert. t-SNE wird wegen Rechenaufwand nur auf einer dokumentierten Stichprobe ausgefuehrt.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{t-SNE auf allen 200.000 Zeilen wurde wegen unverhaeltnismaessiger Laufzeit nicht verwendet; erste DBSCAN-Parametrisierung erzeugte keine sinnvolle Clusterstruktur.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Label- und Feature-EDA gezielter trennen.}
 
 \logsection{06.08.2026}{Erweiterte Label-/Feature-EDA}
-\field{Zusammenfassung}{Die EDA wurde klar in Label und Features getrennt. Für alle 200 Features
-wurden Klassenimbalance, gruppierte Verteilungen, Mittelwert- und Medianunterschiede sowie
-label-konditionierte Feature-Feature-Korrelationen untersucht und visualisiert.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Featurematrix $X$ mit 200 Spalten und Labelvektor $y=\texttt{target}$ separat definiert.
-  \item Klassenhäufigkeiten und Klassenanteile als Balkendiagramm und Kreisdiagramm dargestellt.
-  \item Für jedes Feature Mittelwert, Median und Standardabweichung je Labelgruppe berechnet.
-  \item Absolute und relative Mittelwertdifferenzen sowie Cohen's $d$ als standardisierte
-        Effektgröße bestimmt und für alle 200 Features geplottet.
-  \item Alle Features in zehn gruppierten Boxplot-Seiten mit jeweils \texttt{target=False} und
-        \texttt{target=True} verglichen; die zwölf stärksten Features zusätzlich als Violinplots.
-  \item Je Labelgruppe eine 200$\times$200-Korrelationsmatrix berechnet und die Differenz
-        $\mathrm{corr}(True)-\mathrm{corr}(False)$ als Heatmap und Rangliste dargestellt.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Die Labelverteilung bleibt mit 179.902 False (89,951\,\%) und
-20.098 True (10,049\,\%) deutlich unausgeglichen. Die größten positiven standardisierten
-Mittelwertdifferenzen zeigen \texttt{var\_6} ($d=0,215926$), \texttt{var\_110} ($d=0,205989$),
-\texttt{var\_53} ($d=0,204101$), \texttt{var\_26} ($d=0,199796$) und \texttt{var\_22}
-($d=0,194818$). Die größten negativen Differenzen zeigen \texttt{var\_81} ($d=-0,255463$),
-\texttt{var\_139} ($d=-0,237684$), \texttt{var\_12} ($d=-0,221911$), \texttt{var\_146}
-($d=-0,204394$) und \texttt{var\_76} ($d=-0,199939$). Die stärkste Veränderung einer
-Feature-Feature-Korrelation beträgt nur rund 0,031455 (Paar \texttt{var\_62}/\texttt{var\_173});
-weitere starke Änderungen liegen ebenfalls nur knapp über 0,03. Die Korrelationen zwischen
-Features verändern sich durch das Label somit in dieser ersten Auswertung nur schwach.}
-\field{Entscheidung und Begründung}{Cohen's $d$ wird zur Rangordnung verwendet, weil rohe
-Mittelwertdifferenzen wegen der unterschiedlichen Feature-Skalen nicht direkt vergleichbar sind.
-Die label-konditionierten Korrelationsmatrizen werden getrennt von der ursprünglichen Matrix
-analysiert, weil eine Korrelation des konstanten Labels innerhalb einer einzelnen Gruppe nicht
-definiert wäre. Die Rohdaten und die Labeltrennung bleiben unverändert.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Die gruppierten Boxplots werden aus Rechen- und
-Darstellungsgründen mit 2.000 zufällig gezogenen Zeilen pro Klasse geplottet; alle Tabellen und
-Effektgrößen basieren weiterhin auf dem vollständigen Datensatz. Eine sichtbare Verteilungsdifferenz
-ist nicht automatisch kausal und muss wegen der 200 parallelen Tests vorsichtig interpretiert
-werden. Die Korrelationsdifferenzen sind klein und werden deshalb nicht als starker Beleg für
-labelabhängige Abhängigkeiten bewertet.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Das Label wurde in
-keinem Schritt als erklärendes Feature verwendet.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Mehrfachtestproblematik und statistische Signifikanz der Unterschiede
-prüfen, Effektgrößen mit Verteilungen und Ausreißern verbinden und die Featureauswahl für die
-Modellierung vorbereiten.}
+\field{Arbeitsschritte}{Klassenverteilung visualisiert; klassenweise Mittelwerte, Mediane und Standardabweichungen berechnet; Cohen's $d$ fuer alle Features bestimmt; Box-/Violinplots erstellt; label-konditionierte Korrelationsmatrizen verglichen.}
+\field{Ergebnis/Erkenntnis}{Groesste positive Cohen's-$d$-Werte: \texttt{var\_6}=0,215926, \texttt{var\_110}=0,205989, \texttt{var\_53}=0,204101, \texttt{var\_26}=0,199796, \texttt{var\_22}=0,194818. Groesste negative: \texttt{var\_81}=-0,255463, \texttt{var\_139}=-0,237684, \texttt{var\_12}=-0,221911, \texttt{var\_146}=-0,204394, \texttt{var\_76}=-0,199939. Staerkste label-bedingte Korrelationsaenderung nur ca. 0,031455.}
+\field{Entscheidung und Begruendung}{Cohen's $d$ wird fuer skalenunabhaengige Rangordnung verwendet; Target bleibt aus Feature-Feature-Korrelationen ausgeschlossen.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Gruppierte Boxplots werden fuer die Darstellung subsampled; statistische Tabellen und Effektgroessen bleiben auf dem vollen Datensatz. Sichtbare Unterschiede werden nicht kausal interpretiert.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Mehrfachtests und statistische Absicherung ergaenzen.}
 
 \logsection{06.08.2026}{PCA-/t-SNE-Labelansichten und korrigierte Korrelations-Heatmaps}
-\field{Zusammenfassung}{Die Dimensionsreduktionsgrafiken wurden nach den beiden Labelwerten
-getrennt. Zusätzlich wurde die Diagonale aus den Korrelations-Heatmaps maskiert, da sie nur die
-Selbstkorrelation jedes Features zeigt und die Interpretation der übrigen Zusammenhänge verfälscht.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Separate PCA-Abbildungen für ausschließlich \texttt{target=0} und ausschließlich
-        \texttt{target=1} erzeugt.
-  \item Separate t-SNE-Abbildungen für ausschließlich \texttt{target=0} und ausschließlich
-        \texttt{target=1} erzeugt.
-  \item Für alle vier Bilder identische Achsenbereiche gesetzt, damit die räumliche Verteilung
-        zwischen den Labelgruppen direkt vergleichbar bleibt.
-  \item Kontrastreiche Farben verwendet: Blau für Label 0 und Rot für Label 1.
-  \item Die Diagonalen der globalen sowie der label-konditionierten Korrelations-Heatmaps mit
-        Masken ausgeblendet; die Korrelationsrangliste nutzte bereits nur das obere Dreieck.
-  \item Den PCA-/t-SNE-Abschnitt als eigene Visualisierungs- und Clustering-Gruppe kenntlich gemacht.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Die vier neuen Labelansichten wurden mit der reproduzierbaren
-5.000-Zeilen-Stichprobe erstellt. Dadurch sind Unterschiede in der Punktdichte und räumlichen
-Lage zwischen den Labelgruppen sichtbar, ohne dass die jeweils andere Klasse die Darstellung
-überlagert. Die Heatmaps zeigen nach der Maskierung ausschließlich Beziehungen zwischen
-verschiedenen Features.}
-\field{Entscheidung und Begründung}{Die getrennte Darstellung wurde gewählt, weil eine gemeinsame
-Farbskala die seltenere positive Klasse visuell überdecken kann. Identische Achsen sind für einen
-fairen Vergleich wichtiger als eine jeweils automatisch optimierte Ansicht. Die Diagonale wird
-nicht durch Null ersetzt, sondern als fehlend maskiert, damit sie nicht als künstlicher Wert in die
-Farbskala eingeht.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Eine gemeinsame Target-Abbildung bleibt als ältere
-Übersicht im Notebook erhalten, dient aber nicht mehr als primäre Labeldarstellung. Die
-Dimensionsreduktion basiert weiterhin auf einer Stichprobe für t-SNE; daraus dürfen keine Aussagen
-über exakte Häufigkeiten im vollständigen Datensatz abgeleitet werden.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; es handelt sich um eine
-Darstellungs- und Interpretationsverbesserung.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die getrennten Ansichten mit den Gruppenverteilungen, Effektgrößen und
-label-konditionierten Korrelationen zusammenführen und auffällige Features für die Modellierung
-priorisieren.}
+\field{Arbeitsschritte}{PCA- und t-SNE-Ansichten getrennt nach Target erzeugt; identische Achsenbereiche verwendet; Korrelationsdiagonalen maskiert.}
+\field{Ergebnis/Erkenntnis}{Die getrennten Ansichten verbessern die Sichtbarkeit der seltenen positiven Klasse; Heatmaps zeigen nach Maskierung nur Beziehungen zwischen unterschiedlichen Features.}
+\field{Entscheidung und Begruendung}{Identische Achsen und maskierte Diagonalen verhindern irrefuehrende visuelle Vergleiche.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Gemeinsame Target-Abbildung bleibt als historische Uebersicht erhalten, ist aber nicht mehr primaere Darstellung.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Labelansichten, Effektgroessen und Korrelationen gemeinsam interpretieren.}
 
 \logsection{06.08.2026}{Skalenanpassung und direkter PCA-/t-SNE-Vergleich}
-\field{Zusammenfassung}{Die Skalen der Korrelations- und Gruppenmittelwert-Heatmaps wurden auf
-die tatsächlich beobachteten Wertebereiche angepasst. Zusätzlich wurden PCA und t-SNE jeweils in
-einer gemeinsamen Dreifachansicht mit nur Label 0, nur Label 1 und beiden Labels zusammengeführt.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Für die globale Feature-Korrelationsmatrix die Off-Diagonal-Minima und -Maxima als
-        Farbgrenzen verwendet; die Diagonale bleibt maskiert.
-  \item Für die label-konditionierten Matrizen eine gemeinsame Skala für True/False und eine
-        separate beobachtete Skala für die Differenzmatrix verwendet.
-  \item Die standardisierten Gruppenmittelwerte ebenfalls mit empirischem Minimum und Maximum
-        skaliert.
-  \item Je eine 3-Panel-Grafik für PCA und t-SNE mit identischen Achsen erstellt: nur
-        \texttt{target=0}, nur \texttt{target=1}, beide gemeinsam.
-  \item Die Top-Rangliste der label-bedingten Korrelationsänderungen um die Einzelwerte
-        \texttt{corr\_false} und \texttt{corr\_true} ergänzt; zusätzlich werden Differenz und
-        absolute Differenz ausgegeben und geplottet.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Das stärkste Korrelationsänderungspaar
-\texttt{var\_62}/\texttt{var\_173} weist innerhalb \texttt{target=False} $r=0,003212$ und
-innerhalb \texttt{target=True} $r=-0,028243$ auf. Die Differenz beträgt $-0,031455$. Damit ist
-der direkte Vergleich möglich; die absolute Änderung bleibt dennoch klein. Die neuen PCA-/t-SNE-
-Dreifachansichten machen sichtbar, ob eine scheinbare Labeltrennung nur durch die gemeinsame
-Darstellung oder tatsächlich durch räumlich getrennte Punktwolken entsteht.}
-\field{Entscheidung und Begründung}{Eine gemeinsame Farbskala ist für True/False notwendig, wenn
-die beiden label-konditionierten Matrizen direkt verglichen werden sollen. Die Differenzmatrix
-erhält eine eigene Skala, weil ihre Werte deutlich kleiner sind. Für PCA und t-SNE wurden gleiche
-Achsenbereiche pro Methode beibehalten; dadurch wird der Vergleich nicht durch automatische
-Achsenanpassung verfälscht.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Die feste Skala $[-1,1]$ wurde für die Visualisierung
-verworfen, weil die tatsächlich beobachteten Korrelationen wesentlich kleiner sind und dadurch
-kaum Kontrast zeigen. Die empirische Skala verbessert die Lesbarkeit, ist aber bei Vergleichen
-zwischen unterschiedlichen Matrizen nur zusammen mit der dokumentierten gemeinsamen Skala
-interpretierbar.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; die Änderungen betreffen
-Skalierung, Maskierung und Anordnung der bereits berechneten Ergebnisse.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die nun besser lesbaren Unterschiede mit Effektgrößen, Verteilungen und
-statistischer Absicherung zusammenführen.}
+\field{Arbeitsschritte}{Empirische Farbgrenzen fuer Korrelationsdarstellungen verwendet; True/False-Matrizen mit gemeinsamer Skala, Differenzmatrix separat; PCA/t-SNE als 3-Panel-Vergleich aufgebaut.}
+\field{Ergebnis/Erkenntnis}{Beim Paar \texttt{var\_62}/\texttt{var\_173}: $r_{False}=0{,}003212$, $r_{True}=-0{,}028243$, Differenz $-0{,}031455$. Numerisch bleibt die Aenderung klein.}
+\field{Entscheidung und Begruendung}{Empirische Skalen erhoehen Lesbarkeit, muessen aber explizit dokumentiert werden, damit kleine Unterschiede nicht ueberinterpretiert werden.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Darstellungen mit statistischer Absicherung verbinden.}
 
 \logsection{06.08.2026}{Interpretierbarkeit der erweiterten EDA-Plots verbessert}
-\field{Zusammenfassung}{Die erweiterten EDA-Grafiken wurden auf eine präzisere und kompaktere
-Interpretation angepasst. Beschriftungen erklären nun, ob Mittelwerte oder Pearson-Korrelationen
-dargestellt werden; die wichtigsten Verteilungsbeispiele und Korrelationsänderungen sind gezielt
-sortiert.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Die Gruppenmittelwertgrafik in eine Darstellung der Abweichungen der Gruppenmittelwerte
-        mittels Cohen's $d$ und eine signiert log1p-transformierte Heatmap überführt.
-  \item Die Bedeutung der standardisierten Gruppenmittelwerte ergänzt: Gruppenmittelwert geteilt
-        durch gepoolte Standardabweichung; das Vorzeichen zeigt die Richtung der Abweichung.
-  \item Die Verteilungsplots auf zehn Beispiele reduziert: fünf größte positive und fünf größte
-        negative Cohen's-$d$-Effekte.
-  \item Den Korrelationsplot als Pearson-Korrelationen je Labelgruppe beschriftet und die zwölf
-        Paare nach absoluter label-bedingter Differenz absteigend geordnet.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Die log1p-Transformation komprimiert große standardisierte Mittelwerte,
-behält aber positive und negative Richtungen durch die signierte Form bei. Die zehn ausgewählten
-Box- und Violinplots sind dadurch direkt mit der Effektgrößenrangliste verknüpft. Der
-Korrelationsvergleich zeigt weiterhin pro Featurepaar separat \texttt{corr\_false}, \texttt{corr\_true},
-die Differenz und die absolute Differenz.}
-\field{Entscheidung und Begründung}{Die vollständige statistische Tabelle bleibt erhalten, während
-die Grafik auf die interpretierbarsten zehn Beispiele fokussiert wird. Eine empirische Farbskala
-zwischen beobachtetem Minimum und Maximum ist informativer als eine feste $[-1,1]$-Skala, sofern
-die gemeinsame Skala bei direkten Matrixvergleichen dokumentiert bleibt.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Die Darstellung aller 200 gruppierten Boxplots wurde
-für diesen Abschnitt verworfen, weil sie die zentralen Unterschiede schwer erkennbar macht. Die
-logarithmische Transformation darf nicht als Änderung der Rohdaten missverstanden werden; sie
-betrifft ausschließlich die Darstellung der standardisierten Gruppenmittelwerte.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung; es wurden ausschließlich
-Darstellung, Sortierung und Beschriftung verbessert.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die zehn auffälligsten Features mit Signifikanztests, Konfidenzintervallen
-und möglichen Mehrfachtestkorrekturen weiter untersuchen.}
+\field{Arbeitsschritte}{Gruppenmittelwertgrafik auf Cohen's $d$ und signierte log1p-Darstellung umgestellt; Verteilungsplots auf zehn repraesentative Features reduziert; Korrelationsvergleich klarer beschriftet und sortiert.}
+\field{Ergebnis/Erkenntnis}{Die zentralen Effekte sind nun gezielter lesbar; vollstaendige statistische Tabellen bleiben erhalten.}
+\field{Entscheidung und Begruendung}{Grafiken werden auf interpretierbare Beispiele reduziert, ohne numerische Vollstaendigkeit zu verlieren.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Darstellung aller 200 Boxplots in einem Ergebnisabschnitt wurde als zu unuebersichtlich verworfen.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Signifikanztests, Konfidenzintervalle und Mehrfachtestkorrektur.}
 
 \logsection{06.08.2026}{Korrelationsbasierte Featureauswahl und erneute Dimensionsreduktion}
-\field{Zusammenfassung}{Da die ursprüngliche PCA-/t-SNE-Darstellung keine klare Trennung der
-Labelgruppen zeigte, wurde die Dimensionsreduktion mit 14 gezielt ausgewählten Features wiederholt.
-Die Auswahl basiert auf der signierten Zeilensumme der Differenzmatrix
-\texttt{corr\_true - corr\_false}. Zusätzlich wurde die globale Korrelationsmatrix nach der Summe
-der absoluten Off-Diagonal-Korrelationen sortiert.}
-\field{Arbeitsschritte}{
-\begin{itemize}
-  \item Für jedes Feature die signierte Summe seiner label-bedingten Korrelationsänderungen
-        berechnet; die Diagonale wurde ausgeschlossen.
-  \item Sieben Features mit den größten positiven Scores und sieben mit den größten negativen
-        Scores ausgewählt.
-  \item Die ausgewählten Features auf Basis der bestehenden Min-Max-Normalisierung verwendet und
-        die Zielvariable weiterhin ausschließlich als Label behandelt.
-  \item PCA für alle 200.000 Zeilen und t-SNE für eine reproduzierbare Stichprobe von 5.000 Zeilen
-        mit den 14 Features berechnet.
-  \item K-Means mit $k=2$ und DBSCAN auf beiden neuen Embeddings ausgeführt.
-  \item Labelvergleichsbilder für PCA und t-SNE sowie eine nach absoluter Korrelationssumme
-        sortierte Korrelations-Heatmap erstellt.
-\end{itemize}}
-\field{Ergebnis/Erkenntnis}{Die ausgewählten positiven Features sind \texttt{var\_161},
-\texttt{var\_188}, \texttt{var\_177}, \texttt{var\_123}, \texttt{var\_84}, \texttt{var\_63}
-und \texttt{var\_7}. Die ausgewählten negativen Features sind \texttt{var\_19},
-\texttt{var\_176}, \texttt{var\_189}, \texttt{var\_184}, \texttt{var\_194}, \texttt{var\_69}
-und \texttt{var\_169}. Die ersten beiden PCA-Komponenten erklären zusammen 17,1223\,\% der
-Varianz. K-Means zeigte weiterhin praktisch keine Übereinstimmung mit dem Label: PCA ARI=-0,0000,
-NMI=0,0001; t-SNE ARI=-0,0001, NMI=0,0009. DBSCAN bildete in beiden Embeddings nur einen Cluster.
-Die Dimensionsreduktion verbessert damit die erklärte PCA-Varianz deutlich gegenüber der
-200-Feature-Baseline, erzeugt aber noch keine belastbare Labeltrennung.}
-\field{Entscheidung und Begründung}{Die mathematische Zielgröße $2\log_2(200)=15,29$ wurde als
-symmetrische Auswahl von 7 positiven plus 7 negativen Features umgesetzt. Die signierte
-Zeilensumme wurde als Feature-Ranking verwendet, weil sie die Richtung der gesamten
-Korrelationsänderung berücksichtigt. Die absolute Korrelationssumme dient separat dazu, die
-Korrelationsmatrix nach den insgesamt am stärksten vernetzten Features zu ordnen.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Eine Auswahl nach einzelnen Extrempaaren wurde nicht
-verwendet, da dabei die übrigen Korrelationen eines Features unberücksichtigt bleiben würden.
-Eine absolute Zeilensumme wurde ebenfalls nicht als Hauptkriterium gewählt, weil sie die Richtung
-der label-bedingten Veränderung verliert. Die neue t-SNE-Ausführung dauerte wegen der
-rechenintensiven Dimensionsreduktion mehrere Minuten.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die bisherige Analyse
-bleibt als Baseline erhalten; die neue Featureauswahl und die neuen Grafiken wurden separat
-gespeichert.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die ausgewählten Features mit überwachten Modellen prüfen und untersuchen,
-ob die fehlende 2D-Trennung durch die Projektion oder durch tatsächlich geringe Labelinformation
-verursacht wird.}
+\field{Arbeitsschritte}{14 Features anhand der signierten Zeilensumme label-bedingter Korrelationsaenderungen ausgewaehlt; PCA/t-SNE sowie K-Means/DBSCAN erneut ausgefuehrt.}
+\field{Ergebnis/Erkenntnis}{Ausgewaehlte positive Features: \texttt{var\_161}, \texttt{var\_188}, \texttt{var\_177}, \texttt{var\_123}, \texttt{var\_84}, \texttt{var\_63}, \texttt{var\_7}; negative: \texttt{var\_19}, \texttt{var\_176}, \texttt{var\_189}, \texttt{var\_184}, \texttt{var\_194}, \texttt{var\_69}, \texttt{var\_169}. Zwei PCA-Komponenten erklaeren nun 17,1223\,\%, aber Cluster-Uebereinstimmung mit dem Target bleibt praktisch null.}
+\field{Entscheidung und Begruendung}{Experiment bleibt als explorative Iteration dokumentiert, wird aber nicht als finale Featureauswahl gewertet.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Weder Extrempaare noch absolute Zeilensumme wurden als Hauptkriterium verwendet; das Experiment liefert keine belastbare Labeltrennung.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Mit ueberwachter Baseline pruefen, ob ausserhalb der 2D-Projektion Vorhersageinformation vorhanden ist.}
 
 \logsection{14.08.2026}{Ausgeglichene Labelgruppen und methodischer EDA-Ausblick}
-\field{Zusammenfassung}{Die label-konditionierte Korrelationsanalyse wurde zusätzlich mit einem
-reproduzierbaren Verhältnis von True:False = 1:1 durchgeführt. Dafür wurden alle 20.098 True-Zeilen
-beibehalten und mit \texttt{random\_state=42} ohne Zurücklegen genau 20.098 False-Zeilen gezogen.
-Die Zielvariable blieb aus allen Korrelationsmatrizen ausgeschlossen; die Diagonale wurde weiterhin
-maskiert.}
-\field{Durchgeführte Analysen}{Für die balancierte Stichprobe wurden die False-, True- und
-Differenz-Korrelationsmatrix mit empirischen Skalen visualisiert. Zusätzlich wurden die
-Korrelationsdifferenzen und die absoluten Korrelations-Zeilensummen mit der unausgeglichenen
-Baseline verglichen. Die Baseline-Grafiken wurden nicht überschrieben; neue Abbildungen liegen unter
-\texttt{EDA/assets/}.}
-\field{Ergebnis/Erkenntnis}{Die 1:1-Auswertung ermöglicht einen direkteren Gruppenvergleich, ist als
-Undersampling jedoch selbst stichprobenabhängig. Unterschiede zwischen Baseline und 1:1-Analyse
-dürfen deshalb nicht ohne Stabilitätsprüfung als echte Populationseffekte interpretiert werden. Für
-die nächsten Schritte sind mehrere Seeds und Bootstrap-Konfidenzintervalle vorgesehen.}
-\field{Zusätzliche Violinplots}{Ergänzend zu den zehn bestehenden repräsentativen Violinplots wurden
-fünf Features dynamisch über \texttt{abs(cohens\_d).nsmallest(5)} ausgewählt. Jeder Plot zeigt die
-Verteilungen von False und True, Median und Quartile sowie Feature, Cohen's d und Gruppenmittelwerte.
-Die Auswahl und Grafik werden separat gespeichert.}
-\field{PCA/t-SNE-Dokumentation}{Die Notebooktexte stellen nun ausdrücklich klar, dass die Eingabefeatures
-Min-Max-normalisiert im Intervall [0,1] liegen und \texttt{target} nicht als Feature verwendet wird.
-PCA wird als lineare, varianzmaximierende Projektion beschrieben; t-SNE als nichtlineare, lokale
-Nachbarschaftsprojektion mit 5.000er Stichprobe und parameter-/seedabhängigem Ergebnis. Überlappung
-in zwei Dimensionen beweist keinen Informationsverlust, und eine sichtbare Trennung wäre kein Beweis
-für robuste Modellierbarkeit.}
-\field{Ausblick}{Als nächste EDA-Schritte wurden Stabilitätsanalysen, Bootstrap-Intervalle,
-Multiple-Testing-Korrektur, Signifikanztests und Effektgrößen, Mutual Information, Ausreißer und
-Heavy Tails, Redundanz- und Varianzanalysen, Vergleiche verschiedener Skalierungen, PCA-Scree-Plot,
-Ranglistenstabilität sowie anschließend ein überwachtes Baseline-Modell mit ROC-AUC, PR-AUC,
-Balanced Accuracy, Recall, Precision und F1 dokumentiert. Besonders relevant bleiben die starke
-Klassenimbalance, anonymisierte kontinuierliche Features, negative Rohwerte, geringe 2D-PCA-Varianz
-und schwache label-bedingte Korrelationsänderungen.}
-\field{Entscheidung und Begründung}{Das 1:1-Verhältnis wurde durch False-Undersampling umgesetzt, weil
-alle seltenen True-Beobachtungen erhalten bleiben und der Vergleich dadurch nicht von der großen
-False-Gruppe dominiert wird. Die ursprüngliche unausgeglichene Analyse bleibt als Baseline erhalten.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Eine einzelne balancierte Stichprobe reicht nicht aus, um
-die Stabilität der Korrelationen zu garantieren. Außerdem bleiben PCA und t-SNE bewusst explorativ;
-ihre 2D-Darstellungen werden nicht als endgültiger Nachweis für oder gegen Modellierbarkeit gewertet.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die neuen Berechnungen,
-Grafiken und Erläuterungen wurden zusätzlich zu den vorhandenen Baseline-Analysen ergänzt.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Stabilität der 1:1-Ergebnisse über mehrere Seeds und Bootstrap-Stichproben
-prüfen und danach einen überwachten Baseline-Klassifikator mit Imbalance-Metriken trainieren.}
+\field{Arbeitsschritte}{Alle 20.098 True-Faelle mit 20.098 ohne Zuruecklegen gezogenen False-Faellen (\texttt{random\_state=42}) verglichen; balancierte Korrelationsanalyse und zusaetzliche Violinplots erstellt; Grenzen von PCA/t-SNE expliziter dokumentiert.}
+\field{Ergebnis/Erkenntnis}{Eine 1:1-Auswertung erleichtert den Gruppenvergleich, ist aber selbst stichprobenabhaengig. Eine einzelne balancierte Stichprobe reicht deshalb nicht fuer Stabilitaetsaussagen.}
+\field{Entscheidung und Begruendung}{Alle seltenen True-Faelle bleiben erhalten; False wird undersampled. Die natuerliche Baseline bleibt parallel bestehen.}
+\field{Naechster Schritt}{Mehrere Seeds, Bootstrap, Inferenz, Mutual Information, Ausreisser-/Varianzanalyse, Redundanz, Skalierungsvergleich und ueberwachte Baseline.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
 
-\logsection{15.08.2026}{Vollständige EDA-Erweiterung und Schlussfolgerung}
-\field{Zusammenfassung}{Die EDA wurde um Stabilitäts-, Inferenz-, Redundanz- und Modellierungsanalysen erweitert. Abschnitt 13 wurde korrigiert, sodass PCA, t-SNE und Clustering nun konsistent auf der Min-Max-normalisierten Matrix arbeiten. Die 15 Violinplots aus den Abschnitten 15.3 und 18 wurden zusätzlich in einer gemeinsamen 3x5-Abbildung zusammengeführt.}
-\field{Durchgeführte Analysen}{Für fünf 1:1-Stichproben mit den Seeds 42 bis 46 wurden Cohen's-d-Ranglisten verglichen. Zusätzlich wurden Bootstrap-Intervalle mit 500 Wiederholungen und 5.000 Beobachtungen je Gruppe, Welch-t-Tests mit Benjamini-Hochberg-FDR, Mutual Information auf 50.000 Zeilen, IQR-Ausreißerquoten, Varianz-/IQR-Rankings, Redundanz ab $|r|\geq 0{,}8$, Skalierungsvergleiche, ein PCA-Scree-Plot mit 20 Komponenten, Korrelationsranglistenstabilität und eine balancierte Logistic-Regression-Baseline berechnet.}
-\field{Ergebnis/Erkenntnis}{Die Cohen's-d-Ranglisten sind zwischen den fünf 1:1-Stichproben sehr stabil (Spearman ungefähr 0,996). 181 von 200 Features bleiben nach FDR-Korrektur bei $\alpha=0{,}05$ signifikant. Die ersten 20 Min-Max-PCA-Komponenten erklären zusammen nur 12,988\,\% der Varianz. Es wurden keine Featurepaare mit $|r|\geq 0{,}8$ gefunden. Die Logistic-Regression-Baseline erreicht ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863 und F1 0,4181.}
-\field{Interpretation und Grenzen}{Die hohe Signifikanzzahl ist wegen der großen Stichprobe nicht mit großen praktischen Effekten gleichzusetzen; Cohen's d und Konfidenzintervalle bleiben entscheidend. Mutual Information ergänzt die lineare Analyse, beweist aber keine Kausalität. Die 2D-Projektionen und Cluster sind explorativ; t-SNE-Achsen sind nicht global interpretierbar, und die Logistic Regression ist kein optimiertes Endmodell.}
-\field{Portfolio- und Plotquellen}{Die Schlussfolgerung verweist im Notebook auf Klassenimbalance, Gruppenmittelwerte, FDR-Tests, Mutual Information, Ausreißer/Varianz, Skalierung/PCA, Korrelationsranglisten und ROC-/PR-Kurven. Die gemeinsame Violinplot-Übersicht wird als \texttt{EDA/assets/all\_15\_violinplots\_combined.png} gespeichert; weitere Quellenplots liegen im selben Asset-Ordner.}
-\field{Entscheidung und Begründung}{Die Erweiterungen wurden vollständig umgesetzt, um zwischen stabilen Gruppenunterschieden, statistischer Signifikanz, nichtlinearen Zusammenhängen und bloßen Projektionseffekten zu unterscheiden. Die bestehende Baseline-EDA und die bisherigen Einzelgrafiken wurden erhalten.}
-\field{Verworfene Ansätze/Schwierigkeiten}{Die vollständige Notebookausführung ist wegen mehrerer t-SNE-, Korrelations- und Bootstrap-Schritte sehr rechenintensiv. Bootstrap-Intervalle wurden deshalb mit einer dokumentierten festen Stichprobengröße je Wiederholung berechnet; die Unsicherheit dieses Designs bleibt im Notebook ausgewiesen.}
-\field{Abweichung vom vereinbarten Vorgehen}{Keine inhaltliche Abweichung. Die Bootstrap-Berechnung wurde technisch so umgesetzt, dass 500 Wiederholungen mit reproduzierbarer Stichprobengröße ohne unnötige Speicherlast ausgeführt werden können.}
-\field{Gruppentreffen}{Kein inhaltliches Gruppentreffen dokumentiert.}
-\field{Zeitaufwand}{\placeholder{Minuten/Stunden ergänzen}}
-\field{Nächster Schritt}{Die Baseline mit weiteren überwachten Modellen, geeigneten Schwellenwerten und Cross-Validation unter Klassenimbalance vergleichen.}
+\logsection{15.08.2026}{Vollstaendige EDA-Erweiterung und Schlussfolgerung}
+\field{Arbeitsschritte}{Fuenf 1:1-Seeds (42--46), Bootstrap-Intervalle mit 500 Wiederholungen und 5.000 Beobachtungen je Gruppe, Welch-Tests mit Benjamini-Hochberg-FDR, Mutual Information auf 50.000 Zeilen, IQR-Ausreisserquoten, Varianz-/IQR-Rankings, Redundanzpruefung ab $|r|\geq0{,}8$, Skalierungsvergleich, PCA-Scree-Plot, Korrelationsranglistenstabilitaet und Logistic-Regression-Baseline umgesetzt.}
+\field{Ergebnis/Erkenntnis}{Cohen's-$d$-Ranglisten zwischen den fuenf 1:1-Stichproben: Spearman ca. 0,996. Nach FDR-Korrektur 181/200 Features signifikant. Erste 20 Min-Max-PCA-Komponenten: 12,988\,\% kumulierte Varianz. Keine Featurepaare mit $|r|\geq0{,}8$. Logistic Regression: ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863, F1 0,4181.}
+\field{Interpretation und Grenzen}{Hohe Signifikanzzahl ist bei grosser Stichprobe nicht mit grossen Effekten gleichzusetzen; Effektgroessen und Konfidenzintervalle bleiben zentral. Mutual Information ist nicht kausal. PCA/t-SNE/Clustering sind explorativ. Logistic Regression ist eine Referenz, kein optimiertes Endmodell.}
+\field{Entscheidung und Begruendung}{Die EDA wurde um Stabilitaets-, Inferenz- und Modellierungschecks erweitert, um robuste Muster von Projektionseffekten und Stichprobenartefakten zu trennen.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Vollstaendige Notebookausfuehrung ist rechenintensiv; Bootstrap verwendet deshalb eine dokumentierte feste Stichprobengroesse pro Wiederholung.}
+\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Weitere ueberwachte Modelle mit Cross-Validation, geeigneten Imbalance-Strategien und Schwellenwertanalyse vergleichen.}
 
-\section{Laufende Methodik- und Entscheidungsübersicht}
-
-Diese Übersicht wird parallel zum Logbuch aktualisiert. Sie verhindert, dass wichtige
-Entscheidungen nur im Fließtext verborgen bleiben.
-
-\begin{longtable}{p{0.19\textwidth}p{0.29\textwidth}p{0.42\textwidth}}
+\section{Laufende Methodik- und Entscheidungsuebersicht}
+\begin{longtable}{p{0.20\textwidth}p{0.29\textwidth}p{0.41\textwidth}}
 \toprule
-\textbf{Bereich} & \textbf{Aktueller Stand} & \textbf{Begründung/Beleg} \\
+\textbf{Bereich} & \textbf{Aktueller Stand} & \textbf{Begruendung/Beleg} \\
 \midrule
-Datenzugang & OpenML ID 45566 & Lokale CSV, geladen am 06.08.2026; Quelle und Download sind in \texttt{data/README.md} dokumentiert. \\
-Datentypen & 200\,$\times$\,\texttt{float64}, 1\,$\times$\,\texttt{bool} & DataFrame-Speicherbedarf rund 305,37 MiB; technische Bestandsaufnahme im EDA-Notebook. \\
-Fehlende Werte & Keine festgestellt & 0 fehlende Zellen, 0 betroffene Spalten und 0 betroffene Zeilen; keine Imputation erforderlich. \\
-Zielvariable & \texttt{target}, boolesch & 179.902 False (89,951\,\%) und 20.098 True (10,049\,\%); Klassenungleichgewicht bei Metrik und Split beachten. \\
-Train-Test-Aufteilung & \placeholder{offen} & \placeholder{Zeitpunkt und Begründung} \\
-Metrik(en) & \placeholder{offen} & \placeholder{Warum passend für die Aufgabe?} \\
-Modelle & \placeholder{offen} & \placeholder{Vergleich und Auswahl} \\
-Feature Engineering & \placeholder{offen} & \placeholder{getestete Varianten} \\
-Hyperparameter & \placeholder{offen} & \placeholder{Suchraum und Evaluation} \\
+Datenzugang & OpenML ID 45566 & Reproduzierbare Quelle; lokale Rohdaten werden nicht versioniert. \\
+Datenqualitaet & Keine fehlenden Werte & Keine Imputation erforderlich. \\
+Zielvariable & 89,951\,\% False / 10,049\,\% True & Klassenimbalance muss in Training, Metriken und Schwellenwahl beruecksichtigt werden. \\
+Skalierung & Min-Max fuer PCA/t-SNE/Clustering; Skalierungsvergleich durchgefuehrt & Target wird nicht skaliert und nicht als Eingabefeature verwendet. \\
+Train-Test-Aufteilung & Stratifiziert 80:20 fuer die Logistic-Regression-Baseline & Erhaelt die Klassenanteile in beiden Splits. \\
+Metriken & ROC-AUC, PR-AUC, Balanced Accuracy, Recall, Precision, F1 & Kombination aus Ranking- und Schwellenmetriken fuer unausgeglichene Klassen. \\
+Baseline-Modell & Logistic Regression mit \texttt{class\_weight=balanced} & Erste ueberwachte Referenz; kein Endmodell. \\
+Featureauswahl & Noch keine finale Auswahl & 14-Feature-Variante war ein exploratives Experiment und wird nicht als finaler Selektionsschritt gewertet. \\
+Hyperparameter & Finale Optimierung noch offen & Soll erst im systematischen Modellvergleich mit Cross-Validation erfolgen. \\
 \bottomrule
 \end{longtable}
 
-\section{Offene Fragen und Risiken}
-
+\section{Aktuelle offene Fragen und Risiken}
 \begin{itemize}
-  \item \placeholder{Welche genaue persönliche Forschungsfrage wird verfolgt?}
-  \item \placeholder{Wie wird die Gruppenarbeit aufgeteilt?}
-  \item \placeholder{Welche Metrik ist für die unausgeglichene Zielvariable sachgerecht?}
-  \item \placeholder{Wie groß ist der Datensatz und welche Speicherstrategie ist erforderlich?}
-  \item \placeholder{Welche Grenzen der Aussagekraft müssen später diskutiert werden?}
+  \item Wie werden weitere Modelle und Imbalance-Strategien fair per Cross-Validation verglichen?
+  \item Welche Schwellenwertstrategie ist fuer die Zielmetrik sinnvoll, insbesondere mit Blick auf Precision und Recall?
+  \item Welche EDA-Entscheidungen duerfen in der Modellierungsphase nur innerhalb der Trainingsdaten wiederholt werden, um Data Leakage zu vermeiden?
+  \item Wie robust sind rechenintensive Verfahren wie t-SNE und Bootstrap gegen Seeds, Stichprobengroesse und Parameterwahl?
+  \item Die anonymisierten Features begrenzen fachliche Interpretation und Kausalitaetsaussagen.
+  \item Zeitaufwaende, Gruppentreffen sowie KI-/Prompt-Nutzung muessen vor Abgabe anhand realer Aufzeichnungen vervollstaendigt werden.
 \end{itemize}
 
-\section{Hinweise für die spätere Zusammenfassung}
+\section{Hinweise fuer die spaetere Zusammenfassung}
+Das Portfolio soll die EDA nicht chronologisch nacherzaehlen. Es verdichtet den Arbeitsprozess in
+eine fachliche Reihenfolge: Datenbasis und Datenqualitaet, Klassenimbalance, Gruppenunterschiede,
+Abhaengigkeiten und Redundanz, Dimensionsreduktion, ueberwachte Referenz, Grenzen und daraus
+abgeleitete Modellierungsentscheidungen. Die vollstaendige Chronologie bleibt ausschliesslich in
+diesem Logbuch.
 
-Bei der späteren Verdichtung des Logbuchs müssen Fragestellung, Methodenwahl, Ergebnisse,
-Schwierigkeiten/Grenzen und Ausblick klar erkennbar sein. Für Abbildungen und Tabellen werden
-Nummer, kurze Caption, Textreferenz und ein prägnanter Take-away ergänzt. Die ausführliche
-Nachvollziehbarkeit bleibt in diesem Logbuch erhalten.
+% Vorlage fuer kuenftige Eintraege (bewusst nur als Kommentar, nicht als leerer Logbucheintrag):
+% \logsection{DD.MM.YYYY}{Praegnanter Titel}
+% \field{Arbeitsschritte}{...}
+% \field{Ergebnis/Erkenntnis}{...}
+% \field{Entscheidung und Begruendung}{...}
+% \field{Verworfene Ansaetze/Schwierigkeiten}{...}
+% \field{Zeitaufwand}{...}
+% \field{Naechster Schritt}{...}
 
 \ifdefined\PortfolioMain
   \def\LogbuchEnd{}
