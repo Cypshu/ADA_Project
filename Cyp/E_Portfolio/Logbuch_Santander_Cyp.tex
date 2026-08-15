@@ -30,6 +30,15 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 
 \subsection{Chronologische Eintraege}
 
+\paragraph{Hinweis zur rekonstruierten Zeitachse.}
+Die Eintraege vom 07.08. bis 14.08.2026 wurden rueckblickend anhand der EDA-/ML-Notebooks,
+der gespeicherten Run-Artefakte und der Ergebnistabellen rekonstruiert. Um einen linearen,
+fachlich kausalen Arbeitsablauf abzubilden, folgt die Rekonstruktion der Reihenfolge
+\emph{EDA abschliessen $\rightarrow$ Modellierungsentscheidungen $\rightarrow$ Pipeline $\rightarrow$
+Split $\rightarrow$ Modelle $\rightarrow$ Validation $\rightarrow$ Test}. Die Tageszuordnung ist
+keine minutengenaue Historie; konkrete Kennzahlen werden nur dort genannt, wo sie durch
+Artefakte belegt sind.
+
 \logsection{06.08.2026}{Projektunterlagen und Projektauswahl}
 \field{Zusammenfassung}{Bewertungs- und Projektunterlagen wurden gelesen; Santander Customer Transaction Prediction wurde als Projekt festgelegt.}
 \field{Arbeitsschritte}{Bewertungshinweise und Santander-Aufgabenblatt gelesen; OpenML-ID 45566 sowie Kaggle-/OpenML-Quellen vorgemerkt.}
@@ -111,21 +120,87 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 \field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
 \field{Naechster Schritt}{Mit ueberwachter Baseline pruefen, ob ausserhalb der 2D-Projektion Vorhersageinformation vorhanden ist.}
 
-\logsection{14.08.2026}{Ausgeglichene Labelgruppen und methodischer EDA-Ausblick}
-\field{Arbeitsschritte}{Alle 20.098 True-Faelle mit 20.098 ohne Zuruecklegen gezogenen False-Faellen (\texttt{random\_state=42}) verglichen; balancierte Korrelationsanalyse und zusaetzliche Violinplots erstellt; Grenzen von PCA/t-SNE expliziter dokumentiert.}
-\field{Ergebnis/Erkenntnis}{Eine 1:1-Auswertung erleichtert den Gruppenvergleich, ist aber selbst stichprobenabhaengig. Eine einzelne balancierte Stichprobe reicht deshalb nicht fuer Stabilitaetsaussagen.}
-\field{Entscheidung und Begruendung}{Alle seltenen True-Faelle bleiben erhalten; False wird undersampled. Die natuerliche Baseline bleibt parallel bestehen.}
-\field{Naechster Schritt}{Mehrere Seeds, Bootstrap, Inferenz, Mutual Information, Ausreisser-/Varianzanalyse, Redundanz, Skalierungsvergleich und ueberwachte Baseline.}
-\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
+\logsection{07.08.2026}{EDA finalisiert und Modellierungsleitplanken abgeleitet}
+\field{Arbeitsschritte}{Die bis dahin entstandene EDA systematisch abgeschlossen und methodisch abgesichert: fuenf reproduzierbare 1:1-Stichproben (Seeds 42--46), Bootstrap-Stabilitaetsintervalle, Welch-Tests mit Benjamini-Hochberg-FDR, Mutual Information, Ausreisser-/Streuungsdiagnostik, Redundanzpruefung, Skalierungsvergleich, PCA-Scree-Plot und eine leakage-freie Logistic-Regression-Referenz.}
+\field{Ergebnis/Erkenntnis}{Die Cohen's-$d$-Ranglisten waren ueber die 1:1-Stichproben sehr stabil (Spearman ca. 0,996). Nach FDR-Korrektur waren 181/200 Features signifikant, ohne dass daraus grosse praktische Effekte folgen. Keine Featurepaare erreichten $|r|\geq0{,}8$. Die ersten 20 Min-Max-PCA-Komponenten erklaerten nur 12,988\,\% der Varianz. Die Logistic Regression erreichte ROC-AUC 0,8599 und Average Precision 0,5004.}
+\field{Interpretation und Grenzen}{Viele kleine, stabile Einzelsignale sprechen gegen eine aggressive Vorselektion. Die schwache PCA-Komprimierbarkeit spricht gegen ein vorgeschaltetes PCA-Bottleneck. Signifikanz wird wegen der grossen Stichprobe nur zusammen mit Effektgroessen und Stabilitaet interpretiert.}
+\field{Entscheidung und Begruendung}{Fuer die erste ML-Phase bleiben alle 200 Features erhalten. Average Precision wird wegen des Positivanteils von rund 10,05\,\% als primaere Rankingmetrik verwendet. Transformationen und Hyperparameter duerfen ausschliesslich aus Train/Validation gelernt werden.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Die EDA-Befunde in konkrete Standard- und EDA-adaptierte Modellvarianten uebersetzen.}
 
-\logsection{15.08.2026}{Vollstaendige EDA-Erweiterung und Schlussfolgerung}
-\field{Arbeitsschritte}{Fuenf 1:1-Seeds (42--46), Bootstrap-Intervalle mit 500 Wiederholungen und 5.000 Beobachtungen je Gruppe, Welch-Tests mit Benjamini-Hochberg-FDR, Mutual Information auf 50.000 Zeilen, IQR-Ausreisserquoten, Varianz-/IQR-Rankings, Redundanzpruefung ab $|r|\geq0{,}8$, Skalierungsvergleich, PCA-Scree-Plot, Korrelationsranglistenstabilitaet und Logistic-Regression-Baseline umgesetzt.}
-\field{Ergebnis/Erkenntnis}{Cohen's-$d$-Ranglisten zwischen den fuenf 1:1-Stichproben: Spearman ca. 0,996. Nach FDR-Korrektur 181/200 Features signifikant. Erste 20 Min-Max-PCA-Komponenten: 12,988\,\% kumulierte Varianz. Keine Featurepaare mit $|r|\geq0{,}8$. Logistic Regression: ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749, Precision 0,2863, F1 0,4181.}
-\field{Interpretation und Grenzen}{Hohe Signifikanzzahl ist bei grosser Stichprobe nicht mit grossen Effekten gleichzusetzen; Effektgroessen und Konfidenzintervalle bleiben zentral. Mutual Information ist nicht kausal. PCA/t-SNE/Clustering sind explorativ. Logistic Regression ist eine Referenz, kein optimiertes Endmodell.}
-\field{Entscheidung und Begruendung}{Die EDA wurde um Stabilitaets-, Inferenz- und Modellierungschecks erweitert, um robuste Muster von Projektionseffekten und Stichprobenartefakten zu trennen.}
-\field{Verworfene Ansaetze/Schwierigkeiten}{Vollstaendige Notebookausfuehrung ist rechenintensiv; Bootstrap verwendet deshalb eine dokumentierte feste Stichprobengroesse pro Wiederholung.}
-\field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
-\field{Naechster Schritt}{Weitere ueberwachte Modelle mit Cross-Validation, geeigneten Imbalance-Strategien und Schwellenwertanalyse vergleichen.}
+\logsection{07.08.2026}{Uebergang von der EDA zu Modellierungsentscheidungen}
+\field{Arbeitsschritte}{Die Modellfamilien Naive Bayes und ANN festgelegt und je eine transparente Standardvariante sowie eine EDA-adaptierte Variante geplant. Als strukturelle Vorlage dient die bestehende AML-Projektpipeline mit reproduzierbaren Runs, gespeicherten Konfigurationen, Predictions, Checkpoints, Ergebnistabellen und Plot-Artefakten.}
+\field{Ergebnis/Erkenntnis}{GaussianNB eignet sich als einfache probabilistische Baseline. Fuer die EDA-adaptierten Varianten wird die beobachtete Heterogenitaet der marginalen Verteilungen mit einer Quantiltransformation als pruefbare Hypothese aufgegriffen. Beim ANN wird die Klassenimbalance zusaetzlich ueber eine gewichtete Loss-Funktion adressiert.}
+\field{Entscheidung und Begruendung}{Alle vier Varianten nutzen dieselben 200 Eingabefeatures. Es wird keine label-informierte Featureselektion vor dem Split und keine PCA-Kompression eingesetzt. Modellwahl erfolgt nach Validation Average Precision; Betriebs-Thresholds werden getrennt auf Validation bestimmt.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Eine Modellwahl anhand des spaeteren Testwerts sowie ein Fit von Skalierern/Transformationen vor dem Split wurden ausgeschlossen, um Data Leakage und optimistische Testwerte zu vermeiden.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Reproduzierbare Run- und Reporting-Struktur implementieren.}
+
+\logsection{08.08.2026}{Aufbau der reproduzierbaren ML-Pipeline}
+\field{Arbeitsschritte}{Zentrale Konfiguration, Zufallsseed, CPU-Ausfuehrung und Run-Verzeichnis eingerichtet; lokale Santander-CSV geladen; technische Datenchecks aus der EDA fuer die Modellpipeline wiederholt.}
+\field{Ergebnis/Erkenntnis}{Der echte Datensatz mit 200.000 Zeilen und 200 Features wurde verwendet; der Smoke-Test blieb deaktiviert. Jeder Lauf erzeugt ein eigenes Verzeichnis unter \texttt{Cyp/ML/runs/}.}
+\field{Entscheidung und Begruendung}{\texttt{random\_state=42} wird fuer reproduzierbare Splits und Auswertungen verwendet. Neben Logs werden Konfiguration, Split-Indizes, Predictions, Ergebnistabellen, Modellartefakte, Checkpoints, Epochenhistorien und Plots gespeichert.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Ein nicht reproduzierbarer manueller Modellvergleich ohne gespeicherte Artefakte wurde vermieden. Die fachliche Hauptanalyse bleibt im EDA-Notebook; die ML-Pipeline wiederholt nur notwendige technische Checks.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Daten in Development-, Validation- und Testbereiche aufteilen, bevor Transformationen gefittet werden.}
+
+\logsection{09.08.2026}{Leakage-freier Daten-Split}
+\field{Arbeitsschritte}{Einen stratifizierten 80:20-Split mit \texttt{random\_state=42} erstellt und die 80\,\% Development-Daten nochmals in Training und Validation geteilt.}
+\field{Ergebnis/Erkenntnis}{Die resultierenden Teilmengen umfassen 128.000 Train-Zeilen (64\,\%), 32.000 Validation-Zeilen (16\,\%) und 40.000 Test-Zeilen (20\,\%). Die positiven Klassenanteile bleiben in allen Teilmengen bei etwa 10,05\,\%.}
+\field{Entscheidung und Begruendung}{Alle Skalierer und Transformationen werden ausschliesslich auf Train gefittet. Hyperparameter, Modellranking und Betriebs-Thresholds werden nur auf Validation bestimmt; der Testdatensatz bleibt bis zur finalen Evaluation unberuehrt.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Ein direktes Tuning auf dem Testdatensatz wurde ausgeschlossen, da dadurch die finale Leistungschaetzung optimistisch und nicht mehr sauber nachvollziehbar waere.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Zunaechst eine transparente GaussianNB-Baseline mit allen Rohfeatures trainieren.}
+
+\logsection{10.08.2026}{GaussianNB als probabilistische Baseline}
+\field{Arbeitsschritte}{Standard-GaussianNB mit allen 200 Rohfeatures trainiert; pro Klasse und Feature werden Normalverteilungen unter der bedingten Unabhaengigkeitsannahme modelliert. Empirische Klassenpriors und kein Resampling verwendet. Der F1-optimale Threshold wurde auf Validation bestimmt.}
+\field{Ergebnis/Erkenntnis}{Auf Validation erreichte das Standardmodell ROC-AUC $0{,}8876$, Average Precision $0{,}5805$, F1 $0{,}5505$ und Balanced Accuracy $0{,}7601$. Der Validation-Threshold lag bei $0{,}2683$.}
+\field{Entscheidung und Begruendung}{GaussianNB dient als einfache, schnelle und interpretierbare probabilistische Referenz. Die EDA liefert trotz der Unabhaengigkeitsannahme keine starke paarweise lineare Redundanz, weshalb dieser Baseline-Test sinnvoll ist.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Der Default-Threshold $0{,}5$ wird nicht als einzig sinnvoller Betriebszustand behandelt, da er bei der Klassenimbalance zu einer anderen Recall-Precision-Abwaegung fuehrt.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Eine EDA-adaptierte Quantilnormalisierung testen und ihren Nutzen ausschliesslich auf Validation beurteilen.}
+
+\logsection{11.08.2026}{EDA-adaptiertes GaussianNB}
+\field{Arbeitsschritte}{\texttt{QuantileTransformer(output\_distribution=normal)} ausschliesslich auf Train gefittet; die transformierten Daten fuer GaussianNB verwendet; mehrere \texttt{var\_smoothing}-Werte anhand der Validation Average Precision verglichen.}
+\field{Ergebnis/Erkenntnis}{Das beste \texttt{var\_smoothing} betrug $1\times10^{-12}$. Das adaptierte Modell erreichte auf Validation ROC-AUC $0{,}8891$, Average Precision $0{,}5797$, F1 $0{,}5556$ und Balanced Accuracy $0{,}7610$. Die ROC-AUC und die Schwellenmetriken verbesserten sich leicht, die Average Precision jedoch nicht.}
+\field{Entscheidung und Begruendung}{Die Quantilnormalisierung bleibt eine explizite EDA-Hypothese. Eine Transformation wird nur dann als hilfreich bewertet, wenn sie unter dem primaeren Rankingkriterium und spaeter auf Test robust bleibt.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Eine Verbesserung einzelner Metriken wurde nicht als ausreichender Beleg fuer eine generell bessere Modellvariante interpretiert.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Die EDA-Ideen auch in zwei ANN-Varianten mit kontrollierter Komplexitaet und unterschiedlicher Imbalance-Behandlung testen.}
+
+\logsection{12.08.2026}{ANN-Preprocessing und Architekturen}
+\field{Arbeitsschritte}{Fuer das Small ANN einen train-only \texttt{StandardScaler} und fuer das EDA-adaptierte ANN dieselbe train-only Quantilnormalisierung vorbereitet. Beide Netze verwenden alle 200 Features ohne PCA und ohne label-informierte Vorselektion.}
+\field{Ergebnis/Erkenntnis}{Das Small ANN verwendet die Architektur $200\rightarrow64\rightarrow32\rightarrow1$ mit ReLU und 14.977 trainierbaren Parametern. Das EDA-adaptierte ANN verwendet $200\rightarrow128\rightarrow64\rightarrow32\rightarrow1$ mit BatchNorm, Dropout, ReLU und 36.481 Parametern.}
+\field{Entscheidung und Begruendung}{Die Netze bleiben bewusst moderat gross: Die EDA spricht fuer viele schwache Signale, aber nicht fuer ein einzelnes hochdominantes Merkmal oder die Notwendigkeit eines tiefen Netzes.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{PCA als vorgeschaltete Kompression und eine labelbasierte Featureauswahl wurden nicht in die ANN-Eingabe integriert, damit die Information aller Features erhalten bleibt und kein zusaetzlicher Selektionsschritt die Pipeline verkompliziert.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Training mit getrennten Epochenmetriken, Checkpoints und einer auf die Klassenimbalance abgestimmten Loss-Funktion durchfuehren.}
+
+\logsection{13.08.2026}{ANN-Training, Imbalance-Behandlung und Diagnostik}
+\field{Arbeitsschritte}{Fuer jede Epoche getrennte Train- und Validation-Metriken berechnet; beste Modellzustaende und Epochenhistorien als CSV gespeichert; Early Stopping und Trainingsdiagnostik mit Loss-, Ranking- und Confusion-Count-Plots umgesetzt.}
+\field{Ergebnis/Erkenntnis}{Das Small ANN nutzt Adam und eine ungewichtete \texttt{BCEWithLogitsLoss} mit Monitoring des Validation Loss. Das EDA-adaptierte ANN nutzt AdamW und \texttt{BCEWithLogitsLoss(pos\_weight)} mit $\approx8{,}952$, wobei Validation Average Precision ueberwacht wird. Das adaptierte ANN erreichte auf Validation AP $0{,}5076$ statt $0{,}4686$ beim Small ANN.}
+\field{Entscheidung und Begruendung}{Die Imbalance-Gewichtung wird nur in der angepassten ANN-Variante verwendet, damit ihr Beitrag gegen die klassische Referenz sichtbar bleibt. Sigmoid wird erst fuer die Auswertung auf die Modell-Logits angewendet.}
+\field{Verworfene Ansaetze/Schwierigkeiten}{Accuracy wurde nicht als Trainingsziel verwendet. Die steigende Trainingsleistung bei gleichzeitig nachlassender Validationleistung wurde als Overfitting-Risiko betrachtet; neuronale Netze koennen zudem Optimierungsvarianz zwischen Seeds zeigen.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Alle vier Varianten vor dem ersten Testzugriff anhand der Validation Average Precision vergleichen.}
+
+\logsection{14.08.2026}{Validation-Ranking, einmalige Testevaluation und Robustheitsanalyse}
+\field{Arbeitsschritte}{Alle vier Modellkonfigurationen vor dem ersten Testzugriff nach Validation Average Precision gerankt. Danach die einmalige Testevaluation mit ROC-/PR-Kurven, Confusion Matrices, Validation-Threshold-Diagnostik, Kalibrierung und Wahrscheinlichkeitsverteilungen durchgefuehrt. Zusaetzlich wurden 200 Bootstrap-Wiederholungen fuer Average Precision und ROC-AUC sowie eine Fehleranalyse sicherer False Positives/False Negatives gespeichert.}
+\field{Validation-Auswahl}{\texttt{NB | standard} erreichte die hoechste Validation-AP mit 0,5805 und wurde deshalb bereits vor der Testeinsicht ausgewaehlt. \texttt{NB | EDA-adapted} lag bei 0,5797, \texttt{ANN | EDA-adapted} bei 0,5076 und \texttt{ANN | small} bei 0,4686.}
+\field{Testergebnis}{Beim validation-basierten F1-Threshold von 0,2683 erreichte \texttt{NB | standard} ROC-AUC 0,8881, Average Precision 0,5755, Balanced Accuracy 0,7525, Precision 0,5304, Recall 0,5604 und F1 0,5450. Das EDA-adaptierte GaussianNB erreichte AP 0,5734 und F1 0,5460. Das Small ANN erreichte AP 0,4666 und F1 0,4662; das EDA-adaptierte ANN AP 0,5030 und F1 0,4865.}
+\field{Robustheit und Kalibrierung}{Fuer das ausgewaehlte Standard-GaussianNB ergab der Bootstrap fuer AP ein 95\,\%-Intervall von etwa [0,5615; 0,5906] und fuer ROC-AUC [0,8838; 0,8933]. Das gewichtete EDA-ANN verbesserte das Ranking gegenueber dem Small ANN, zeigte aber mit Brier Score 0,1505 deutlich schlechter kalibrierte Wahrscheinlichkeiten als die NB-Varianten (ca. 0,061).}
+\field{Interpretation und Grenzen}{Die Quantiltransformation verbesserte GaussianNB unter der primaeren Rankingmetrik nicht robust. Das angepasste ANN profitierte von problembezogenen Anpassungen, blieb aber hinter Naive Bayes. Hoehere Modellkomplexitaet war somit kein Qualitaetskriterium. Die Ergebnisse beruhen weiterhin auf einem einzelnen stratifizierten Hold-out-Split; ANN-Seed-Stabilitaet und Cross-Validation bleiben offene Robustheitschecks.}
+\field{Entscheidung und Begruendung}{Die Modellwahl bleibt an die vorab festgelegte Validation-AP gebunden. Der F1-Threshold wird ebenfalls nur aus Validation uebernommen; Testdaten werden nicht fuer nachtraegliches Tuning verwendet.}
+\field{Zeitaufwand}{\placeholder{nachtraeglich nicht exakt rekonstruierbar}}
+\field{Naechster Schritt}{Run-Artefakte verifizieren und die Ergebnisse thematisch im Portfolio verdichten; danach Robustheit ueber weitere Splits/Cross-Validation und ANN-Seeds pruefen.}
+
+\logsection{15.08.2026}{ML-Run verifiziert und Portfolio/Logbuch konsolidiert}
+\field{Arbeitsschritte}{Den Run \texttt{20260815\_030409\_NB\_ANN} anhand von \texttt{config.json}, \texttt{validation\_results.csv}, \texttt{test\_results.csv}, \texttt{results.csv}, Trainingshistorien, Predictions und Bootstrap-Tabelle geprueft. Portfolio und Logbuch auf denselben Ergebnisstand gebracht und ausgewaehlte ML-Plots fuer das Overleaf-Asset-Verzeichnis vorbereitet.}
+\field{Ergebnis/Erkenntnis}{Die im rekonstruierten ML-Abschnitt dokumentierten Kennzahlen sind durch die Run-Artefakte belegt. Das ausgewaehlte Modell ist aufgrund der Validation-AP \texttt{NB | standard}; nicht aufgrund eines nachtraeglich betrachteten Testscores.}
+\field{Entscheidung und Begruendung}{Das Portfolio fasst die Resultate thematisch zusammen, waehrend das Logbuch den linearen Arbeitsablauf und die verworfenen bzw. nicht verbesserten Varianten sichtbar laesst.}
+\field{Offene Punkte}{Cross-Validation bzw. Split-Stabilitaet, mehrere ANN-Seeds und eine an Anwendungskosten orientierte Threshold-Wahl sind noch nicht abgeschlossen.}
+\field{Zeitaufwand}{\placeholder{falls belastbar nachvollziehbar}}
+\field{Naechster Schritt}{Naechste Modellierungsrunde bzw. Robustheitsanalyse planen und spaeter die finale Gruppenmodellierung einordnen.}
 
 \subsection{Laufende Methodik- und Entscheidungsuebersicht}
 \begin{longtable}{p{0.20\textwidth}p{0.29\textwidth}p{0.41\textwidth}}
@@ -134,31 +209,36 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 \midrule
 Datenzugang & OpenML ID 45566 & Reproduzierbare Quelle; lokale Rohdaten werden nicht versioniert. \\
 Datenqualitaet & Keine fehlenden Werte & Keine Imputation erforderlich. \\
-Zielvariable & 89,951\,\% False / 10,049\,\% True & Klassenimbalance muss in Training, Metriken und Schwellenwahl beruecksichtigt werden. \\
-Skalierung & Min-Max fuer PCA/t-SNE/Clustering; Skalierungsvergleich durchgefuehrt & Target wird nicht skaliert und nicht als Eingabefeature verwendet. \\
-Train-Test-Aufteilung & Stratifiziert 80:20 fuer die Logistic-Regression-Baseline & Erhaelt die Klassenanteile in beiden Splits. \\
-Metriken & ROC-AUC, PR-AUC, Balanced Accuracy, Recall, Precision, F1 & Kombination aus Ranking- und Schwellenmetriken fuer unausgeglichene Klassen. \\
-Baseline-Modell & Logistic Regression mit \texttt{class\_weight=balanced} & Erste ueberwachte Referenz; kein Endmodell. \\
-Featureauswahl & Noch keine finale Auswahl & 14-Feature-Variante war ein exploratives Experiment und wird nicht als finaler Selektionsschritt gewertet. \\
-Hyperparameter & Finale Optimierung noch offen & Soll erst im systematischen Modellvergleich mit Cross-Validation erfolgen. \\
+Zielvariable & 89,951\,\% False / 10,049\,\% True & Imbalance wird in Rankingmetrik, Loss und Threshold-Wahl beruecksichtigt. \\
+Featurebasis & Alle 200 numerischen Features & Keine starke lineare Redundanz; viele kleine stabile Effekte; keine finale label-informierte Vorselektion. \\
+Split & 64\,\% Train / 16\,\% Validation / 20\,\% Test, stratifiziert & Preprocessing nur auf Train; Auswahl/Tuning nur auf Validation; Test erst danach. \\
+Primaere Modellwahl & Validation Average Precision & Aussagekraeftiger als Accuracy bei rund 10\,\% Positivanteil. \\
+Threshold & F1-optimal auf Validation & Test wird nicht zur Schwellenwahl verwendet; fachlich kostenbasierte Schwelle bleibt spaeter zu pruefen. \\
+Naive Bayes & Standard + Quantil-adaptiert & Standard-NB gewinnt Validation-AP knapp und bleibt auf Test AP 0,5755. \\
+ANN & Small + EDA-adaptiert & EDA-ANN verbessert AP gegenueber Small ANN, bleibt aber unter NB und ist schlechter kalibriert. \\
+Ausgewaehltes Modell & \texttt{NB | standard} & Vor Testeinsicht nach Validation-AP 0,5805 ausgewaehlt. \\
+Test-Robustheit & Bootstrap mit 200 Wiederholungen & NB-Standard: AP 95\,\%-Intervall ca. [0,5615; 0,5906], ROC-AUC ca. [0,8838; 0,8933]. \\
+Offene Robustheit & Cross-Validation / weitere Splits und ANN-Seeds & Aktueller Vergleich basiert auf einem reproduzierbaren Hold-out-Split. \\
 \bottomrule
 \end{longtable}
 
 \subsection{Aktuelle offene Fragen und Risiken}
 \begin{itemize}
-  \item Wie werden weitere Modelle und Imbalance-Strategien fair per Cross-Validation verglichen?
-  \item Welche Schwellenwertstrategie ist fuer die Zielmetrik sinnvoll, insbesondere mit Blick auf Precision und Recall?
-  \item Welche EDA-Entscheidungen duerfen in der Modellierungsphase nur innerhalb der Trainingsdaten wiederholt werden, um Data Leakage zu vermeiden?
-  \item Wie robust sind rechenintensive Verfahren wie t-SNE und Bootstrap gegen Seeds, Stichprobengroesse und Parameterwahl?
+  \item Wie stabil bleibt das Modellranking ueber weitere stratifizierte Splits bzw. Cross-Validation?
+  \item Wie stark variieren die beiden ANNs ueber mehrere Initialisierungs-Seeds?
+  \item Der bisherige F1-optimale Validation-Threshold ist methodisch sauber, aber noch nicht an fachliche Kosten von False Positives und False Negatives gekoppelt.
+  \item Das gewichtete EDA-ANN verbessert AP gegenueber dem Small ANN, besitzt aber deutlich schlechtere Kalibrierung; Rankingqualitaet und Wahrscheinlichkeitskalibrierung muessen getrennt bewertet werden.
+  \item Bootstrap-Intervalle quantifizieren Teststichprobenunsicherheit, ersetzen aber keine externe Validierung.
   \item Die anonymisierten Features begrenzen fachliche Interpretation und Kausalitaetsaussagen.
   \item Zeitaufwaende, Gruppentreffen sowie KI-/Prompt-Nutzung muessen vor Abgabe anhand realer Aufzeichnungen vervollstaendigt werden.
 \end{itemize}
 
 \subsection{Hinweise fuer die spaetere Zusammenfassung}
-Das Portfolio soll die EDA nicht chronologisch nacherzaehlen. Es verdichtet den Arbeitsprozess in
-eine fachliche Reihenfolge: Datenbasis und Datenqualitaet, Klassenimbalance, Gruppenunterschiede,
-Abhaengigkeiten und Redundanz, Dimensionsreduktion, ueberwachte Referenz, Grenzen und daraus
-abgeleitete Modellierungsentscheidungen. Die vollstaendige Chronologie bleibt ausschliesslich in
+Das Portfolio erzaehlt den Arbeitsprozess nicht tageweise nach. Es verdichtet ihn in einer linearen
+fachlichen Argumentation: Datenbasis $\rightarrow$ robuste EDA-Befunde $\rightarrow$ daraus abgeleitete
+Modellierungsentscheidungen $\rightarrow$ leakage-freier Split $\rightarrow$ Standard- und
+EDA-adaptierte Modelle $\rightarrow$ Validation-Auswahl $\rightarrow$ Testevaluation $\rightarrow$
+Grenzen und naechste Robustheitsschritte. Die vollstaendige rekonstruierte Chronologie bleibt in
 diesem Logbuch.
 
 % Vorlage fuer kuenftige Eintraege (bewusst nur als Kommentar, nicht als leerer Logbucheintrag):

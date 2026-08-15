@@ -1,10 +1,8 @@
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
-\renewcommand{\contentsname}{Inhaltsverzeichnis}
-\renewcommand{\figurename}{Abbildung}
-\renewcommand{\tablename}{Tabelle}
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
 \emergencystretch=1.5em
 \usepackage{xcolor}
@@ -19,7 +17,6 @@
 \usepackage{needspace}
 \usepackage{enumitem}
 \usepackage{titlesec}
-\usepackage{fancyhdr}
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=true,
@@ -58,12 +55,7 @@
   {\normalsize\bfseries\color{ADAblue}}{\thesubsubsection}{0.7em}{}
 \setlist[itemize]{leftmargin=*,itemsep=0.25em,topsep=0.4em}
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small E-Portfolio -- Santander}
-\fancyhead[R]{\small Cyprian Sawarzynski}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
+\pagestyle{plain}
 
 \begin{document}
 
@@ -109,20 +101,21 @@ anonymisierten numerischen Merkmalen soll vorhergesagt werden, ob die Zielvariab
 \end{itemize}
 
 \subsection{Persoenliche Fragestellung}
-Mein bisheriger Schwerpunkt ist die Frage, \textbf{welche statistisch stabilen Unterschiede
-zwischen \texttt{target=False} und \texttt{target=True} in den anonymisierten Features erkennbar
-sind und welche Konsequenzen sich daraus fuer eine robuste Modellierung unter starker
-Klassenimbalance ergeben}. Dabei wird zwischen statistischer Signifikanz, praktischer
-Effektgroesse, linearer bzw. nichtlinearer Abhaengigkeit und Darstellungseffekten von
-Dimensionsreduktionsverfahren unterschieden.
+Mein Schwerpunkt ist die Frage, \textbf{welche statistisch stabilen Unterschiede zwischen
+\texttt{target=False} und \texttt{target=True} in den anonymisierten Features erkennbar sind und
+welche EDA-begruendeten Modellierungsentscheidungen unter starker Klassenimbalance tatsaechlich
+einen messbaren Mehrwert liefern}. Dabei werden statistische Signifikanz, praktische Effektgroesse,
+lineare bzw. nichtlineare Abhaengigkeit, Dimensionsreduktion, Rankingmetriken, Schwellenwahl und
+Kalibrierung bewusst getrennt betrachtet.
 
 \subsection{Ziel meines Arbeitsanteils}
-Ziel meines bisherigen Arbeitsanteils ist eine nachvollziehbare EDA als Grundlage fuer die
-anschliessende Modellierung. Dazu gehoeren Datenqualitaet, Klassenverteilung,
-Featureverteilungen, Effektgroessen, Inferenz, Redundanz, Dimensionsreduktion,
-Stabilitaetspruefungen und eine erste ueberwachte Referenz. Die EDA soll begruenden, welche
-Modellierungsentscheidungen spaeter sinnvoll sind und welche Annahmen nicht durch die Daten
-gestuetzt werden.
+Mein Arbeitsanteil verbindet eine methodisch abgesicherte EDA mit einer ersten reproduzierbaren
+Machine-Learning-Phase. Die EDA begruendet, welche Annahmen fuer die Modellierung sinnvoll sind;
+anschliessend werden Naive Bayes und kuenstliche neuronale Netze jeweils als Standard- und
+EDA-adaptierte Variante in einer leakage-freien Train-/Validation-/Test-Pipeline verglichen. Neben
+reiner Modellleistung stehen Reproduzierbarkeit, Reporting, Plotting, Schwellenwahl und die kritische
+Pruefung im Vordergrund, ob zusaetzliche Modellkomplexitaet oder EDA-basierte Anpassungen wirklich
+helfen.
 
 \section{Individuelles Logbuch}
 \label{sec:logbuch}
@@ -219,24 +212,141 @@ bleibt.
   \label{fig:eda-baseline}
 \end{figure}
 
+\subsection{Vom EDA-Befund zur Modellierungsstrategie}
+Die EDA liefert keine Begruendung fuer eine aggressive Feature-Reduktion: starke lineare Redundanz
+wurde nicht gefunden, die relevanten Einzeleffekte sind klein und ueber viele Features verteilt und
+wenige PCA-Komponenten erklaeren nur einen kleinen Anteil der Gesamtvarianz. Daher bleiben fuer die
+erste Modellierungsphase alle 200 Features erhalten. Gleichzeitig macht der Positivanteil von nur
+rund 10,05\,\% Accuracy als Hauptmetrik ungeeignet; die Modellwahl wird deshalb primaer an Average
+Precision auf dem Validation-Set ausgerichtet.
+
+Standardvarianten werden bewusst gegen EDA-adaptierte Varianten gestellt. Bei GaussianNB testet die
+angepasste Variante eine train-only Quantiltransformation auf eine Normalverteilung und stimmt
+\texttt{var\_smoothing} auf Validation ab. Beim ANN wird ein kleines MLP mit StandardScaler gegen ein
+groesseres, regularisiertes MLP mit Quantiltransformation, BatchNorm, Dropout, AdamW und
+\texttt{BCEWithLogitsLoss(pos\_weight)} verglichen. Die Anpassungen sind Hypothesen aus der EDA und
+werden nicht automatisch als Verbesserung vorausgesetzt.
+
+\subsection{Leakage-freie ML-Pipeline und Datenaufteilung}
+Der erste stratifizierte 80:20-Split reproduziert den Testsplit der EDA. Nur die verbleibenden
+80\,\% Development-Daten werden erneut geteilt. Damit entstehen 128.000 Trainingsfaelle (64\,\%),
+32.000 Validation-Faelle (16\,\%) und 40.000 Testfaelle (20\,\%). Skalierer und
+Quantiltransformationen werden ausschliesslich auf Train gefittet. Hyperparameter, Modellranking und
+F1-Thresholds werden ausschliesslich aus Validation abgeleitet. Das Testset wird erst danach fuer
+die finale Leistungsabschaetzung verwendet.
+
+Jeder Run speichert Konfiguration, Split-Indizes, Predictions, Ergebnistabellen, Modellartefakte,
+ANN-Checkpoints, Epochenhistorien und Plot-Artefakte. Der hier berichtete echte Run ist
+\texttt{20260815\_030409\_NB\_ANN}.
+
+\subsection{Naive Bayes: Standard gegen EDA-adaptierte Variante}
+Das Standard-GaussianNB auf den Rohfeatures erreichte auf Validation ROC-AUC 0,8876 und Average
+Precision 0,5805. Die EDA-adaptierte Variante mit
+\texttt{QuantileTransformer(output\_distribution=normal)} und dem auf Validation gewaehlteten
+\texttt{var\_smoothing}=10^{-12} erreichte ROC-AUC 0,8891, aber mit 0,5797 eine minimal niedrigere
+Average Precision. Damit verbesserte die Normalisierung die primaere Rankingmetrik nicht.
+
+Auf Test bestaetigte sich dieses Bild: Standard-GaussianNB erreichte AP 0,5755 und ROC-AUC 0,8881;
+die angepasste Variante AP 0,5734 und ROC-AUC 0,8879. Die sehr kleinen Differenzen sprechen nicht
+dafuer, die zusaetzliche Transformation als generell vorteilhaft zu interpretieren.
+
+\subsection{Kuenstliche neuronale Netze}
+Das Small ANN verwendet die Architektur $200\rightarrow64\rightarrow32\rightarrow1$ mit ReLU,
+StandardScaler, ungewichteter \texttt{BCEWithLogitsLoss} und Adam (14.977 Parameter). Das
+EDA-adaptierte ANN verwendet $200\rightarrow128\rightarrow64\rightarrow32\rightarrow1$ mit
+Quantilnormalisierung, BatchNorm, Dropout, ReLU, AdamW und einem aus dem Trainingssplit abgeleiteten
+\texttt{pos\_weight}\,$\approx8{,}952$ (36.481 Parameter). Beide besten Checkpoints lagen in diesem
+Run bei Epoche 7.
+
+Die problembezogene Anpassung verbessert das ANN deutlich gegenueber der kleinen Referenz:
+Validation-AP steigt von 0,4686 auf 0,5076; auf Test von 0,4666 auf 0,5030. Trotzdem bleibt das
+angepasste ANN unter den beiden Naive-Bayes-Varianten. Die Trainingshistorien zeigen zugleich, warum
+Early Stopping wichtig ist: Die Trainingsleistung steigt weiter, waehrend sich die Validation-Metriken
+nach dem besten Bereich nicht entsprechend verbessern.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{assets/ml_validation_model_ranking.png}
+  \caption{Validation-Ranking vor der ersten Testevaluation. Die Auswahl erfolgt anhand der Average Precision und ist damit vom spaeteren Testresultat getrennt.}
+  \label{fig:ml-validation-ranking}
+\end{figure}
+
+\subsection{Validation-basierte Modellauswahl und finale Testevaluation}
+Vor der Testeinsicht wurde \texttt{NB | standard} wegen der hoechsten Validation Average Precision
+(0,5805) ausgewaehlt. Tabelle~\ref{tab:ml-test-results} zeigt die Testresultate bei den jeweils auf
+Validation F1-optimierten Thresholds. Dass das EDA-adaptierte GaussianNB auf Test einen minimal
+hoeheren F1-Wert erreicht, aendert die Modellwahl nicht, weil der Test nicht nachtraeglich fuer die
+Auswahl verwendet wird.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Testvergleich der vier Modellvarianten. AP und ROC-AUC sind threshold-unabhaengig; Balanced Accuracy, Precision, Recall und F1 verwenden den vorher auf Validation gewaehlteten F1-Threshold.}
+\label{tab:ml-test-results}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Modell} & \textbf{AP} & \textbf{ROC-AUC} & \textbf{Bal. Acc.} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+NB Standard & 0,5755 & 0,8881 & 0,7525 & 0,5304 & 0,5604 & 0,5450 \\
+NB EDA-adaptiert & 0,5734 & 0,8879 & 0,7531 & 0,5312 & 0,5617 & 0,5460 \\
+ANN Small & 0,4666 & 0,8464 & 0,7121 & 0,4411 & 0,4943 & 0,4662 \\
+ANN EDA-adaptiert & 0,5030 & 0,8608 & 0,7362 & 0,4345 & 0,5527 & 0,4865 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{assets/ml_test_ranking_metric_comparison.png}
+  \caption{Threshold-unabhaengiger Testvergleich von Average Precision und ROC-AUC. Die EDA-Logistic-Regression ist als historische Referenz eingezeichnet.}
+  \label{fig:ml-test-ranking}
+\end{figure}
+
+\subsection{Schwellenwerte, Kalibrierung und Unsicherheit}
+Die Validation-optimierten Thresholds unterscheiden sich deutlich vom Default 0,5: beispielsweise
+0,2683 fuer das Standard-GaussianNB und 0,7340 fuer das gewichtete EDA-ANN. Beim Standard-NB steigt
+dadurch auf Test der Recall gegenueber dem Default-Threshold von 0,3473 auf 0,5604, waehrend die
+Precision von 0,7112 auf 0,5304 sinkt; der F1-Wert steigt von 0,4667 auf 0,5450. Dies zeigt, dass
+Rankingqualitaet und Betriebsentscheidung getrennt bewertet werden muessen.
+
+Auch Kalibrierung und Ranking liefern unterschiedliche Aussagen. Das EDA-adaptierte ANN verbessert
+die AP gegenueber dem Small ANN, besitzt aber mit einem Brier Score von 0,1505 wesentlich schlechter
+kalibrierte Wahrscheinlichkeiten als die beiden Naive-Bayes-Varianten mit etwa 0,061. Die
+Klassengewichtung veraendert damit die Score-Skala stark; gute Rankingmetriken duerfen nicht mit gut
+kalibrierten Wahrscheinlichkeiten gleichgesetzt werden.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{assets/ml_test_confusion_matrices.png}
+  \caption{Test-Confusion-Matrices der vier Varianten bei den auf Validation festgelegten F1-Thresholds. Die Darstellung macht den Precision-/Recall-Trade-off der unterschiedlichen Betriebsgrenzen sichtbar.}
+  \label{fig:ml-confusions}
+\end{figure}
+
+Fuer die Testmetriken wurden 200 Bootstrap-Wiederholungen berechnet. Beim ausgewaehlten Standard-NB
+liegt das 95\,\%-Bootstrapintervall fuer Average Precision ungefaehr bei [0,5615; 0,5906] und fuer
+ROC-AUC bei [0,8838; 0,8933]. Die Intervalle quantifizieren die Stichprobenunsicherheit des
+Testsets, ersetzen aber weder externe Validierung noch eine Untersuchung weiterer Splits.
+
 \subsection{Wichtigste methodische Entscheidungen und Korrekturen}
-Im Verlauf der EDA wurden mehrere Darstellungen und Interpretationen ueberarbeitet. Wesentliche
-Korrekturen waren die klare Trennung von Features und Label, die Maskierung der
-Korrelationsdiagonalen, der direkte Vergleich identischer Farb- und Achsenskalierungen, die
-Ergaenzung balancierter Stichproben und mehrerer Seeds sowie die explizite Einschraenkung der
-Aussagekraft von PCA, t-SNE und Clustering. Ein korrelationsbasiertes 14-Feature-Experiment wurde
-als explorativer Versuch dokumentiert, aber nicht als finale Featureauswahl uebernommen, weil es
-keine belastbare Labeltrennung erzeugte.
+Die Arbeit folgt damit einer linearen Argumentation: Die EDA begruendet die Modellhypothesen; danach
+werden Preprocessing und Modellwahl strikt innerhalb Train/Validation gehalten und der Test erst am
+Ende betrachtet. Wichtige Korrekturen waren die klare Trennung von Feature- und Labelanalyse, die
+vorsichtige Interpretation von PCA/t-SNE/Clustering, der Verzicht auf eine vorgezogene
+label-informierte Featureauswahl sowie die Trennung von Rankingmetriken, Threshold-Metriken und
+Kalibrierung. Die EDA-adaptierten Varianten werden nur dann als Fortschritt gewertet, wenn der
+Vergleich dies tatsaechlich stuetzt.
 
 \subsection{Grenzen und naechster Schritt}
-Die Feature-Namen sind anonymisiert und erlauben keine fachliche Kausalinterpretation.
-Undersampling, Bootstrap und Mutual Information besitzen eigene Stichproben- bzw.
-Schaetzunsicherheiten. Multiple Tests koennen bei grossen Stichproben auch sehr kleine Effekte
-als signifikant markieren. Dimensionsreduktions- und Clusterverfahren bleiben explorativ.
+Die Feature-Namen sind anonymisiert und erlauben keine fachliche Kausalinterpretation. Die aktuelle
+ML-Auswertung ist reproduzierbar und besitzt ein unberuehrtes Testset, basiert aber weiterhin auf
+einem einzelnen stratifizierten Hold-out-Split. Cross-Validation bzw. Split-Stabilitaet und mehrere
+ANN-Seeds fehlen noch. Der F1-optimale Validation-Threshold ist eine methodische Referenz und noch
+nicht an reale Kosten von False Positives und False Negatives gekoppelt.
 
-Der naechste fachliche Schritt ist deshalb kein weiterer Versuch, die EDA optisch zu optimieren,
-sondern ein sauberer Modellvergleich mit Cross-Validation, geeigneten Imbalance-Strategien,
-PR-AUC-orientierter Bewertung, Schwellenwertanalyse und nachvollziehbarer Hyperparameterwahl.
+Der naechste Schritt ist daher nicht, weitere Komplexitaet ungeprueft hinzuzufuegen, sondern die
+Robustheit des Modellrankings ueber weitere Splits bzw. Cross-Validation zu untersuchen, die
+Seed-Sensitivitaet der ANNs zu pruefen und anschliessend zu entscheiden, welche Modelle fuer den
+finalen Gruppenvergleich sinnvoll erweitert werden.
 
 \section{Einschaetzung der Gruppenmitglieder}
 Dieser vertrauliche Abschnitt soll auf realen Beobachtungen aus der Zusammenarbeit beruhen.
@@ -261,7 +371,7 @@ Die Quellenangaben werden vor Abgabe in einem einheitlichen Zitierstil finalisie
 \sourceitem{Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, Sommersemester 2026. Verwendung: Anforderungen und Bewertung des E-Portfolios.}
 \sourceitem{OpenML, Datensatz ID 45566.}{\emph{Santander Customer Transaction Prediction}. Verwendung: reproduzierbare Datenquelle; Abruf des Datensatzes im Projekt am 06.08.2026 dokumentiert.}
 \sourceitem{Kaggle.}{\emph{Santander Customer Transaction Prediction}. Verwendung: Wettbewerbskontext und Aufgabenbeschreibung. \offen{finales Zugriffsdatum}}
-\sourceitem{Software.}{Python, Jupyter, pandas, NumPy, SciPy, scikit-learn, matplotlib und seaborn. \offen{verwendete Versionen aus der Projektumgebung ergaenzen}}
+\sourceitem{Software.}{Python 3.12.3, NumPy 2.0.0, pandas 2.2.3, scikit-learn 1.6.1 und PyTorch 2.12.0+cpu fuer den dokumentierten ML-Run; zusaetzlich Jupyter, SciPy, matplotlib und seaborn im EDA-/Reporting-Workflow.}
 \sourceitem{Generative KI / Agentenunterstuetzung.}{Im Arbeitsprozess wurde Agentenunterstuetzung fuer EDA- und Dokumentationsarbeiten verwendet. Ergebnisse wurden als Arbeitsstaende uebernommen und werden fachlich sowie strukturell nachgeprueft. \offen{Tool/Version, konkrete Einsatzzeitraeume und relevante Prompts vollstaendig dokumentieren}}
 
 \subsection{KI- und Tool-Transparenz}
@@ -278,7 +388,9 @@ Entscheidung zunaechst unzureichend umgesetzt hat.
   \item Gruppentreffen und Abweichungen vom Gruppenplan anhand tatsaechlicher Ereignisse ergaenzen.
   \item Einschaetzung der Gruppenmitglieder aus eigener Beobachtung vervollstaendigen.
   \item Softwareversionen, Zitierstil, Zugriffsdatum und KI-/Prompt-Dokumentation finalisieren.
-  \item Nach Abschluss der Modellierungsphase die Zusammenfassung um Modellvergleich, Cross-Validation, Hyperparameter und finale Schlussfolgerung erweitern.
+  \item Modellranking ueber weitere Splits bzw. Cross-Validation und mehrere ANN-Seeds auf Robustheit pruefen.
+  \item Threshold-Wahl spaeter an fachliche Kosten von False Positives und False Negatives koppeln.
+  \item Nach der naechsten Modellierungsrunde die finale Schlussfolgerung und Einordnung in den Gruppenvergleich aktualisieren.
   \item In Overleaf nur die Portfolio-Hauptdatei kompilieren; Logbuch und Abbildungen werden automatisch eingebunden. Abbildungen, Querverweise und Seitenumfang vor Abgabe visuell pruefen.
 \end{itemize}
 

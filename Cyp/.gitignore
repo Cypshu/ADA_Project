@@ -7,8 +7,9 @@
 !E_Portfolio/*.tex
 !E_Portfolio/README.md
 !E_Portfolio/assets/
-!E_Portfolio/assets/**
+
 !E_Portfolio/ADA_138_Sawarzynski_Portfolio.pdf
+!E_Portfolio/Logbuch_Santander_Cyp.pdf
 
 # LaTeX-Buildartefakte
 *.aux
@@ -19,15 +20,15 @@
 *.fdb_latexmk
 *.synctex.gz
 
-# Die separate Logbuch-PDF wird lokal erzeugt, aber nicht versioniert.
-E_Portfolio/Logbuch_Santander_Cyp.pdf
-
 # EDA-Quellen und Rohdaten
 !data/
 data/*
 !data/README.md
 !EDA/
-!EDA/**/
 !EDA/*.ipynb
-!EDA/assets/
-!EDA/assets/**
+!ML/
+!ML/**/
+!ML/*.ipynb
+!ML/assets/
+!ML/assets/**
+
