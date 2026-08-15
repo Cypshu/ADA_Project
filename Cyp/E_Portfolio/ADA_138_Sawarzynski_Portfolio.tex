@@ -1,17 +1,25 @@
 \documentclass[11pt,a4paper]{article}
 
-\usepackage{fontspec}
-\setmainfont{Latin Modern Roman}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
 \renewcommand{\contentsname}{Inhaltsverzeichnis}
 \renewcommand{\figurename}{Abbildung}
 \renewcommand{\tablename}{Tabelle}
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
+\emergencystretch=1.5em
 \usepackage{xcolor}
 \definecolor{ADAblue}{HTML}{173F5F}
 \definecolor{ADAgold}{HTML}{D99A2B}
+\definecolor{ADAlight}{HTML}{EEF3F7}
+\usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{graphicx}
+\usepackage{needspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=true,
@@ -22,9 +30,40 @@
   pdfauthor={Cyprian Sawarzynski}
 }
 
-\newcommand{\offen}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
+\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
+\newcommand{\offen}[1]{\placeholder{#1}}
 \newcommand{\sourceitem}[2]{\noindent\textbf{#1}\\#2\par\medskip}
-\pagestyle{plain}
+
+% Logbuch-Makros: Die Logbuchdatei ist eine reine Include-Datei.
+\newcommand{\logsection}[2]{%
+  \needspace{8\baselineskip}%
+  \par\medskip
+  \noindent\colorbox{ADAlight}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \textbf{\color{ADAblue}#1}\hfill\textbf{#2}}}%
+  \par\smallskip
+}
+\newcommand{\field}[2]{%
+  \par\begingroup\sloppy
+  \noindent\textbf{\color{ADAblue}#1:} #2\par
+  \endgroup\smallskip
+}
+
+% Einheitliche Overleaf-Gestaltung.
+\titleformat{\section}
+  {\Large\bfseries\color{ADAblue}}{\thesection}{0.7em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{ADAblue}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{ADAblue}}{\thesubsubsection}{0.7em}{}
+\setlist[itemize]{leftmargin=*,itemsep=0.25em,topsep=0.4em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small E-Portfolio -- Santander}
+\fancyhead[R]{\small Cyprian Sawarzynski}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
 
 \begin{document}
 
@@ -85,11 +124,17 @@ Stabilitaetspruefungen und eine erste ueberwachte Referenz. Die EDA soll begruen
 Modellierungsentscheidungen spaeter sinnvoll sind und welche Annahmen nicht durch die Daten
 gestuetzt werden.
 
-\section{Individueller Arbeitsprozess}
-Das vollstaendige, chronologisch gefuehrte Arbeitsprotokoll befindet sich im Anhang und wird in
-der separaten Datei \texttt{Logbuch\_Santander\_Cyp.tex} gepflegt. Das Logbuch dokumentiert den
-tatsaechlichen Arbeitsverlauf. Die folgenden Abschnitte sind dagegen thematisch geordnet und
-verdichten die Ergebnisse fuer eine lesbare Gesamtdarstellung.
+\section{Individuelles Logbuch}
+\label{sec:logbuch}
+Das Logbuch ist eine separate Quelldatei, wird aber an dieser Stelle vollstaendig in das
+Portfolio eingebunden. Dadurch bleibt die chronologische Arbeitsdokumentation technisch getrennt
+und trotzdem Bestandteil des eigentlichen Portfolios. Die Datei
+\texttt{Logbuch\_Santander\_Cyp.tex} enthaelt ausschliesslich den Inhalt dieses Kapitels und wird
+nicht separat kompiliert.
+
+\input{Logbuch_Santander_Cyp.tex}
+
+\clearpage
 
 \section{Verdichtete Zusammenfassung der bisherigen Arbeit}
 
@@ -102,7 +147,7 @@ inhaltlich-kausale Interpretation einzelner Variablen ist daher nicht moeglich.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.82\textwidth]{../EDA/assets/klassenimbalance.png}
+  \includegraphics[width=0.82\textwidth]{assets/klassenimbalance.png}
   \caption{Klassenverteilung des Santander-Datensatzes. Die starke Imbalance beeinflusst Stichprobendesign, Modelltraining und die Wahl geeigneter Evaluationsmetriken.}
   \label{fig:eda-class-imbalance}
 \end{figure}
@@ -123,7 +168,7 @@ Artefakt einer einzelnen balancierten Stichprobe.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.92\textwidth]{../EDA/assets/all_15_violinplots_combined.png}
+  \includegraphics[width=0.92\textwidth]{assets/all_15_violinplots_combined.png}
   \caption{Ausgewaehlte Violinplots zur Einordnung von Gruppenunterschieden. Die Visualisierung ergaenzt die numerischen Effektgroessen; sie ersetzt keine statistische Absicherung.}
   \label{fig:eda-violinplots}
 \end{figure}
@@ -152,7 +197,7 @@ Darstellung lokale Nachbarschaften betont und parameter- sowie seedabhaengig ist
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.84\textwidth]{../EDA/assets/pca_scree_kumulierte_varianz.png}
+  \includegraphics[width=0.84\textwidth]{assets/pca_scree_kumulierte_varianz.png}
   \caption{PCA-Scree-Plot und kumulierte erklaerte Varianz der Min-Max-normalisierten Features. Die geringe kumulierte Varianz weniger Komponenten begrenzt die Aussagekraft zweidimensionaler Projektionen.}
   \label{fig:eda-pca-scree}
 \end{figure}
@@ -169,7 +214,7 @@ bleibt.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.84\textwidth]{../EDA/assets/baseline_logistic_roc_pr.png}
+  \includegraphics[width=0.84\textwidth]{assets/baseline_logistic_roc_pr.png}
   \caption{ROC- und Precision-Recall-Kurven der Logistic-Regression-Baseline. Fuer die unausgeglichene Zielvariable ist insbesondere die Precision-Recall-Perspektive relevant.}
   \label{fig:eda-baseline}
 \end{figure}
@@ -225,12 +270,8 @@ Kurzbeschreibung, erzeugtem Ergebnis und eigener Pruefung dokumentiert. Insbeson
 nachtraegliche Korrekturen kenntlich bleiben, wenn ein Agent eine methodische oder strukturelle
 Entscheidung zunaechst unzureichend umgesetzt hat.
 
-\appendix
-\section{Individuelles Logbuch}
-\def\PortfolioMain{}
-\input{Logbuch_Santander_Cyp.tex}
-
 \clearpage
+\appendix
 \section{Offene Punkte vor der Abgabe}
 \begin{itemize}
   \item Reale Zeitaufwaende im Logbuch ergaenzen, soweit nachvollziehbar; keine Zeiten schaetzen, wenn keine belastbare Grundlage existiert.
@@ -238,7 +279,7 @@ Entscheidung zunaechst unzureichend umgesetzt hat.
   \item Einschaetzung der Gruppenmitglieder aus eigener Beobachtung vervollstaendigen.
   \item Softwareversionen, Zitierstil, Zugriffsdatum und KI-/Prompt-Dokumentation finalisieren.
   \item Nach Abschluss der Modellierungsphase die Zusammenfassung um Modellvergleich, Cross-Validation, Hyperparameter und finale Schlussfolgerung erweitern.
-  \item Finale PDF kompilieren und Abbildungen, Querverweise sowie Seitenumfang visuell pruefen.
+  \item In Overleaf nur die Portfolio-Hauptdatei kompilieren; Logbuch und Abbildungen werden automatisch eingebunden. Abbildungen, Querverweise und Seitenumfang vor Abgabe visuell pruefen.
 \end{itemize}
 
 \end{document}

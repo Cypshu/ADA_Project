@@ -1,39 +1,12 @@
-\ifdefined\PortfolioMain
-\else
-\documentclass[11pt,a4paper]{article}
-\usepackage{fontspec}
-\setmainfont{Latin Modern Roman}
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
-\usepackage{xcolor}
-\definecolor{ADAblue}{HTML}{173F5F}
-\definecolor{ADAgold}{HTML}{D99A2B}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=ADAblue,urlcolor=ADAblue,pdftitle={Logbuch Santander Customer Transaction Prediction},pdfauthor={Cyprian Sawarzynski}}
-\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
-\newcommand{\logsection}[2]{\subsection*{#1 -- #2}}
-\newcommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
-\title{\color{ADAblue}\textbf{Individuelles Logbuch}\\[0.4em]\large Santander Customer Transaction Prediction}
-\author{Cyprian Sawarzynski\\Gruppe 138}
-\date{Sommersemester 2026}
-\fi
+% -----------------------------------------------------------------------------
+% Logbuch_Santander_Cyp.tex
+% Diese Datei ist absichtlich KEIN eigenstaendiges LaTeX-Dokument.
+% Sie wird in ADA_138_Sawarzynski_Portfolio.tex innerhalb von Kapitel 2
+% mit \input{Logbuch_Santander_Cyp.tex} eingebunden.
+% In Overleaf daher nur die Portfolio-Hauptdatei kompilieren.
+% -----------------------------------------------------------------------------
 
-\providecommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
-\providecommand{\logsection}[2]{\subsection*{#1 -- #2}}
-\providecommand{\field}[2]{\noindent\textbf{#1}\\#2\par\medskip}
-
-\ifdefined\PortfolioMain
-\else
-\begin{document}
-\maketitle
-\tableofcontents
-\clearpage
-\fi
-
-\section{Zweck und Fuehrungsregeln}
+\subsection{Zweck und Fuehrungsregeln}
 Dieses Logbuch dokumentiert meinen individuellen Arbeitsprozess chronologisch. Es ist bewusst
 kein nachtraeglich geglaetteter Ergebnisbericht. Fachliche Ergebnisse werden im Portfolio
 thematisch verdichtet; hier bleiben auch Korrekturen, verworfene Ansaetze und Iterationen sichtbar.
@@ -43,7 +16,7 @@ Begruendung, Schwierigkeiten oder verworfene Ansaetze sowie den naechsten Schrit
 Zeitaufwand und Gruppentreffen werden nur eingetragen, wenn sie tatsaechlich nachvollziehbar sind.
 Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 
-\section{Projekt- und Gruppenrahmen}
+\subsection{Projekt- und Gruppenrahmen}
 \begin{tabularx}{\textwidth}{>{\bfseries}p{0.32\textwidth}X}
   Thema & Santander Customer Transaction Prediction \\
   Datensatz & OpenML ID 45566 \\
@@ -55,7 +28,7 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
   Individueller Workload-Richtwert & ca. 100 Stunden \\
 \end{tabularx}
 
-\section{Chronologische Eintraege}
+\subsection{Chronologische Eintraege}
 
 \logsection{06.08.2026}{Projektunterlagen und Projektauswahl}
 \field{Zusammenfassung}{Bewertungs- und Projektunterlagen wurden gelesen; Santander Customer Transaction Prediction wurde als Projekt festgelegt.}
@@ -70,7 +43,7 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 \logsection{06.08.2026}{E-Portfolio auf LaTeX umgestellt}
 \field{Zusammenfassung}{Das zunaechst als Notebook angelegte E-Portfolio wurde auf LaTeX umgestellt, um Layout und finale PDF-Ausgabe besser kontrollieren zu koennen.}
 \field{Arbeitsschritte}{Ordner \texttt{E\_Portfolio}, Portfolio-Hauptdatei und separates Logbuch angelegt; Grundstruktur und Asset-Ordner vorbereitet; XeLaTeX-Kompilierung geprueft.}
-\field{Entscheidung und Begruendung}{Portfolio und Logbuch bleiben getrennte Quellen: Das Logbuch bewahrt Chronologie, das Portfolio verdichtet die Ergebnisse thematisch.}
+\field{Entscheidung und Begruendung}{Portfolio und Logbuch bleiben getrennte Quelldateien: Das Logbuch bewahrt die Chronologie und wird direkt in Kapitel 2 des Portfolios eingebunden; das Portfolio verdichtet die Ergebnisse anschliessend thematisch.}
 \field{Verworfene Ansaetze/Schwierigkeiten}{Notebook-/nbconvert-Ausgabe wurde wegen unzureichender PDF-Gestaltung verworfen; TinyTeX-Praeambel musste auf verfuegbare Pakete reduziert werden.}
 \field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
 \field{Naechster Schritt}{Technische EDA beginnen.}
@@ -154,7 +127,7 @@ Fehlende persoenliche Angaben werden nicht nachtraeglich erfunden.
 \field{Zeitaufwand}{\placeholder{nur ergaenzen, falls belastbar nachvollziehbar}}
 \field{Naechster Schritt}{Weitere ueberwachte Modelle mit Cross-Validation, geeigneten Imbalance-Strategien und Schwellenwertanalyse vergleichen.}
 
-\section{Laufende Methodik- und Entscheidungsuebersicht}
+\subsection{Laufende Methodik- und Entscheidungsuebersicht}
 \begin{longtable}{p{0.20\textwidth}p{0.29\textwidth}p{0.41\textwidth}}
 \toprule
 \textbf{Bereich} & \textbf{Aktueller Stand} & \textbf{Begruendung/Beleg} \\
@@ -171,7 +144,7 @@ Hyperparameter & Finale Optimierung noch offen & Soll erst im systematischen Mod
 \bottomrule
 \end{longtable}
 
-\section{Aktuelle offene Fragen und Risiken}
+\subsection{Aktuelle offene Fragen und Risiken}
 \begin{itemize}
   \item Wie werden weitere Modelle und Imbalance-Strategien fair per Cross-Validation verglichen?
   \item Welche Schwellenwertstrategie ist fuer die Zielmetrik sinnvoll, insbesondere mit Blick auf Precision und Recall?
@@ -181,7 +154,7 @@ Hyperparameter & Finale Optimierung noch offen & Soll erst im systematischen Mod
   \item Zeitaufwaende, Gruppentreffen sowie KI-/Prompt-Nutzung muessen vor Abgabe anhand realer Aufzeichnungen vervollstaendigt werden.
 \end{itemize}
 
-\section{Hinweise fuer die spaetere Zusammenfassung}
+\subsection{Hinweise fuer die spaetere Zusammenfassung}
 Das Portfolio soll die EDA nicht chronologisch nacherzaehlen. Es verdichtet den Arbeitsprozess in
 eine fachliche Reihenfolge: Datenbasis und Datenqualitaet, Klassenimbalance, Gruppenunterschiede,
 Abhaengigkeiten und Redundanz, Dimensionsreduktion, ueberwachte Referenz, Grenzen und daraus
@@ -196,10 +169,3 @@ diesem Logbuch.
 % \field{Verworfene Ansaetze/Schwierigkeiten}{...}
 % \field{Zeitaufwand}{...}
 % \field{Naechster Schritt}{...}
-
-\ifdefined\PortfolioMain
-  \def\LogbuchEnd{}
-\else
-  \def\LogbuchEnd{\end{document}}
-\fi
-\LogbuchEnd
