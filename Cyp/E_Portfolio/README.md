@@ -10,20 +10,18 @@ separat und wird trotzdem in der finalen Portfolio-PDF berücksichtigt.
 
 ## PDF erzeugen
 
-Im Ordner `E_Portfolio` ausführen:
+Die auf diesem Rechner zuerst gefundene TinyTeX-Installation enthält nicht alle benötigten
+Pakete. Im Ordner `E_Portfolio` deshalb die vorhandene MiKTeX-Installation explizit zweimal
+aufrufen (zweiter Lauf für Inhaltsverzeichnis und Querverweise):
 
 ```powershell
-latexmk -xelatex -interaction=nonstopmode -halt-on-error ADA_138_Sawarzynski_Portfolio.tex
+$adaXeLaTeX = "$env:LOCALAPPDATA\Programs\MiKTeX\miktex\bin\x64\xelatex.exe"
+& $adaXeLaTeX -interaction=nonstopmode -halt-on-error ADA_138_Sawarzynski_Portfolio.tex
+& $adaXeLaTeX -interaction=nonstopmode -halt-on-error ADA_138_Sawarzynski_Portfolio.tex
 ```
 
-Das Logbuch kann separat kompiliert werden:
-
-```powershell
-latexmk -xelatex -interaction=nonstopmode -halt-on-error Logbuch_Santander_Cyp.tex
-```
-
-Die Hauptdatei bindet `Logbuch_Santander_Cyp.tex` im Anhang per `\input{...}` ein. Der
-einzige notwendige Befehl für die finale Portfolio-PDF ist daher der erste Befehl oben.
+`Logbuch_Santander_Cyp.tex` ist bewusst keine eigenständige LaTeX-Datei und wird nicht
+separat kompiliert. Die Hauptdatei bindet das Logbuch im Anhang per `\input{...}` ein.
 Für Abbildungen können Dateien im Ordner `assets` abgelegt und anschließend mit
 `\includegraphics` eingebunden werden.
 

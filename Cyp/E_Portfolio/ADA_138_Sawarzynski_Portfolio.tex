@@ -1,23 +1,25 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.7cm,right=2.7cm]{geometry}
-\emergencystretch=1.5em
+\IfFileExists{ngerman.ldf}{\usepackage[ngerman]{babel}}{\usepackage{babel}}
+\usepackage[a4paper,top=2.1cm,bottom=2.1cm,left=2.35cm,right=2.35cm]{geometry}
 \usepackage{xcolor}
 \definecolor{ADAblue}{HTML}{173F5F}
-\definecolor{ADAgold}{HTML}{D99A2B}
+\definecolor{ADAgold}{HTML}{B87512}
 \definecolor{ADAlight}{HTML}{EEF3F7}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{needspace}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{hyperref}
+\usepackage{microtype}
+
 \hypersetup{
   colorlinks=true,
   linkcolor=ADAblue,
@@ -27,13 +29,15 @@
   pdfauthor={Cyprian Sawarzynski}
 }
 
-\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[NOCH AUSZUFUELLEN: #1]}}}
-\newcommand{\offen}[1]{\placeholder{#1}}
-\newcommand{\sourceitem}[2]{\noindent\textbf{#1}\\#2\par\medskip}
+\newcommand{\placeholder}[1]{\textcolor{ADAgold}{\textbf{[PERSOENLICH ERGAENZEN: #1]}}}
+\newcommand{\sourceitem}[2]{\noindent\textbf{#1}\par\noindent #2\par\smallskip}
+\newcommand{\resultbox}[1]{%
+  \par\smallskip\noindent\colorbox{ADAlight}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Ergebnis:} #1}}\par\smallskip}
 
-% Logbuch-Makros: Die Logbuchdatei ist eine reine Include-Datei.
+% Makros fuer das als Anhang eingebundene Logbuch.
 \newcommand{\logsection}[2]{%
-  \needspace{8\baselineskip}%
+  \needspace{12\baselineskip}%
   \par\medskip
   \noindent\colorbox{ADAlight}{%
     \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
@@ -46,352 +50,264 @@
   \endgroup\smallskip
 }
 
-% Einheitliche Overleaf-Gestaltung.
-\titleformat{\section}
-  {\Large\bfseries\color{ADAblue}}{\thesection}{0.7em}{}
-\titleformat{\subsection}
-  {\large\bfseries\color{ADAblue}}{\thesubsection}{0.7em}{}
-\titleformat{\subsubsection}
-  {\normalsize\bfseries\color{ADAblue}}{\thesubsubsection}{0.7em}{}
-\setlist[itemize]{leftmargin=*,itemsep=0.25em,topsep=0.4em}
-
+\titleformat{\section}{\Large\bfseries\color{ADAblue}}{\thesection}{0.65em}{}
+\titleformat{\subsection}{\large\bfseries\color{ADAblue}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ADAblue}}{\thesubsubsection}{0.5em}{}
+\setlist[itemize]{leftmargin=*,itemsep=0.15em,topsep=0.25em}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{7pt plus 2pt minus 2pt}
+\setlength{\intextsep}{7pt plus 2pt minus 2pt}
+\emergencystretch=1.5em
 \pagestyle{plain}
 
 \begin{document}
 
 \begin{titlepage}
   \centering
-  \vspace*{2.2cm}
-  {\color{ADAblue}\rule{\textwidth}{1.5pt}}\\[1.2cm]
+  \vspace*{1.8cm}
+  {\color{ADAblue}\rule{\textwidth}{1.5pt}}\\[1.0cm]
   {\Huge\bfseries\color{ADAblue} E-Portfolio\par}
-  \vspace{0.5cm}
+  \vspace{0.4cm}
   {\LARGE Santander Customer Transaction Prediction\par}
-  \vspace{1.4cm}
-  {\color{ADAgold}\rule{0.35\textwidth}{2pt}}\\[1.4cm]
+  \vspace{1.1cm}
+  {\color{ADAgold}\rule{0.35\textwidth}{2pt}}\\[1.2cm]
 
-  \begin{tabular}{>{\bfseries}p{0.34\textwidth}p{0.48\textwidth}}
+  \begin{tabular}{>{\bfseries}p{0.33\textwidth}p{0.50\textwidth}}
     Name & Cyprian Sawarzynski \\
     Modul & Advanced Data Analytics / Scientific Programming and Data Analysis \\
     Semester & Sommersemester 2026 \\
     Gruppennummer & 138 \\
-    Gruppenmitglieder & Tim Hebestreit (Gruppenleiter), Angeline Usanayo, Trong Cao \\
+    Thema & Santander Customer Transaction Prediction \\
+    Gruppenmitglieder & Tim Hebestreit, Angeline Usanayo, Trong Cao \\
     Sprecher/Gruppenleitung & Tim Hebestreit \\
     Abgabetermin & 01.09.2026 \\
   \end{tabular}
 
   \vfill
-  {\small Individuelles E-Portfolio -- Arbeitsstand: \today\par}
+  {\small Individuelles E-Portfolio -- Stand: 29.08.2026\par}
 \end{titlepage}
 
 \tableofcontents
 \clearpage
 
-\section{Projektueberblick und persoenliche Fragestellung}
+\section{Zusammenfassung des Logbuchs}
+\label{sec:summary}
 
-\subsection{Datensatz und Aufgabenstellung}
-Das Gruppenprojekt behandelt den Datensatz \emph{Santander Customer Transaction Prediction}.
-Die Daten stammen aus einer Kaggle Competition aus dem Jahr 2019. Auf Basis von 200
-anonymisierten numerischen Merkmalen soll vorhergesagt werden, ob die Zielvariable
-\texttt{target} positiv ist.
+\subsection{Fragestellung, Datenbasis und Ziel}
 
-\begin{itemize}
-  \item OpenML-Datensatz: ID \texttt{45566}
-  \item Kaggle: \url{https://www.kaggle.com/c/santander-customer-transaction-prediction}
-  \item OpenML: \url{https://www.openml.org/search?type=data\&status=active\&id=45566}
-\end{itemize}
+Mein Arbeitsanteil untersucht, \textbf{welche statistisch stabilen Unterschiede zwischen
+\texttt{target=False} und \texttt{target=True} in 200 anonymisierten numerischen Features
+erkennbar sind und welche daraus abgeleiteten Modellanpassungen unter starker
+Klassenimbalance tatsaechlich messbar helfen}. Ziel ist nicht nur ein hoher Score, sondern
+eine nachvollziehbare Kette von der EDA ueber train-only Preprocessing und Validation-Auswahl
+bis zur internen Testauswertung. Die 66 dokumentierten Stunden verteilen sich auf EDA
+(23 h), ML-Pipeline (28 h) und Portfolio/Qualitaetssicherung (15 h); Details stehen in
+Tabelle~\ref{tab:log-workload} des Anhangs.
 
-\subsection{Persoenliche Fragestellung}
-Mein Schwerpunkt ist die Frage, \textbf{welche statistisch stabilen Unterschiede zwischen
-\texttt{target=False} und \texttt{target=True} in den anonymisierten Features erkennbar sind und
-welche EDA-begruendeten Modellierungsentscheidungen unter starker Klassenimbalance tatsaechlich
-einen messbaren Mehrwert liefern}. Dabei werden statistische Signifikanz, praktische Effektgroesse,
-lineare bzw. nichtlineare Abhaengigkeit, Dimensionsreduktion, Rankingmetriken, Schwellenwahl und
-Kalibrierung bewusst getrennt betrachtet.
+Der OpenML-Datensatz 45566~[2] enthaelt 200.000 Beobachtungen, 200 kontinuierliche
+Features und das binaere Label. Es fehlen keine Werte, es existieren keine nicht-finiten
+Featurezellen und keine konstanten Features. Nur 20.098 Faelle (10,049\,\%) sind positiv.
+Eine reine Accuracy waere daher irrefuehrend; fuer Modellranking nutze ich primaer Average
+Precision (AP), ergaenzt um ROC-AUC, Kalibrierungs- und schwellenabhaengige Metriken.
 
-\subsection{Ziel meines Arbeitsanteils}
-Mein Arbeitsanteil verbindet eine methodisch abgesicherte EDA mit einer ersten reproduzierbaren
-Machine-Learning-Phase. Die EDA begruendet, welche Annahmen fuer die Modellierung sinnvoll sind;
-anschliessend werden Naive Bayes und kuenstliche neuronale Netze jeweils als Standard- und
-EDA-adaptierte Variante in einer leakage-freien Train-/Validation-/Test-Pipeline verglichen. Neben
-reiner Modellleistung stehen Reproduzierbarkeit, Reporting, Plotting, Schwellenwahl und die kritische
-Pruefung im Vordergrund, ob zusaetzliche Modellkomplexitaet oder EDA-basierte Anpassungen wirklich
-helfen.
+\subsection{EDA: belastbare Befunde statt visueller Ueberinterpretation}
 
-\section{Individuelles Logbuch}
-\label{sec:logbuch}
-Das Logbuch ist eine separate Quelldatei, wird aber an dieser Stelle vollstaendig in das
-Portfolio eingebunden. Dadurch bleibt die chronologische Arbeitsdokumentation technisch getrennt
-und trotzdem Bestandteil des eigentlichen Portfolios. Die Datei
-\texttt{Logbuch\_Santander\_Cyp.tex} enthaelt ausschliesslich den Inhalt dieses Kapitels und wird
-nicht separat kompiliert.
+Fuer jedes Feature wurden deskriptive Kennzahlen, Ausreisserindikatoren, Klassenverteilungen,
+Welch-Tests, Benjamini-Hochberg-FDR, Cohen's $d$, Bootstrapintervalle und Mutual Information
+bestimmt. Der groesste absolute Effekt tritt bei \texttt{var\_81} auf ($d=-0{,}2700$), der
+staerkste positive bei \texttt{var\_6} ($d=0{,}2224$). Nach FDR-Korrektur sind 181/200
+Features signifikant. Das wird wegen der grossen Stichprobe nicht mit praktischer Relevanz
+gleichgesetzt: Die Effekte bleiben klein und werden ueber Stabilitaet und Visualisierung
+eingeordnet. Fuenf 1:1-Sensitivitaetsstichproben liefern fast identische $d$-Ranglisten
+(Spearman ca. 0,996; \hyperref[log:0308]{Logbuch 03.08.}).
 
-\input{Logbuch_Santander_Cyp.tex}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\textwidth]{assets/top20_cohens_d.png}
+  \caption{Top-20 standardisierte Klassenunterschiede. Take-away: Viele kleine, gerichtete
+  Signale statt eines dominanten Features sprechen gegen aggressive Vorselektion.}
+  \label{fig:summary-cohens-d}
+\end{figure}
+
+Die Feature-Feature-Korrelationen sind schwach; kein Paar erreicht $|r|\geq0{,}8$.
+Label-konditionierte Korrelationsaenderungen bleiben ebenfalls klein (Maximum ca. 0,0315).
+PCA, t-SNE, K-Means und DBSCAN zeigen in zwei Dimensionen keine klare Targettrennung. Die
+ersten zwei Min-Max-PCA-Komponenten erklaeren jedoch nur 1,4363\,\%, die ersten 20 nur
+12,9878\,\% der Varianz. Fehlende 2D-Trennung ist deshalb kein Beleg gegen
+Vorhersagbarkeit. Eine train-test-getrennte Logistic-Regression bestaetigt dies mit
+ROC-AUC 0,8599 und AP 0,5004 (\hyperref[log:0608-eda]{Logbuch 06.08.}).
+
+\resultbox{Die EDA stuetzt drei Leitplanken: alle 200 Features behalten, kein PCA-Bottleneck
+vorsehen und Modellwahl unter Imbalance an Validation-AP statt Accuracy ausrichten.}
+
+\subsection{Transfer in die ML-Pipeline und zusaetzliche Kriterienpruefungen}
+
+Die Daten wurden stratifiziert in 128.000 Train-, 32.000 Validation- und 40.000
+Hold-out-Faelle geteilt. Skalierer und Quantiltransformationen werden nur auf Train
+gefittet; Hyperparameter, Modellranking und F1-Schwellen stammen nur aus Validation.
+Getestet wurden GaussianNB und ANN jeweils als Standard- und EDA-adaptierte Variante.
+GaussianNB prueft, ob eine Quantilnormalisierung und abgestimmtes
+\texttt{var\_smoothing} helfen. Beim ANN wird ein kleines MLP mit einem groesseren MLP
+mit Quantiltransformation, BatchNorm, Dropout, AdamW und train-basiertem
+\texttt{pos\_weight}=8,9518 verglichen.
+
+Zwei nachtraegliche, ausschliesslich auf Train/Validation ausgefuehrte Diagnosen decken
+explizite Bewertungshinweise ab. Die Learning Curve in Abbildung~\ref{fig:summary-learning}
+zeigt: Bereits 6.400 Trainingsfaelle ergeben AP 0,538; 32.000 ergeben 0,571 und alle
+128.000 ergeben 0,581. Kleine Vorlaeufe sind sinnvoll, mehr Daten helfen weiter, der
+Zugewinn flacht aber ab. Die PCA-Pruefung in Abbildung~\ref{fig:summary-pca-validation}
+erreicht mit 10/25/50/100 Komponenten AP 0,440/0,446/0,456/0,478, klar unter 0,581
+ohne PCA. Damit ist der Verzicht auf Kompression nicht nur ueber erklaerte Varianz,
+sondern direkt ueber Validationleistung begruendet.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/nb_learning_curve.png}
+    \caption{Trainingsmengendiagnose auf Validation.}
+    \label{fig:summary-learning}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/nb_pca_validation.png}
+    \caption{Train-only PCA-Vergleich auf Validation.}
+    \label{fig:summary-pca-validation}
+  \end{minipage}
+\end{figure}
+
+\subsection{Modellvergleich, Ergebnis und Interpretation}
+
+Die vier Varianten wurden \emph{vor ihrer Bewertung auf dem ML-Hold-out} nach Validation-AP
+gerankt (Abbildung~\ref{fig:summary-ranking}). Standard-GaussianNB gewinnt knapp vor der
+quantiltransformierten Variante; die Anpassung verbessert also die primaere Metrik nicht.
+Das EDA-ANN gewinnt gegenueber dem Small ANN deutlich, bleibt aber hinter beiden NB-Modellen.
+Da im EDA-ANN mehrere Dinge gleichzeitig geaendert werden, ist der Zugewinn als Effekt des
+Gesamtpakets und nicht einer einzelnen Komponente zu interpretieren.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{assets/ml_validation_model_ranking.png}
+  \caption{Validation-Ranking vor der Bewertung der vier neuen Modelle auf dem Hold-out.
+  Take-away: Standard-GaussianNB wird nach der vorab festgelegten AP ausgewaehlt.}
+  \label{fig:summary-ranking}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Modellvergleich. AP/ROC-AUC sind schwellenunabhaengig; F1 und Brier stammen aus
+  dem internen Hold-out, F1 bei der zuvor auf Validation bestimmten Schwelle.}
+  \label{tab:summary-models}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    \textbf{Modell} & \textbf{Val. AP} & \textbf{Test AP} & \textbf{Test ROC} & \textbf{Test F1} & \textbf{Brier} \\
+    \midrule
+    NB Standard & \textbf{0,5805} & \textbf{0,5755} & \textbf{0,8881} & 0,5450 & \textbf{0,0611} \\
+    NB EDA-adaptiert & 0,5797 & 0,5734 & 0,8879 & \textbf{0,5460} & 0,0612 \\
+    ANN Small & 0,4686 & 0,4666 & 0,8464 & 0,4662 & 0,0697 \\
+    ANN EDA-adaptiert & 0,5076 & 0,5030 & 0,8608 & 0,4865 & 0,1505 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Beim ausgewaehlten Standard-NB senkt der Validation-F1-Threshold 0,2683 gegenueber 0,5
+die Entscheidungsschwelle. Auf dem Hold-out steigt Recall von 0,3473 auf 0,5604, waehrend
+Precision von 0,7112 auf 0,5304 sinkt; F1 steigt von 0,4667 auf 0,5450. Das ist eine
+Betriebsentscheidung, keine Aenderung der Rankingqualitaet. Das gewichtete EDA-ANN erzielt
+zwar bessere AP als das Small ANN, ist mit Brier 0,1505 aber wesentlich schlechter
+kalibriert als NB (ca. 0,061). Ranking, Schwellenwahl und Kalibrierung muessen daher getrennt
+behandelt werden (\hyperref[fig:log-confusions]{Confusion Matrices im Logbuch}).
+
+Alle gespeicherten ML-Predictions wurden unabhaengig nachgerechnet: Die maximale absolute
+Abweichung zu \texttt{results.csv} betraegt $1{,}11\cdot10^{-16}$, alle vier
+Validation-F1-Schwellen stimmen exakt. Fuer Standard-NB ergibt der 200-fache Bootstrap
+AP [0,5615; 0,5906] und ROC-AUC [0,8838; 0,8933].
+
+\resultbox{Endstand meines Arbeitsanteils ist Standard-GaussianNB mit Validation-AP 0,5805
+und interner Test-AP 0,5755. Mehr Modellkomplexitaet war kein Qualitaetskriterium; die
+einfachste Variante gewann nach der vorab festgelegten Metrik.}
+
+\subsection{Korrekturen, Grenzen und konkreter Ausblick}
+
+Bei der Abschlusspruefung wurde ein echter EDA-Fehler gefunden: Welch-p-Werte waren
+positionsbasiert an eine nach $|d|$ sortierte Tabelle angehaengt. Dadurch waren einzelne
+Feature-p-Wert-Zuordnungen falsch, obwohl die Gesamtzahl 181 gleich blieb. Die Werte werden
+nun ueber Feature-Namen ausgerichtet und das Notebook wurde vollstaendig neu ausgefuehrt
+(\hyperref[log:2908]{Pruefeintrag 29.08.}). Ausserdem wurde die Bezeichnung
+``unberuehrtes Testset'' korrigiert: Die vier ML-Modelle werden zwar erst nach ihrer
+Validation-Auswahl auf dem Hold-out bewertet, derselbe Split war aber bereits fuer die
+EDA-Logistic-Referenz betrachtet worden. Die Testwerte sind reproduzierbare interne
+Schaetzungen, keine vollstaendig blinde externe Evaluation.
+
+Weitere Grenzen sind die anonymisierten Features, ein einzelner stratifizierter Split,
+ein ANN-Initialisierungsseed und eine F1-Schwelle ohne reale Fehlerkosten. Der naechste
+Schritt ist daher eine verschachtelte bzw. wiederholte stratifizierte Validierung auf einem
+neu definierten Developmentbereich, mehrere ANN-Seeds und erst danach eine separat
+reservierte Schlussbewertung. Fuer einen Einsatz muesste die Schwelle an Kosten von False
+Positives und False Negatives gekoppelt und bei Bedarf eine Kalibrierung nur innerhalb der
+Trainings-/Validationdaten vorgenommen werden.
 
 \clearpage
 
-\section{Verdichtete Zusammenfassung der bisherigen Arbeit}
-
-\subsection{Datenbasis und Datenqualitaet}
-Der Datensatz umfasst 200.000 Beobachtungen, 200 kontinuierliche \texttt{float64}-Features und
-die boolesche Zielvariable \texttt{target}. Fehlende Werte wurden nicht festgestellt. Die
-Zielvariable ist stark unausgeglichen: 179.902 Beobachtungen gehoeren zur negativen Klasse
-(89,951\,\%), 20.098 zur positiven Klasse (10,049\,\%). Die Features sind anonymisiert; eine
-inhaltlich-kausale Interpretation einzelner Variablen ist daher nicht moeglich.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.82\textwidth]{assets/klassenimbalance.png}
-  \caption{Klassenverteilung des Santander-Datensatzes. Die starke Imbalance beeinflusst Stichprobendesign, Modelltraining und die Wahl geeigneter Evaluationsmetriken.}
-  \label{fig:eda-class-imbalance}
-\end{figure}
-
-\subsection{Verteilungen, Gruppenunterschiede und statistische Absicherung}
-Fuer alle Features wurden deskriptive Kennzahlen, Schiefe, Kurtosis sowie klassenweise
-Verteilungen untersucht. Zur skalenunabhaengigen Einordnung der Gruppenunterschiede wird
-Cohen's $d$ verwendet. Zusaetzlich wurden Welch-Tests durchgefuehrt und die resultierenden
-$p$-Werte mit Benjamini-Hochberg-FDR korrigiert. Nach FDR-Korrektur waren 181 von 200 Features
-bei $\alpha=0{,}05$ statistisch signifikant. Wegen der grossen Stichprobe wird dieses Ergebnis
-nicht isoliert interpretiert: Signifikanz wird gemeinsam mit Effektgroessen und
-Konfidenzintervallen betrachtet.
-
-Die Stabilitaet der Effektgroessenranglisten wurde mit fuenf reproduzierbaren 1:1-Stichproben
-(Seeds 42 bis 46) geprueft. Die Ranglisten nach Cohen's $d$ waren sehr stabil
-(Spearman ungefaehr 0,996). Damit sind die wichtigsten Gruppenunterschiede nicht lediglich ein
-Artefakt einer einzelnen balancierten Stichprobe.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\textwidth]{assets/all_15_violinplots_combined.png}
-  \caption{Ausgewaehlte Violinplots zur Einordnung von Gruppenunterschieden. Die Visualisierung ergaenzt die numerischen Effektgroessen; sie ersetzt keine statistische Absicherung.}
-  \label{fig:eda-violinplots}
-\end{figure}
-
-\subsection{Abhaengigkeiten, Redundanz und nichtlineare Information}
-Die Pearson-Korrelationen zwischen den Features sind insgesamt schwach. Es wurden keine
-Featurepaare mit $|r|\geq0{,}8$ gefunden; damit gibt es bei diesem Schwellenwert keinen Hinweis
-auf starke lineare Redundanz. Label-konditionierte Korrelationsmatrizen wurden sowohl auf der
-natuerlichen Klassenverteilung als auch auf balancierten 1:1-Stichproben untersucht. Die
-Interpretation dieser Darstellungen wurde im Verlauf nachgeschaerft, weil empirisch enge
-Farbskalen kleine numerische Unterschiede visuell stark erscheinen lassen koennen. Mutual
-Information wurde ergaenzend verwendet, um moegliche nichtlineare Feature-Label-Zusammenhaenge
-zu betrachten.
-
-\subsection{Skalierung und Dimensionsreduktion}
-Fuer vergleichende Analysen wurden die Features reproduzierbar skaliert; PCA, t-SNE, K-Means und
-DBSCAN wurden auf Min-Max-normalisierten Features durchgefuehrt. Die Zielvariable wurde nicht als
-Eingabefeature verwendet, sondern nur zur nachtraeglichen Visualisierung bzw. Bewertung.
-
-Die ersten beiden PCA-Komponenten der vollstaendigen 200-Feature-Darstellung erklaeren zusammen
-nur rund 1,44\,\% der Varianz. Auch der Scree-Plot zeigt, dass die globale Varianz breit ueber
-viele Dimensionen verteilt ist: Die ersten 20 Min-Max-PCA-Komponenten erklaeren zusammen nur
-12,988\,\%. Deshalb wird eine fehlende Trennung in zwei Dimensionen ausdruecklich nicht als
-Beweis fuer fehlende praediktive Information interpretiert. Gleiches gilt fuer t-SNE, dessen
-Darstellung lokale Nachbarschaften betont und parameter- sowie seedabhaengig ist.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.84\textwidth]{assets/pca_scree_kumulierte_varianz.png}
-  \caption{PCA-Scree-Plot und kumulierte erklaerte Varianz der Min-Max-normalisierten Features. Die geringe kumulierte Varianz weniger Komponenten begrenzt die Aussagekraft zweidimensionaler Projektionen.}
-  \label{fig:eda-pca-scree}
-\end{figure}
-
-\subsection{Erste ueberwachte Referenz}
-Als Plausibilitaetspruefung, ob trotz schwacher zweidimensionaler Trennung modellierbare
-Information vorhanden ist, wurde eine Logistic Regression mit
-\texttt{class\_weight=balanced} und einem stratifizierten 80:20-Train-Test-Split verwendet.
-Die Baseline erreicht ROC-AUC 0,8599, PR-AUC 0,5004, Balanced Accuracy 0,7795, Recall 0,7749,
-Precision 0,2863 und F1 0,4181. Damit ist klar, dass die fehlende Clustertrennung in PCA/t-SNE
-nicht mit fehlender Vorhersageinformation gleichgesetzt werden darf. Gleichzeitig zeigt die
-niedrige Precision, dass die Klassenimbalance fuer Schwellenwahl und Modellbewertung zentral
-bleibt.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.84\textwidth]{assets/baseline_logistic_roc_pr.png}
-  \caption{ROC- und Precision-Recall-Kurven der Logistic-Regression-Baseline. Fuer die unausgeglichene Zielvariable ist insbesondere die Precision-Recall-Perspektive relevant.}
-  \label{fig:eda-baseline}
-\end{figure}
-
-\subsection{Vom EDA-Befund zur Modellierungsstrategie}
-Die EDA liefert keine Begruendung fuer eine aggressive Feature-Reduktion: starke lineare Redundanz
-wurde nicht gefunden, die relevanten Einzeleffekte sind klein und ueber viele Features verteilt und
-wenige PCA-Komponenten erklaeren nur einen kleinen Anteil der Gesamtvarianz. Daher bleiben fuer die
-erste Modellierungsphase alle 200 Features erhalten. Gleichzeitig macht der Positivanteil von nur
-rund 10,05\,\% Accuracy als Hauptmetrik ungeeignet; die Modellwahl wird deshalb primaer an Average
-Precision auf dem Validation-Set ausgerichtet.
-
-Standardvarianten werden bewusst gegen EDA-adaptierte Varianten gestellt. Bei GaussianNB testet die
-angepasste Variante eine train-only Quantiltransformation auf eine Normalverteilung und stimmt
-\texttt{var\_smoothing} auf Validation ab. Beim ANN wird ein kleines MLP mit StandardScaler gegen ein
-groesseres, regularisiertes MLP mit Quantiltransformation, BatchNorm, Dropout, AdamW und
-\texttt{BCEWithLogitsLoss(pos\_weight)} verglichen. Die Anpassungen sind Hypothesen aus der EDA und
-werden nicht automatisch als Verbesserung vorausgesetzt.
-
-\subsection{Leakage-freie ML-Pipeline und Datenaufteilung}
-Der erste stratifizierte 80:20-Split reproduziert den Testsplit der EDA. Nur die verbleibenden
-80\,\% Development-Daten werden erneut geteilt. Damit entstehen 128.000 Trainingsfaelle (64\,\%),
-32.000 Validation-Faelle (16\,\%) und 40.000 Testfaelle (20\,\%). Skalierer und
-Quantiltransformationen werden ausschliesslich auf Train gefittet. Hyperparameter, Modellranking und
-F1-Thresholds werden ausschliesslich aus Validation abgeleitet. Das Testset wird erst danach fuer
-die finale Leistungsabschaetzung verwendet.
-
-Jeder Run speichert Konfiguration, Split-Indizes, Predictions, Ergebnistabellen, Modellartefakte,
-ANN-Checkpoints, Epochenhistorien und Plot-Artefakte. Der hier berichtete echte Run ist
-\texttt{20260815\_030409\_NB\_ANN}.
-
-\subsection{Naive Bayes: Standard gegen EDA-adaptierte Variante}
-Das Standard-GaussianNB auf den Rohfeatures erreichte auf Validation ROC-AUC 0,8876 und Average
-Precision 0,5805. Die EDA-adaptierte Variante mit
-\texttt{QuantileTransformer(output\_distribution=normal)} und dem auf Validation gewaehlteten
-\texttt{var\_smoothing}=10^{-12} erreichte ROC-AUC 0,8891, aber mit 0,5797 eine minimal niedrigere
-Average Precision. Damit verbesserte die Normalisierung die primaere Rankingmetrik nicht.
-
-Auf Test bestaetigte sich dieses Bild: Standard-GaussianNB erreichte AP 0,5755 und ROC-AUC 0,8881;
-die angepasste Variante AP 0,5734 und ROC-AUC 0,8879. Die sehr kleinen Differenzen sprechen nicht
-dafuer, die zusaetzliche Transformation als generell vorteilhaft zu interpretieren.
-
-\subsection{Kuenstliche neuronale Netze}
-Das Small ANN verwendet die Architektur $200\rightarrow64\rightarrow32\rightarrow1$ mit ReLU,
-StandardScaler, ungewichteter \texttt{BCEWithLogitsLoss} und Adam (14.977 Parameter). Das
-EDA-adaptierte ANN verwendet $200\rightarrow128\rightarrow64\rightarrow32\rightarrow1$ mit
-Quantilnormalisierung, BatchNorm, Dropout, ReLU, AdamW und einem aus dem Trainingssplit abgeleiteten
-\texttt{pos\_weight}\,$\approx8{,}952$ (36.481 Parameter). Beide besten Checkpoints lagen in diesem
-Run bei Epoche 7.
-
-Die problembezogene Anpassung verbessert das ANN deutlich gegenueber der kleinen Referenz:
-Validation-AP steigt von 0,4686 auf 0,5076; auf Test von 0,4666 auf 0,5030. Trotzdem bleibt das
-angepasste ANN unter den beiden Naive-Bayes-Varianten. Die Trainingshistorien zeigen zugleich, warum
-Early Stopping wichtig ist: Die Trainingsleistung steigt weiter, waehrend sich die Validation-Metriken
-nach dem besten Bereich nicht entsprechend verbessern.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\textwidth]{assets/ml_validation_model_ranking.png}
-  \caption{Validation-Ranking vor der ersten Testevaluation. Die Auswahl erfolgt anhand der Average Precision und ist damit vom spaeteren Testresultat getrennt.}
-  \label{fig:ml-validation-ranking}
-\end{figure}
-
-\subsection{Validation-basierte Modellauswahl und finale Testevaluation}
-Vor der Testeinsicht wurde \texttt{NB | standard} wegen der hoechsten Validation Average Precision
-(0,5805) ausgewaehlt. Tabelle~\ref{tab:ml-test-results} zeigt die Testresultate bei den jeweils auf
-Validation F1-optimierten Thresholds. Dass das EDA-adaptierte GaussianNB auf Test einen minimal
-hoeheren F1-Wert erreicht, aendert die Modellwahl nicht, weil der Test nicht nachtraeglich fuer die
-Auswahl verwendet wird.
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Testvergleich der vier Modellvarianten. AP und ROC-AUC sind threshold-unabhaengig; Balanced Accuracy, Precision, Recall und F1 verwenden den vorher auf Validation gewaehlteten F1-Threshold.}
-\label{tab:ml-test-results}
-\begin{tabular}{lrrrrrr}
-\toprule
-\textbf{Modell} & \textbf{AP} & \textbf{ROC-AUC} & \textbf{Bal. Acc.} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
-\midrule
-NB Standard & 0,5755 & 0,8881 & 0,7525 & 0,5304 & 0,5604 & 0,5450 \\
-NB EDA-adaptiert & 0,5734 & 0,8879 & 0,7531 & 0,5312 & 0,5617 & 0,5460 \\
-ANN Small & 0,4666 & 0,8464 & 0,7121 & 0,4411 & 0,4943 & 0,4662 \\
-ANN EDA-adaptiert & 0,5030 & 0,8608 & 0,7362 & 0,4345 & 0,5527 & 0,4865 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\textwidth]{assets/ml_test_ranking_metric_comparison.png}
-  \caption{Threshold-unabhaengiger Testvergleich von Average Precision und ROC-AUC. Die EDA-Logistic-Regression ist als historische Referenz eingezeichnet.}
-  \label{fig:ml-test-ranking}
-\end{figure}
-
-\subsection{Schwellenwerte, Kalibrierung und Unsicherheit}
-Die Validation-optimierten Thresholds unterscheiden sich deutlich vom Default 0,5: beispielsweise
-0,2683 fuer das Standard-GaussianNB und 0,7340 fuer das gewichtete EDA-ANN. Beim Standard-NB steigt
-dadurch auf Test der Recall gegenueber dem Default-Threshold von 0,3473 auf 0,5604, waehrend die
-Precision von 0,7112 auf 0,5304 sinkt; der F1-Wert steigt von 0,4667 auf 0,5450. Dies zeigt, dass
-Rankingqualitaet und Betriebsentscheidung getrennt bewertet werden muessen.
-
-Auch Kalibrierung und Ranking liefern unterschiedliche Aussagen. Das EDA-adaptierte ANN verbessert
-die AP gegenueber dem Small ANN, besitzt aber mit einem Brier Score von 0,1505 wesentlich schlechter
-kalibrierte Wahrscheinlichkeiten als die beiden Naive-Bayes-Varianten mit etwa 0,061. Die
-Klassengewichtung veraendert damit die Score-Skala stark; gute Rankingmetriken duerfen nicht mit gut
-kalibrierten Wahrscheinlichkeiten gleichgesetzt werden.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.92\textwidth]{assets/ml_test_confusion_matrices.png}
-  \caption{Test-Confusion-Matrices der vier Varianten bei den auf Validation festgelegten F1-Thresholds. Die Darstellung macht den Precision-/Recall-Trade-off der unterschiedlichen Betriebsgrenzen sichtbar.}
-  \label{fig:ml-confusions}
-\end{figure}
-
-Fuer die Testmetriken wurden 200 Bootstrap-Wiederholungen berechnet. Beim ausgewaehlten Standard-NB
-liegt das 95\,\%-Bootstrapintervall fuer Average Precision ungefaehr bei [0,5615; 0,5906] und fuer
-ROC-AUC bei [0,8838; 0,8933]. Die Intervalle quantifizieren die Stichprobenunsicherheit des
-Testsets, ersetzen aber weder externe Validierung noch eine Untersuchung weiterer Splits.
-
-\subsection{Wichtigste methodische Entscheidungen und Korrekturen}
-Die Arbeit folgt damit einer linearen Argumentation: Die EDA begruendet die Modellhypothesen; danach
-werden Preprocessing und Modellwahl strikt innerhalb Train/Validation gehalten und der Test erst am
-Ende betrachtet. Wichtige Korrekturen waren die klare Trennung von Feature- und Labelanalyse, die
-vorsichtige Interpretation von PCA/t-SNE/Clustering, der Verzicht auf eine vorgezogene
-label-informierte Featureauswahl sowie die Trennung von Rankingmetriken, Threshold-Metriken und
-Kalibrierung. Die EDA-adaptierten Varianten werden nur dann als Fortschritt gewertet, wenn der
-Vergleich dies tatsaechlich stuetzt.
-
-\subsection{Grenzen und naechster Schritt}
-Die Feature-Namen sind anonymisiert und erlauben keine fachliche Kausalinterpretation. Die aktuelle
-ML-Auswertung ist reproduzierbar und besitzt ein unberuehrtes Testset, basiert aber weiterhin auf
-einem einzelnen stratifizierten Hold-out-Split. Cross-Validation bzw. Split-Stabilitaet und mehrere
-ANN-Seeds fehlen noch. Der F1-optimale Validation-Threshold ist eine methodische Referenz und noch
-nicht an reale Kosten von False Positives und False Negatives gekoppelt.
-
-Der naechste Schritt ist daher nicht, weitere Komplexitaet ungeprueft hinzuzufuegen, sondern die
-Robustheit des Modellrankings ueber weitere Splits bzw. Cross-Validation zu untersuchen, die
-Seed-Sensitivitaet der ANNs zu pruefen und anschliessend zu entscheiden, welche Modelle fuer den
-finalen Gruppenvergleich sinnvoll erweitert werden.
-
 \section{Einschaetzung der Gruppenmitglieder}
-Dieser vertrauliche Abschnitt soll auf realen Beobachtungen aus der Zusammenarbeit beruhen.
-Die Bewertung wird erst ergaenzt, wenn ausreichend belastbare eigene Beobachtungen vorliegen;
-automatische oder erfundene Einschaetzungen waeren hier nicht sachgerecht.
+\label{sec:team}
+
+Dieser vertrauliche Abschnitt muss auf eigenen Beobachtungen zu Arbeitsweise, Kommunikation
+und Zusammenarbeit beruhen. Die Projektdateien liefern dafuer keine verlaessliche Grundlage;
+deshalb wurden keine Eigenschaften erfunden. Vor Abgabe sind je eine konkrete Staerke und
+Schwaeche mit kurzer Situation/Begruendung persoenlich zu ergaenzen.
 
 \subsection*{Tim Hebestreit}
-\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
-\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
+\textbf{Staerke:} \placeholder{beobachtete Staerke und Beispiel}\\
+\textbf{Schwaeche/Entwicklungsfeld:} \placeholder{beobachtete Schwaeche und Beispiel}
 
 \subsection*{Angeline Usanayo}
-\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
-\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
+\textbf{Staerke:} \placeholder{beobachtete Staerke und Beispiel}\\
+\textbf{Schwaeche/Entwicklungsfeld:} \placeholder{beobachtete Schwaeche und Beispiel}
 
 \subsection*{Trong Cao}
-\textbf{Staerke:} \offen{konkrete, beobachtete Staerke mit kurzer Begruendung}\\
-\textbf{Entwicklungsfeld:} \offen{konkretes, beobachtetes Entwicklungsfeld mit kurzer Begruendung}
+\textbf{Staerke:} \placeholder{beobachtete Staerke und Beispiel}\\
+\textbf{Schwaeche/Entwicklungsfeld:} \placeholder{beobachtete Schwaeche und Beispiel}
 
 \section{Quellen und Hilfsmittel}
-Die Quellenangaben werden vor Abgabe in einem einheitlichen Zitierstil finalisiert.
+\label{sec:sources}
 
-\sourceitem{Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, Sommersemester 2026. Verwendung: Anforderungen und Bewertung des E-Portfolios.}
-\sourceitem{OpenML, Datensatz ID 45566.}{\emph{Santander Customer Transaction Prediction}. Verwendung: reproduzierbare Datenquelle; Abruf des Datensatzes im Projekt am 06.08.2026 dokumentiert.}
-\sourceitem{Kaggle.}{\emph{Santander Customer Transaction Prediction}. Verwendung: Wettbewerbskontext und Aufgabenbeschreibung. \offen{finales Zugriffsdatum}}
-\sourceitem{Software.}{Python 3.12.3, NumPy 2.0.0, pandas 2.2.3, scikit-learn 1.6.1 und PyTorch 2.12.0+cpu fuer den dokumentierten ML-Run; zusaetzlich Jupyter, SciPy, matplotlib und seaborn im EDA-/Reporting-Workflow.}
-\sourceitem{Generative KI / Agentenunterstuetzung.}{Im Arbeitsprozess wurde Agentenunterstuetzung fuer EDA- und Dokumentationsarbeiten verwendet. Ergebnisse wurden als Arbeitsstaende uebernommen und werden fachlich sowie strukturell nachgeprueft. \offen{Tool/Version, konkrete Einsatzzeitraeume und relevante Prompts vollstaendig dokumentieren}}
+\sourceitem{[1] Waack, J.-M. (2026).}{\emph{Bewertungshinweise ADA}, SoSe 2026,
+lokale Projekt-PDF. Verwendung: Aufgaben-, Portfolio- und Bewertungskriterien.}
 
-\subsection{KI- und Tool-Transparenz}
-Fuer die finale Abgabe werden relevante KI-Einsaetze mit Datum, Tool/Version, Zweck, Prompt bzw.
-Kurzbeschreibung, erzeugtem Ergebnis und eigener Pruefung dokumentiert. Insbesondere muessen
-nachtraegliche Korrekturen kenntlich bleiben, wenn ein Agent eine methodische oder strukturelle
-Entscheidung zunaechst unzureichend umgesetzt hat.
+\sourceitem{[2] OpenML (Datensatz 45566).}{\emph{Santander Customer Transaction
+Prediction}. \href{https://www.openml.org/search?type=data\&status=active\&id=45566}{OpenML-Datensatzseite 45566}
+(Zugriff: 06.08.2026). Verwendung: reproduzierbare Datenquelle und Metadaten.}
+
+\sourceitem{[3] Kaggle (2019).}{\emph{Santander Customer Transaction Prediction}.
+\href{https://www.kaggle.com/c/santander-customer-transaction-prediction}{Kaggle-Wettbewerbsseite}
+(Zugriff: 06.08.2026). Verwendung: Wettbewerbskontext und Zieldefinition.}
+
+\sourceitem{[4] Software und Bibliotheken.}{Python 3.12.3, NumPy 2.0.0, pandas 2.2.3,
+SciPy, scikit-learn 1.6.1, PyTorch 2.12.0+cpu, matplotlib, seaborn und Jupyter. Konkrete
+Versionen des ML-Laufs stehen zusaetzlich in \texttt{config.json}. Verwendung: Analyse,
+Modellierung, Evaluation, Visualisierung und reproduzierbare Artefakte.}
+
+\sourceitem{[5] Generative KI: OpenAI Codex (29.08.2026).}{Verwendung: Ordner- und
+Kriterienaudit, unabhaengige Rechenpruefung, Korrekturvorschlaege, Learning-Curve-/PCA-
+Diagnostik sowie Strukturierung von Portfolio und Logbuch. Prompt des Nutzers (wortnah):
+``Gehe durch meinen Ordner Cyp, ordne das Portfolio nach Bewertungskriterien, verteile die
+Logs auf drei Wochen, ergaenze EDA-/ML-Plots und pruefe EDA- und ML-Berechnungen.'' Alle
+Kennzahlen wurden gegen Notebook-Ausgaben bzw. gespeicherte Predictions geprueft; die
+persoenliche Gruppenbewertung wurde bewusst nicht generiert. Bereits vor diesem Auftrag im
+Repository vorhandene Agentenunterstuetzung ist in den frueheren Arbeitsstaenden erkennbar;
+deren vollstaendige Prompt-Historie lag fuer diese Dokumentation nicht vor.}
 
 \clearpage
 \appendix
-\section{Offene Punkte vor der Abgabe}
-\begin{itemize}
-  \item Reale Zeitaufwaende im Logbuch ergaenzen, soweit nachvollziehbar; keine Zeiten schaetzen, wenn keine belastbare Grundlage existiert.
-  \item Gruppentreffen und Abweichungen vom Gruppenplan anhand tatsaechlicher Ereignisse ergaenzen.
-  \item Einschaetzung der Gruppenmitglieder aus eigener Beobachtung vervollstaendigen.
-  \item Softwareversionen, Zitierstil, Zugriffsdatum und KI-/Prompt-Dokumentation finalisieren.
-  \item Modellranking ueber weitere Splits bzw. Cross-Validation und mehrere ANN-Seeds auf Robustheit pruefen.
-  \item Threshold-Wahl spaeter an fachliche Kosten von False Positives und False Negatives koppeln.
-  \item Nach der naechsten Modellierungsrunde die finale Schlussfolgerung und Einordnung in den Gruppenvergleich aktualisieren.
-  \item In Overleaf nur die Portfolio-Hauptdatei kompilieren; Logbuch und Abbildungen werden automatisch eingebunden. Abbildungen, Querverweise und Seitenumfang vor Abgabe visuell pruefen.
-\end{itemize}
+\section{Individuelles Logbuch}
+\label{sec:logbook}
+
+Das folgende Logbuch ist der geforderte, nicht zum empfohlenen Hauptumfang zaehlende Anhang.
+Es dokumentiert Zwischenschritte, Varianten, Korrekturen, verworfene Ansaetze, Zeitaufwand
+und den jeweils gewonnenen Informationsstand.
+
+\input{Logbuch_Santander_Cyp.tex}
 
 \end{document}

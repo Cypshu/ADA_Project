@@ -2,11 +2,19 @@
 # zusammengeführte Portfolio-PDF werden versioniert.
 *
 !.gitignore
+!README.md
 !E_Portfolio/
 !E_Portfolio/**/
 !E_Portfolio/*.tex
 !E_Portfolio/README.md
 !E_Portfolio/assets/
+!E_Portfolio/assets/klassenimbalance.png
+!E_Portfolio/assets/top20_cohens_d.png
+!E_Portfolio/assets/pca_scree_kumulierte_varianz.png
+!E_Portfolio/assets/ml_validation_model_ranking.png
+!E_Portfolio/assets/ml_test_confusion_matrices.png
+!E_Portfolio/assets/nb_learning_curve.png
+!E_Portfolio/assets/nb_pca_validation.png
 
 !E_Portfolio/ADA_138_Sawarzynski_Portfolio.pdf
 !E_Portfolio/Logbuch_Santander_Cyp.pdf
@@ -26,9 +34,14 @@ data/*
 !data/README.md
 !EDA/
 !EDA/*.ipynb
+EDA/SCTP_EDA_Trong.ipynb
 !ML/
 !ML/**/
 !ML/*.ipynb
+!ML/03_Verification_and_Diagnostics.py
+!ML/verification/
+!ML/verification/*.csv
+!ML/verification/*.json
+!ML/verification/*.png
 !ML/assets/
 !ML/assets/**
-
