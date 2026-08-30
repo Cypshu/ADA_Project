@@ -1,0 +1,25 @@
+{
+  "data_checks": {
+    "rows": 200000,
+    "features": 200,
+    "positive_count": 20098,
+    "positive_share": 0.10049,
+    "missing_cells": 0,
+    "non_finite_feature_cells": 0,
+    "constant_features": 0
+  },
+  "eda": {
+    "fdr_significant_features": 181,
+    "max_abs_cohens_d": 0.2700233459472656,
+    "top_abs_cohens_d_feature": "var_81"
+  },
+  "ml": {
+    "max_metric_recalculation_difference": 1.1102230246251565e-16,
+    "max_threshold_recalculation_difference": 0.0,
+    "learning_curve_best_validation_ap": 0.5805084358983572,
+    "pca_best_validation_ap": 0.47767628041017024,
+    "no_pca_validation_ap": 0.5805084358983572
+  },
+  "methodological_limit": "The ML hold-out indices are identical to the split already scored by the EDA logistic reference; results are internally reproducible but not fully blind with respect to the complete project analysis.",
+  "runtime_seconds": 23.58372110000346
+}

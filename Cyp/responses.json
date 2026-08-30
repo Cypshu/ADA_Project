@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "responses": {
+    "cell-dec129db4fd5a168-autograded": {
+      "0": {
+        "type": "many_choice",
+        "selected": [
+          "The average humidity is highest in the South-West (SW) quadrant",
+          "The average temperature in the South-East (SO) quadrant is higher than in all other quadrants.",
+          "The highest average elevation is in the North-East (NE) quadrant",
+          "In years with major volcanic eruptions, the temperature rises measurably.",
+          "All regions with high humidity also have high temperatures."
+        ]
+      },
+      "1": {
+        "type": "many_choice",
+        "selected": [
+            "There are more Uilë dragons than Laurëfëa dragons.",
+            "The south-west (SW) has the most dragon variety",
+            "More dragons populate the eastern quadrants than the western quadrants",
+            "More dragons live in the North-West (NW) quadrant than in the North-East (NE) quadrant.",
+            "The south-east (SE) is mostly populated by Laurëfëa"
+        ]
+      },
+      "2": {
+        "type": "many_choice",
+        "selected": [
+            "Helcë eggs and juveniles are predominantly found in cold, northern regions.",
+            "Dragons migrate to warmer regions during winter.",
+            "Mornë eggs and Mornë adults are found in different regions.",
+            "Adult dragons and eggs of the same species are always found in the same areas.",
+            "The dragon species with the most eggs is Uilë."
+        ]
+      },
+      "3": {
+        "type": "many_choice",
+        "selected": [
+            "Helcë dragons change their skin color over their lifetime depending on their environment.",
+            "Adult Helcë dragons live mainly in mountainous regions.",
+            "As juveniles, Mornë dragons prefer to stay in their breeding grounds, where they grew up.",
+            "Adult Üle dragons are found predominantly in deep ocean trenches.",
+            "Helcë dragons prefer warm, southern regions.",
+            "Uilë dragons prefer to lay their eggs in coastal regions"
+        ]
+      },
+      "4": {
+        "type": "many_choice",
+        "selected": [
+            "Uilë dragons are evenly distributed across land and water.",
+            "Older Mornë dragons return to humid areas that resemble their breeding regions.",
+            "Laurëfëa lay their eggs in warm, high-elevation locations.",
+            "Mornë juveniles wander around, looking for hot regions to reside in.",
+            "The lifespan of Laurëfëa dragons is twice that of Mornë dragons.",
+            "Laurëfëa dragons are only found in hot, dry areas like deserts, or around volcanos."
+        ]
+      },
+      "5": {
+        "type": "many_choice",
+        "selected": [
+            "Uilë dragons spread across the whole Ocean.",
+            "Helcë dragons are evenly distributed across all of middle-earth.",
+            "Laurëfëa dragons prefer lower elevations than Helcë dragons.",
+            "The dragon population migrates between quadrants over the course of the seasons.",
+            "Dragons are evenly distributed across land and water regions.",
+            "Helcë dragons are the most wide-spread species of dragon."
+        ]
+      }
+    }
+  }
+}

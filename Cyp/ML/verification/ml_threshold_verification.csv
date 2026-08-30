@@ -1,0 +1,5 @@
+model,saved_threshold,recalculated_validation_f1_threshold,absolute_difference
+NB | standard,0.268334236133203,0.268334236133203,0.0
+NB | EDA-adapted,0.2661445105839424,0.2661445105839424,0.0
+ANN | small,0.2555281221866607,0.2555281221866607,0.0
+ANN | EDA-adapted,0.7340458035469055,0.7340458035469055,0.0
