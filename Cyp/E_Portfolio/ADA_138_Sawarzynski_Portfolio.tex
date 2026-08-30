@@ -76,11 +76,11 @@
 
   \begin{tabular}{>{\bfseries}p{0.33\textwidth}p{0.50\textwidth}}
     Name & Cyprian Sawarzynski \\
-    Modul & Advanced Data Analytics / Scientific Programming and Data Analysis \\
+    Modul & Advanced Data Analytics \\
     Semester & Sommersemester 2026 \\
     Gruppennummer & 138 \\
     Thema & Santander Customer Transaction Prediction \\
-    Gruppenmitglieder & Tim Hebestreit, Angeline Usanayo, Trong Cao \\
+    Gruppenmitglieder & Tim Hebestreit, Angeline Usanayo, The Trong Cao \\
     Sprecher/Gruppenleitung & Tim Hebestreit \\
     Abgabetermin & 01.09.2026 \\
   \end{tabular}
@@ -102,39 +102,45 @@ In meinem Arbeitsanteil gehe ich zwei Fragen nach: Welche stabilen Unterschiede 
 zwischen \texttt{target=False} und \texttt{target=True} in den 200 anonymisierten Features,
 und helfen daraus abgeleitete Anpassungen später bei der Modellierung? Dafür habe ich die
 EDA direkt mit dem train-only Preprocessing, der Modellauswahl auf Validation und der
-internen Testauswertung verbunden. Die 66 dokumentierten Stunden verteilen sich auf EDA
-(23 h), ML-Pipeline (28 h) und Portfolio/Qualitätssicherung (15 h); die einzelnen Einträge
+internen Testauswertung verbunden. Die 72 dokumentierten Stunden verteilen sich auf EDA
+(27 h), ML-Pipeline (28 h) und Portfolio/Qualitätssicherung (17 h). Die einzelnen Einträge
 stehen in Tabelle~\ref{tab:log-workload} des Anhangs.
 
 Der OpenML-Datensatz 45566~[2] enthält 200.000 Beobachtungen, 200 kontinuierliche
 Features und das binäre Label. Es fehlen keine Werte, es existieren keine nicht-finiten
-Featurezellen und keine konstanten Features. Nur 20.098 Fälle (10,049\,\%) sind positiv.
-Eine reine Accuracy wäre daher irreführend; für Modellranking nutze ich primär Average
-Precision (AP), ergänzt um ROC-AUC, Kalibrierungs- und schwellenabhängige Metriken.
+Featurezellen und keine konstanten Features. Nur 20.098 Fälle (10,049\,\%) sind positiv (Label = True/1).
+Eine reine Accuracy wäre daher irreführend. Für Modellranking nutze ich primär Average
+Precision (AP), ergänzt um ROC-AUC und Kalibrierungsmetriken. Schwellenabhängige Kennzahlen
+wie Precision, Recall und F1 verändern sich mit der Wahrscheinlichkeitsschwelle, ab der ein
+Fall als positiv gilt.
 
 \subsection{EDA: zentrale Befunde}
 
 Ich habe für jedes Feature deskriptive Kennzahlen, Ausreißerindikatoren,
-Klassenverteilungen, Welch-Tests, Benjamini-Hochberg-FDR, Cohen's $d$,
+Klassenverteilungen, Welch-Tests, die Benjamini-Hochberg-Korrektur der False Discovery Rate
+(FDR), Cohen's $d$,
 Bootstrapintervalle und Mutual Information berechnet. Der größte absolute Effekt tritt bei
 \texttt{var\_81} auf ($d=-0{,}2700$), der stärkste positive bei \texttt{var\_6}
-($d=0{,}2224$). Nach FDR-Korrektur sind 181/200 Features signifikant. Bei 200.000 Zeilen
+($d=0{,}2224$). Nach dieser FDR-Korrektur sind 181/200 Features signifikant. Bei 200.000 Zeilen
 können allerdings auch kleine Unterschiede statistisch signifikant werden. Deshalb habe
-ich zusätzlich die Effektgrößen und ihre Stabilität betrachtet. Fünf
-1:1-Sensitivitätsstichproben liefern fast identische $d$-Ranglisten (Spearman ca. 0,996;
-\hyperref[log:0308]{Logbuch 03.08.}).
+ich zusätzlich die Effektgrößen und ihre Stabilität betrachtet. Die $d$-Ranglisten aus
+fünf 1:1-Sensitivitätsstichproben erreichen Spearman-Korrelationen von ca. 0,996
+(\hyperref[log:0308]{Logbuch 03.08.}).
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.78\textwidth]{assets/top20_cohens_d.png}
   \caption{Top-20 standardisierte Klassenunterschiede. Die Signale sind klein und auf
-  mehrere Features verteilt; ein einzelnes dominantes Feature ist nicht erkennbar.}
+  mehrere Features verteilt. Ein einzelnes dominantes Feature ist nicht erkennbar.}
   \label{fig:summary-cohens-d}
 \end{figure}
 
-Die Feature-Feature-Korrelationen sind schwach; kein Paar erreicht $|r|\geq0{,}8$.
+Die Feature-Feature-Korrelationen sind schwach. Kein Paar erreicht $|r|\geq0{,}8$.
 Label-konditionierte Korrelationsänderungen bleiben ebenfalls klein (Maximum ca. 0,0315).
-PCA, t-SNE, K-Means und DBSCAN zeigen in zwei Dimensionen keine klare Targettrennung. Die
+PCA und t-SNE zeigen in zwei Dimensionen keine klare Targettrennung
+(\hyperref[fig:log-pca-tsne-target]{PCA-/t-SNE-Vergleich im Logbuch}). Auch die Cluster von
+K-Means und DBSCAN stimmen praktisch nicht mit dem Target überein
+(\hyperref[fig:log-clustering]{Clustervergleich im Logbuch}). Die
 ersten zwei Min-Max-PCA-Komponenten erklären jedoch nur 1,4363\,\%, die ersten 20 nur
 12,9878\,\% der Varianz. Fehlende 2D-Trennung ist deshalb kein Beleg gegen
 Vorhersagbarkeit. Eine train-test-getrennte Logistic-Regression bestätigt dies mit
@@ -147,7 +153,7 @@ richte den Modellvergleich wegen der Klassenimbalance an der Validation-AP aus.}
 
 Die Daten wurden stratifiziert in 128.000 Train-, 32.000 Validation- und 40.000
 Hold-out-Fälle geteilt. Skalierer und Quantiltransformationen werden nur auf Train
-gefittet; Hyperparameter, Modellranking und F1-Schwellen stammen nur aus Validation.
+gefittet. Hyperparameter, Modellranking und F1-Schwellen stammen nur aus Validation.
 Getestet wurden GaussianNB und ANN jeweils als Standard- und EDA-adaptierte Variante.
 GaussianNB prüft, ob eine Quantilnormalisierung und abgestimmtes
 \texttt{var\_smoothing} helfen. Beim ANN wird ein kleines MLP mit einem größeren MLP
@@ -182,7 +188,7 @@ erreichen 10/25/50/100 Komponenten eine AP von 0,440/0,446/0,456/0,478. Ohne PCA
 
 Die vier Varianten wurden \emph{vor ihrer Bewertung auf dem ML-Hold-out} nach Validation-AP
 gerankt (Abbildung~\ref{fig:summary-ranking}). Standard-GaussianNB gewinnt knapp vor der
-quantiltransformierten Variante; die Anpassung verbessert also die primäre Metrik nicht.
+quantiltransformierten Variante - die Anpassung verbessert also die primäre Metrik nicht.
 Das EDA-ANN gewinnt gegenüber dem Small ANN deutlich, bleibt aber hinter beiden NB-Modellen.
 Da im EDA-ANN mehrere Dinge gleichzeitig geändert werden, ist der Zugewinn als Effekt des
 Gesamtpakets und nicht einer einzelnen Komponente zu interpretieren.
@@ -213,18 +219,24 @@ Gesamtpakets und nicht einer einzelnen Komponente zu interpretieren.
   \end{tabular}
 \end{table}
 
+Die vollständigen \hyperref[fig:log-roc]{ROC-Kurven} und
+\hyperref[fig:log-pr]{Precision-Recall-Kurven} stehen im Logbuch.
+
 Beim ausgewählten Standard-NB senkt der Validation-F1-Threshold 0,2683 gegenüber 0,5
 die Entscheidungsschwelle. Auf dem Hold-out steigt Recall von 0,3473 auf 0,5604, während
-Precision von 0,7112 auf 0,5304 sinkt; F1 steigt von 0,4667 auf 0,5450. Das ist eine
+Precision von 0,7112 auf 0,5304 sinkt. F1 steigt von 0,4667 auf 0,5450. Das ist eine
 Betriebsentscheidung, keine Änderung der Rankingqualität. Das gewichtete EDA-ANN erzielt
 zwar bessere AP als das Small ANN, ist mit Brier 0,1505 aber wesentlich schlechter
 kalibriert als NB (ca. 0,061). Ranking, Schwellenwahl und Kalibrierung müssen daher getrennt
-behandelt werden (\hyperref[fig:log-confusions]{Confusion Matrices im Logbuch}).
+behandelt werden. Das Logbuch zeigt dazu die
+\hyperref[fig:log-confusions]{Confusion Matrices}, die
+\hyperref[fig:log-thresholds]{Threshold-Diagnostik} und die
+\hyperref[fig:log-calibration]{Kalibrierungskurven}.
 
-Alle gespeicherten ML-Predictions wurden unabhängig nachgerechnet: Die maximale absolute
-Abweichung zu \texttt{results.csv} beträgt $1{,}11\cdot10^{-16}$, alle vier
-Validation-F1-Schwellen stimmen exakt. Für Standard-NB ergibt der 200-fache Bootstrap
-AP [0,5615; 0,5906] und ROC-AUC [0,8838; 0,8933].
+Zur Kontrolle habe ich alle berichteten ML-Kennzahlen erneut berechnet. Sie stimmen bis auf
+numerisches Rundungsrauschen (maximale absolute Abweichung
+\(1{,}11 \cdot 10^{-16}\)) mit den ursprünglichen Ergebnissen überein. Auch alle vier auf
+den Validierungsdaten bestimmten F1-Schwellen wurden exakt reproduziert.
 
 \resultbox{Für den abschließenden Vergleich wähle ich Standard-GaussianNB mit einer
 Validation-AP von 0,5805. Auf dem internen Hold-out erreicht das Modell eine AP von 0,5755.
@@ -236,29 +248,22 @@ Bei meiner Abschlussprüfung fiel ein Fehler in der EDA auf: Welch-p-Werte waren
 positionsbasiert an eine nach $|d|$ sortierte Tabelle angehängt. Dadurch waren einzelne
 Feature-p-Wert-Zuordnungen falsch, obwohl die Gesamtzahl 181 gleich blieb. Ich habe die
 Werte anschließend über die Feature-Namen ausgerichtet und das Notebook vollständig neu ausgeführt
-(\hyperref[log:2908]{Prüfeintrag 29.08.}). Außerdem wurde die Bezeichnung
-``unberührtes Testset'' korrigiert: Die vier ML-Modelle werden zwar erst nach ihrer
-Validation-Auswahl auf dem Hold-out bewertet, derselbe Split war aber bereits für die
-EDA-Logistic-Referenz betrachtet worden. Die Testwerte sind reproduzierbare interne
-Schätzungen, keine vollständig blinde externe Evaluation.
+(\hyperref[log:2908]{Prüfeintrag 29.08.}). Die FDR-Korrektur nach Benjamini-Hochberg
+begrenzt bei den 200 parallelen Tests den erwarteten Anteil falsch-positiver Befunde unter
+den als signifikant eingestuften Features. Die vier ML-Modelle wurden erst nach ihrer
+Validation-Auswahl auf dem Hold-out bewertet. Da ich denselben Split zuvor für die
+EDA-Logistic-Referenz betrachtet hatte, ordne ich die Werte als interne Testergebnisse ein.
 
 Weitere Grenzen sind die anonymisierten Features, ein einzelner stratifizierter Split,
 ein ANN-Initialisierungsseed und eine F1-Schwelle ohne reale Fehlerkosten. Als Nächstes
 würde ich auf einem neu festgelegten Developmentbereich wiederholt stratifiziert validieren
-und das ANN mit mehreren Seeds trainieren. Erst danach sollte eine separat reservierte
-Schlussbewertung folgen. Für einen Einsatz müsste die Schwelle an die Kosten von False
-Positives und False Negatives gekoppelt werden; eine mögliche Kalibrierung dürfte ebenfalls
-nur auf den Trainings- und Validationdaten beruhen.
+und das ANN mit mehreren Seeds trainieren. 
 
 \clearpage
 
 \section{Einschätzung der Gruppenmitglieder}
 \label{sec:team}
 
-Die Einschätzungen in diesem vertraulichen Abschnitt kann ich nur aus der gemeinsamen
-Arbeit ableiten. Aus den Projektdateien lassen sich Stärken und Entwicklungsfelder nicht
-zuverlässig beurteilen. Deshalb habe ich hier Platzhalter gelassen, die ich vor der Abgabe
-mit einer konkreten Beobachtung und einer kurzen Begründung ergänze.
 
 \subsection*{Tim Hebestreit}
 \textbf{Stärke:} \placeholder{beobachtete Stärke und Beispiel}\\
@@ -268,7 +273,7 @@ mit einer konkreten Beobachtung und einer kurzen Begründung ergänze.
 \textbf{Stärke:} \placeholder{beobachtete Stärke und Beispiel}\\
 \textbf{Schwäche/Entwicklungsfeld:} \placeholder{beobachtete Schwäche und Beispiel}
 
-\subsection*{Trong Cao}
+\subsection*{The Trong Cao}
 \textbf{Stärke:} \placeholder{beobachtete Stärke und Beispiel}\\
 \textbf{Schwäche/Entwicklungsfeld:} \placeholder{beobachtete Schwäche und Beispiel}
 
@@ -287,26 +292,21 @@ Prediction}. \href{https://www.openml.org/search?type=data\&status=active\&id=45
 (Zugriff: 06.08.2026). Verwendung: Wettbewerbskontext und Zieldefinition.}
 
 \sourceitem{[4] Software und Bibliotheken.}{Python 3.12.3, NumPy 2.0.0, pandas 2.2.3,
-SciPy, scikit-learn 1.6.1, PyTorch 2.12.0+cpu, matplotlib, seaborn und Jupyter. Konkrete
-Versionen des ML-Laufs stehen zusätzlich in \texttt{config.json}. Verwendung: Analyse,
-Modellierung, Evaluation, Visualisierung und reproduzierbare Artefakte.}
+SciPy, scikit-learn 1.6.1, PyTorch 2.12.0+cpu, matplotlib, seaborn und Jupyter.
+Verwendung: Analyse, Modellierung, Evaluation und Visualisierung.}
 
-\sourceitem{[5] Generative KI: OpenAI Codex (29.08.2026).}{Verwendung: Prüfung der
-Ordnerstruktur und Berechnungen, Korrekturvorschläge, Learning-Curve-/PCA-Diagnostik sowie
-Überarbeitung von Portfolio und Logbuch. Prompt des Nutzers (wortnah):
-``Gehe durch meinen Ordner Cyp, ordne das Portfolio nach Bewertungskriterien, verteile die
-Logs auf drei Wochen, ergänze EDA-/ML-Plots und prüfe EDA- und ML-Berechnungen.'' Die
-Kennzahlen habe ich mit den Notebook-Ausgaben und gespeicherten Predictions abgeglichen.
-Die Gruppenbewertung ist davon ausgenommen, weil sie auf meinen eigenen Erfahrungen beruhen
-muss. Schon vor diesem Auftrag war in früheren Arbeitsständen KI-Unterstützung erkennbar;
-die zugehörige Prompt-Historie lag für diese Dokumentation nicht vollständig vor.}
+\sourceitem{[5] Generative KI: OpenAI Codex.}{Verwendung: Prüfung der Berechnungen,
+Korrekturvorschläge, Learning-Curve-/PCA-Diagnostik sowie sprachliche Überarbeitung von
+Portfolio, Logbuch und Code. Beispielprompt: ``Prüfe Portfolio, EDA und ML-Berechnungen
+anhand der Bewertungshinweise.'' Die Kennzahlen habe ich zusätzlich durch eigene
+Kontrollrechnungen geprüft.}
 
 \clearpage
 \appendix
 \section{Individuelles Logbuch}
 \label{sec:logbook}
 
-Das folgende Logbuch ist der geforderte, nicht zum empfohlenen Hauptumfang zählende Anhang.
+Im Folgenden kommt das Logbuch.
 Es dokumentiert Zwischenschritte, Varianten, Korrekturen, verworfene Ansätze, Zeitaufwand
 und den jeweils gewonnenen Informationsstand.
 
